@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Avenue | Boutique de Mode</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Style Avenue, votre destination mode à Constantine. Découvrez nos collections de vêtements, accessoires et dernières tendances.">
+  <meta name="keywords" content="mode, vêtements, boutique, shopping, tendances, Constantine, Algérie, Style Avenue">
+  
+  <!-- Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="Style Avenue | Boutique de Mode Premium" />
+  <meta property="og:description" content="Explorez les dernières collections et trouvez votre style unique avec nos pièces de créateurs et nos essentiels de garde-robe." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=2071" />
+  <meta property="og:url" content="https://your-shop-domain.com" /> <!-- Replace with your actual domain -->
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon (Emoji) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍️</text></svg>">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Three.js for 3D Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Google Fonts: Poppins & Oswald -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --accent-color: #8b5cf6; /* A sophisticated violet */
+      --accent-color-dark: #7c3aed;
+      --border-color: #e2e8f0;
+      --shadow-color-rgb: 0, 0, 0;
+    }
+    
+    html[data-theme='dark'] {
+      --bg-primary: #1a202c;
+      --bg-secondary: #2d3748;
+      --text-primary: #f7fafc;
+      --text-secondary: #a0aec0;
+      --border-color: #4a5568;
+      --shadow-color-rgb: 255, 255, 255;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .font-heading {
+      font-family: 'Oswald', sans-serif;
+    }
+    
+    /* Reusable component styles */
+    .bg-primary { background-color: var(--bg-primary); }
+    .bg-secondary { background-color: var(--bg-secondary); }
+    .text-primary { color: var(--text-primary); }
+    .text-secondary { color: var(--text-secondary); }
+    .border-color { border-color: var(--border-color); }
+    .shadow-custom { box-shadow: 0 4px 6px -1px rgba(var(--shadow-color-rgb), 0.1), 0 2px 4px -1px rgba(var(--shadow-color-rgb), 0.06); }
+    .shadow-custom-lg { box-shadow: 0 10px 15px -3px rgba(var(--shadow-color-rgb), 0.1), 0 4px 6px -2px rgba(var(--shadow-color-rgb), 0.05); }
+    .shadow-custom-xl { box-shadow: 0 20px 25px -5px rgba(var(--shadow-color-rgb), 0.1), 0 10px 10px -5px rgba(var(--shadow-color-rgb), 0.04); }
+
+    /* Header scroll effect */
+    header.scrolled {
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    html[data-theme='dark'] header.scrolled {
+        background-color: rgba(26, 32, 44, 0.9);
+        box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Active Nav Link */
+    .nav-link.active {
+        color: var(--accent-color);
+        position: relative;
+    }
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--accent-color);
+    }
+
+    /* Fade-in animation */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Parallax effect */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    /* Testimonial Slider */
+    #testimonial-slider-container {
+      position: relative;
+      min-height: 300px; 
+    }
+    .testimonial-slide {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: opacity 0.5s ease-in-out;
+      width: 100%;
+    }
+    .testimonial-slide.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    /* Form input focus animation */
+    .form-input {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-input:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+    }
+    
+    /* Product filter & card */
+    .product-filter-btn.active {
+      background-color: var(--accent-color);
+      color: white;
+    }
+    .product-item {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, opacity 0.3s ease-in-out;
+    }
+    .product-item:hover .product-hover-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .product-hover-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        opacity: 0;
+        transform: translateY(100%);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Modal styles */
+     #newsletter-modal-overlay, #checkout-modal-overlay, #ai-stylist-modal-overlay, #style-quiz-modal-overlay, #wishlist-modal-overlay, #quick-view-modal-overlay {
+        transition: opacity 0.3s ease-in-out;
+    }
+    #newsletter-modal-box, #checkout-modal-box, #ai-stylist-modal-box, #style-quiz-modal-box, #wishlist-modal-box, #quick-view-modal-box {
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    /* Product Badge */
+    .product-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: white;
+        z-index: 10;
+    }
+    /* Sale Price Style */
+    .original-price {
+        text-decoration: line-through;
+        color: var(--text-secondary);
+        margin-left: 0.5rem;
+    }
+    /* Out of Stock Style */
+    .add-to-cart-btn:disabled {
+        background-color: #a0aec0; /* gray-400 */
+        cursor: not-allowed;
+        transform: none;
+    }
+    html[data-theme='dark'] .add-to-cart-btn:disabled {
+        background-color: #4a5568; /* gray-600 */
+    }
+
+    /* Social Proof Notification */
+    #social-proof {
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+    
+    /* Recently Viewed Section */
+    #recently-viewed-container::-webkit-scrollbar {
+        height: 8px;
+    }
+    #recently-viewed-container::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 10px;
+    }
+    #recently-viewed-container {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-color) transparent;
+    }
+    
+    /* 3D Viewer Canvas */
+    #d-viewer-container {
+        width: 100%;
+        height: 400px; /* Adjust height as needed */
+        cursor: grab;
+    }
+     #d-viewer-container:grabbing {
+        cursor: grabbing;
+    }
+
+
+    /* Shop the Look */
+    .lookbook-item { position: relative; }
+    .shop-dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.5);
+      animation: pulse 2s infinite;
+    }
+    .shop-dot:hover {
+      animation-play-state: paused;
+    }
+    .dot-popup {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-custom-lg);
+      width: 220px;
+      z-index: 20;
+      transform: translateY(10px);
+    }
+    .shop-dot:hover .dot-popup {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+    }
+
+    /* Wishlist Button */
+    .wishlist-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: rgba(255,255,255,0.8);
+        color: var(--text-secondary);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        z-index: 10;
+    }
+    .wishlist-btn:hover {
+        background-color: white;
+        transform: scale(1.1);
+    }
+    .wishlist-btn.active i {
+        color: #ef4444; /* red-500 */
+        font-weight: 900;
+    }
+    
+    /* Product Image Tilt Effect */
+    .product-image-tilt {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+    .product-image-tilt img {
+      transition: transform 0.5s ease-out;
+    }
+
+    /* AI Style Match */
+    #ai-style-match-loader > div {
+        animation: scanner 2s linear infinite;
+    }
+    @keyframes scanner {
+        0% { top: 0; }
+        50% { top: 100%; }
+        100% { top: 0; }
+    }
+
+    /* Style Quiz */
+    .quiz-answer-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .quiz-answer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-custom-lg);
+    }
+     /* AI Stylist Chat */
+    .ai-bubble {
+        background-color: var(--bg-secondary);
+        padding: 0.75rem 1rem;
+        border-radius: 1rem 1rem 1rem 0;
+        max-width: 80%;
+    }
+    .user-bubble {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 1rem 1rem 0 1rem;
+        max-width: 80%;
+    }
+
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Header -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-3xl font-heading font-bold text-primary">
+        STYLE<span style="color: var(--accent-color);">AVENUE</span>
+      </a>
+      
+      <!-- Desktop Nav -->
+      <ul class="hidden md:flex items-center space-x-6">
+        <li class="relative">
+            <div class="relative">
+                <input type="search" id="search-bar" placeholder="e.g. robes elegant under 10000" class="form-input w-48 p-2 border border-color rounded-full bg-secondary text-primary transition-all duration-300 focus:w-72">
+                <i class="fas fa-search absolute top-1/2 right-4 transform -translate-y-1/2 text-secondary"></i>
+            </div>
+            <p id="ai-search-feedback" class="absolute top-full left-0 text-xs text-secondary mt-1 h-4"></p>
+        </li>
+        <li><a href="#about" class="nav-link text-secondary hover:text-violet-500 font-semibold">À Propos</a></li>
+        <li><a href="#collections" class="nav-link text-secondary hover:text-violet-500 font-semibold">Collections</a></li>
+        <li><a href="#offers" class="nav-link text-secondary hover:text-violet-500 font-semibold">Offres</a></li>
+        <li><a href="#gallery" class="nav-link text-secondary hover:text-violet-500 font-semibold">Lookbook</a></li>
+        <li><a href="#contact" class="nav-link text-secondary hover:text-violet-500 font-semibold">Contact</a></li>
+        <li>
+          <button id="wishlist-toggle" class="relative text-secondary hover:text-violet-500">
+            <i class="fas fa-heart text-xl"></i>
+          </button>
+        </li>
+        <li>
+          <button id="cart-toggle" class="relative text-secondary hover:text-violet-500">
+            <i class="fas fa-shopping-bag text-xl"></i>
+            <span id="cart-item-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+          </button>
+        </li>
+        <li>
+          <button id="theme-toggle" class="text-secondary hover:text-violet-500">
+            <i class="fas fa-moon text-xl" id="theme-toggle-dark-icon"></i>
+            <i class="fas fa-sun text-xl hidden" id="theme-toggle-light-icon"></i>
+          </button>
+        </li>
+         <li><a href="#" id="newsletter-cta-header" class="text-white px-5 py-2 rounded-full hover:bg-violet-600 transition-transform transform hover:scale-105 shadow-custom" style="background-color: var(--accent-color);">Newsletter</a></li>
+      </ul>
+      
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center space-x-4">
+        <button id="wishlist-toggle-mobile" class="text-secondary hover:text-violet-500">
+            <i class="fas fa-heart text-xl"></i>
+        </button>
+        <button id="cart-toggle-mobile" class="relative text-secondary hover:text-violet-500">
+          <i class="fas fa-shopping-bag text-xl"></i>
+          <span id="cart-item-count-mobile" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+        <button id="theme-toggle-mobile" class="text-secondary hover:text-violet-500">
+            <i class="fas fa-moon text-xl"></i>
+            <i class="fas fa-sun text-xl hidden"></i>
+        </button>
+        <button id="mobile-menu-btn" class="text-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-primary shadow-custom-lg">
+      <div class="p-4">
+        <input type="search" id="search-bar-mobile" placeholder="Rechercher..." class="form-input w-full p-2 border border-color rounded-full bg-secondary text-primary">
+      </div>
+      <a href="#about" class="block py-3 px-6 text-secondary hover:bg-secondary">À Propos</a>
+      <a href="#collections" class="block py-3 px-6 text-secondary hover:bg-secondary">Collections</a>
+      <a href="#offers" class="block py-3 px-6 text-secondary hover:bg-secondary">Offres</a>
+      <a href="#gallery" class="block py-3 px-6 text-secondary hover:bg-secondary">Lookbook</a>
+      <a href="#contact" class="block py-3 px-6 text-secondary hover:bg-secondary">Contact</a>
+       <div class="p-4">
+        <a href="#" id="newsletter-cta-mobile" class="block text-center w-full text-white px-5 py-2 rounded-full" style="background-color: var(--accent-color);">Newsletter</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="h-screen min-h-[700px] flex items-center justify-center text-white bg-cover bg-center parallax" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2070')">
+      <div class="text-center p-6 fade-in-up">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg font-heading uppercase">DÉFINISSEZ VOTRE STYLE</h1>
+        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md">L'élégance à portée de main. Découvrez les collections qui vous ressemblent.</p>
+        <a href="#collections" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);">Nos Nouveautés</a>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-primary">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="fade-in-up">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&q=80&w=2070" alt="Intérieur de la boutique Style Avenue" class="rounded-lg shadow-custom-xl w-full h-auto object-cover">
+          </div>
+          <div class="fade-in-up" style="transition-delay: 150ms;">
+            <h2 class="text-4xl font-bold font-heading mb-4 text-primary">BIENVENUE CHEZ STYLE AVENUE</h2>
+            <p class="text-secondary mb-4 text-lg">
+              Style Avenue est plus qu'une boutique, c'est une célébration de l'individualité. Née à Constantine, notre mission est de proposer des pièces uniques et de haute qualité qui permettent à chacun d'exprimer sa personnalité.
+            </p>
+            <p class="text-secondary mb-6 text-lg">
+             Nous sélectionnons avec soin chaque article pour son design, sa coupe et ses matières durables. Notre équipe de passionnés est là pour vous offrir des conseils personnalisés et une expérience shopping inoubliable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- AI Style Match Section -->
+    <section id="ai-style-match" class="py-20 bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">AI STYLE MATCH</h2>
+                <p class="text-secondary max-w-2xl mx-auto">Téléchargez une photo de votre style et laissez notre IA vous proposer des articles faits pour vous.</p>
+            </div>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+                <div class="text-center fade-in-up">
+                    <div id="ai-image-preview-container" class="w-full h-96 bg-primary rounded-lg shadow-custom flex items-center justify-center border-2 border-dashed border-color relative overflow-hidden cursor-pointer">
+                        <div id="ai-style-match-loader" class="hidden absolute inset-0 bg-black/50">
+                            <div class="absolute h-1 w-full bg-violet-400 shadow-[0_0_10px_theme(colors.violet.400)]"></div>
+                        </div>
+                        <img id="ai-image-preview" src="" alt="Aperçu du style" class="hidden max-w-full max-h-full object-contain">
+                        <div id="ai-upload-prompt" class="text-center text-secondary">
+                            <i class="fas fa-camera text-5xl mb-4"></i>
+                            <p>Cliquez ici pour téléverser une image</p>
+                        </div>
+                    </div>
+                    <input type="file" id="ai-image-upload" class="hidden" accept="image/*">
+                    <p id="ai-status-text" class="mt-4 font-semibold text-primary h-6"></p>
+                </div>
+                <div id="ai-results-container" class="fade-in-up hidden" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-bold font-heading mb-4 text-primary">Votre match est prêt !</h3>
+                    <div id="ai-results-grid" class="space-y-4">
+                        <!-- AI Results will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="collections" class="py-20 bg-primary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">NOS NOUVEAUTÉS</h2>
+                <p class="text-secondary max-w-2xl mx-auto">Découvrez une sélection de nos pièces les plus récentes.</p>
+            </div>
+
+            <!-- Filters and Sorting Controls -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 fade-in-up">
+                <div id="product-filters" class="flex justify-center flex-wrap gap-2 md:space-x-4 mb-4 md:mb-0">
+                    <button class="product-filter-btn active px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="all">Tous</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="dresses">Robes</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="tops">Hauts</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="pants">Pantalons</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="accessories">Accessoires</button>
+                </div>
+                <div class="relative">
+                    <select id="product-sort" class="form-input appearance-none w-48 p-2 pr-8 border border-color rounded-full bg-secondary text-primary">
+                        <option value="default">Trier par</option>
+                        <option value="price-asc">Prix: Croissant</option>
+                        <option value="price-desc">Prix: Décroissant</option>
+                        <option value="name-asc">Nom: A-Z</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"></i>
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 fade-in-up">
+                <!-- Products will be dynamically injected here by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Style Quiz CTA Section -->
+    <section id="style-quiz-cta-section" class="py-20 parallax text-white" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1552664199-fd31f7431a55?auto=format&fit=crop&q=80&w=2070');">
+        <div class="container mx-auto px-6 text-center fade-in-up">
+            <h2 class="text-4xl font-bold font-heading mb-4">PAS SÛR DE VOTRE STYLE ?</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-8">Répondez à notre quiz rapide et découvrez la collection parfaite pour vous.</p>
+            <button id="style-quiz-cta" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color);">Commencez le Quiz</button>
+        </div>
+    </section>
+    
+    <!-- Offers Section -->
+    <section id="offers" class="py-20 bg-primary">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16 fade-in-up">
+          <h2 class="text-4xl font-bold font-heading mb-4 text-primary">OFFRES SPÉCIALES</h2>
+          <p class="text-secondary max-w-2xl mx-auto">Profitez de nos promotions exclusives pour enrichir votre garde-robe.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <!-- Flash Sale Offer -->
+          <div class="md:col-span-2 bg-secondary p-8 rounded-lg shadow-custom-xl text-center flex flex-col md:flex-row items-center gap-8 fade-in-up border-4 border-dashed" style="border-color: var(--accent-color);">
+              <div class="text-center md:text-left flex-grow">
+                <h3 class="text-3xl font-bold font-heading mb-2 text-red-500">VENTE FLASH</h3>
+                <p class="text-5xl font-bold mb-4 text-primary">-30%</p>
+                <p class="font-semibold text-secondary mb-2">Sur une sélection de Robes de Soirée!</p>
+                <p class="text-secondary">L'offre se termine dans :</p>
+                <div id="countdown-timer" class="flex justify-center md:justify-start space-x-4 mt-4 text-primary">
+                    <div><span id="days" class="text-3xl font-bold">0</span><p>Jours</p></div>
+                    <div><span id="hours" class="text-3xl font-bold">0</span><p>Heures</p></div>
+                    <div><span id="minutes" class="text-3xl font-bold">0</span><p>Min</p></div>
+                    <div><span id="seconds" class="text-3xl font-bold">0</span><p>Sec</p></div>
+                </div>
+              </div>
+               <a href="#collections" class="w-full md:w-auto mt-6 md:mt-0 flex-shrink-0 text-white p-4 rounded-full font-bold text-lg transition transform hover:scale-105" style="background-color: var(--accent-color);">Découvrir</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">NOTRE LOOKBOOK</h2>
+                <p class="text-secondary max-w-2xl mx-auto">Inspirez-vous de nos tenues et créez votre propre style.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-up">
+                <div class="lookbook-item overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=80&w=800" alt="Lookbook 1" class="gallery-item w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer">
+                    <div class="shop-dot" style="top: 30%; left: 60%;">
+                        <div class="dot-popup" style="left: -230px; top: -50%;"></div>
+                    </div>
+                     <div class="shop-dot" style="top: 75%; left: 50%;">
+                        <div class="dot-popup" style="left: 30px; top: -50%;"></div>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800" alt="Lookbook 2" class="gallery-item w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer">
+                </div>
+                <div class="overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="Lookbook 3" class="gallery-item w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer">
+                </div>
+                 <div class="overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?auto=format&fit=crop&q=80&w=800" alt="Lookbook 4" class="gallery-item w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Viewed Section -->
+    <section id="recently-viewed-section" class="py-20 bg-secondary hidden">
+        <div class="container mx-auto px-6">
+            <div class="mb-12 fade-in-up">
+                <h2 class="text-3xl font-bold font-heading mb-4 text-primary">RÉCEMMENT CONSULTÉS</h2>
+            </div>
+            <div id="recently-viewed-container" class="flex gap-8 overflow-x-auto pb-4">
+                <!-- Recently viewed products will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 parallax" style="background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=2070');">
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold font-heading mb-4 fade-in-up text-primary">NOS CLIENTES ADORENT</h2>
+        <p class="text-secondary mb-12 max-w-2xl mx-auto fade-in-up">Découvrez les témoignages de notre communauté.</p>
+        
+        <div class="relative max-w-3xl mx-auto bg-primary p-8 rounded-lg shadow-custom-xl fade-in-up">
+          <div id="testimonial-slider-container">
+            <div class="testimonial-slide active">
+              <img loading="lazy" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200" alt="Photo de Amira K." class="w-24 h-24 rounded-full mx-auto mb-6 border-4 object-cover" style="border-color: var(--accent-color);">
+              <p class="text-secondary italic text-lg mb-6">"J'ai enfin trouvé une boutique avec des pièces originales et de qualité. Ma nouvelle robe est magnifique, je n'ai que des compliments !"</p>
+              <p class="font-bold text-primary text-xl">- Amira K.</p>
+            </div>
+            <div class="testimonial-slide">
+              <img loading="lazy" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200" alt="Photo de Sarah L." class="w-24 h-24 rounded-full mx-auto mb-6 border-4 object-cover" style="border-color: var(--accent-color);">
+              <p class="text-secondary italic text-lg mb-6">"Le service client est incroyable. J'ai été conseillée par téléphone et la vendeuse a été adorable et de très bon conseil. Livraison ultra rapide."</p>
+              <p class="font-bold text-primary text-xl">- Sarah L.</p>
+            </div>
+          </div>
+          <button class="testimonial-prev absolute top-1/2 left-0 md:-left-12 transform -translate-y-1/2 bg-secondary/50 hover:bg-secondary text-primary p-3 rounded-full shadow-md transition">
+              <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="testimonial-next absolute top-1/2 right-0 md:-right-12 transform -translate-y-1/2 bg-secondary/50 hover:bg-secondary text-primary p-3 rounded-full shadow-md transition">
+              <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-primary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">CONTACTEZ-NOUS</h2>
+                <p class="text-secondary max-w-xl mx-auto">Une question ? Envoyez-nous un message ou passez nous voir en boutique !</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 bg-secondary p-8 rounded-lg shadow-custom-lg">
+                <!-- Contact Form & Info -->
+                <div class="fade-in-up">
+                  <form id="contact-form" action="#" method="POST" >
+                      <div class="mb-4">
+                          <label for="name" class="block text-primary font-semibold mb-2">Nom Complet</label>
+                          <input type="text" id="name" name="name" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required>
+                      </div>
+                      <div class="mb-4">
+                          <label for="email" class="block text-primary font-semibold mb-2">Email</label>
+                          <input type="email" id="email" name="email" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required>
+                      </div>
+                      <div class="mb-6">
+                          <label for="message" class="block text-primary font-semibold mb-2">Votre Message</label>
+                          <textarea id="message" name="message" rows="5" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required placeholder="J'aimerais avoir plus d'informations sur la robe florale..."></textarea>
+                      </div>
+                      <button type="submit" class="w-full text-white p-3 rounded-full font-bold text-lg transition flex items-center justify-center space-x-2" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);">
+                          <span>Envoyer</span>
+                      </button>
+                      <div id="form-status" class="mt-4 text-center"></div>
+                  </form>
+                   <div class="mt-12">
+                     <h3 class="text-2xl font-bold mb-4 text-primary">Nos Coordonnées</h3>
+                      <div class="space-y-6">
+                          <div class="flex items-center">
+                              <div class="bg-primary p-3 rounded-full mr-4 shadow-custom-sm">
+                                  <i class="fas fa-map-marker-alt text-2xl" style="color: var(--accent-color);"></i>
+                              </div>
+                              <div>
+                                <p class="font-bold text-primary">Adresse</p>
+                                <p class="text-secondary">78 Boulevard de la Mode, Constantine, Algérie</p>
+                              </div>
+                          </div>
+                          <div class="flex items-center">
+                              <div class="bg-primary p-3 rounded-full mr-4 shadow-custom-sm">
+                                  <i class="fas fa-phone text-2xl" style="color: var(--accent-color);"></i>
+                              </div>
+                              <div>
+                                <p class="font-bold text-primary">Téléphone</p>
+                                <p class="text-secondary">+213 555 111 222</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                
+                <!-- Google Map -->
+                <div class="fade-in-up" style="transition-delay: 200ms; min-height: 400px;">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d103243.51817812921!2d6.551322386352934!3d36.34091515281896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f1db535a265b79%3A0x285923a634125c14!2sConstantine!5e0!3m2!1sfr!2sdz!4v1678886543210!5m2!1sfr!2sdz" 
+                    width="100%" height="100%" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    title="Carte de Style Avenue à Constantine">
+                  </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white">
+      <div class="container mx-auto px-6 py-8 text-center">
+          <div class="flex justify-center space-x-6 mb-4">
+            <a href="mailto:contact@styleavenue.com" aria-label="Email" class="text-gray-400 hover:text-violet-400 transition-colors duration-300">
+              <i class="fas fa-envelope text-2xl"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-violet-400 transition-colors duration-300">
+              <i class="fab fa-instagram text-2xl"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-400 hover:text-violet-400 transition-colors duration-300">
+              <i class="fab fa-facebook text-2xl"></i>
+            </a>
+          </div>
+          <p class="text-gray-500">&copy; 2025 Style Avenue. Tous droits réservés.</p>
+      </div>
+  </footer>
+  
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="hidden fixed bottom-24 right-5 w-12 h-12 rounded-full shadow-lg focus:outline-none transition-opacity duration-300 z-50 text-white" style="background-color: var(--accent-color);">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Floating Contact Buttons -->
+  <div class="fixed bottom-5 right-5 z-50 flex flex-col space-y-3">
+    <a href="https://wa.me/213555111222" target="_blank" rel="noopener noreferrer" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110" aria-label="Contactez-nous sur WhatsApp">
+      <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+  </div>
+
+  <!-- AI Stylist Floating Button -->
+  <button id="ai-stylist-cta" class="fixed bottom-5 left-5 w-14 h-14 rounded-full shadow-lg focus:outline-none transition-transform transform hover:scale-110 z-50 text-white flex items-center justify-center" style="background-color: var(--accent-color);">
+      <i class="fas fa-robot text-2xl"></i>
+  </button>
+  
+  <!-- Social Proof Notification -->
+  <div id="social-proof" class="hidden fixed bottom-5 left-24 bg-primary text-primary p-4 rounded-lg shadow-custom-lg transform translate-y-20 opacity-0 z-50"></div>
+
+  <!-- Gallery Lightbox -->
+    <div id="lightbox" class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[100]">
+        <button id="lightbox-close" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
+        <img id="lightbox-img" src="" alt="Vue agrandie de la galerie" class="max-w-[90%] max-h-[80%] object-contain rounded-lg">
+    </div>
+    
+  <!-- All Modals and Sidebars will be injected here -->
+    <div id="shopping-cart-sidebar"></div>
+    <div id="modals-container"></div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // --- Central Product Data Store ---
+      const allProducts = [
+        { id: 'P001', name: "Robe d'Été Florale", category: 'dresses', style: 'elegant', price: 8500, salePrice: 7500, stock: 15, image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800', badge: { text: 'Nouveau', color: 'bg-pink-500' } },
+        { id: 'P002', name: "Blouse en Soie", category: 'tops', style: 'elegant', price: 6200, salePrice: null, stock: 8, image: 'https://i.postimg.cc/x163nRwm/LHHHHH.png', badge: { text: 'Top Vente', color: 'bg-yellow-500' } },
+        { id: 'P003', name: "Jean Skinny Brut", category: 'pants', style: 'casual', price: 7800, salePrice: null, stock: 25, image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800', badge: null },
+        { id: 'P004', name: "Montre Élégante Dorée", category: 'accessories', style: 'elegant', price: 12000, salePrice: null, stock: 5, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800', badge: null },
+        { id: 'P005', name: "Robe de Soirée Noire", category: 'dresses', style: 'elegant', price: 15500, salePrice: null, stock: 30, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', badge: null },
+        { id: 'P006', name: "T-shirt en Coton Bio", category: 'tops', style: 'casual', price: 3500, salePrice: null, stock: 0, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', badge: null },
+      ];
+
+      const header = document.getElementById("header");
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const backToTopBtn = document.getElementById('back-to-top');
+      let current3DAnimationId = null; // To control the 3D animation loop
+
+      // --- Dark Mode Toggle ---
+      const themeToggleBtns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
+      const darkIcons = document.querySelectorAll('#theme-toggle-dark-icon, #theme-toggle-mobile .fa-moon');
+      const lightIcons = document.querySelectorAll('#theme-toggle-light-icon, #theme-toggle-mobile .fa-sun');
+
+      const setTheme = (theme) => {
+          document.documentElement.setAttribute('data-theme', theme);
+          localStorage.setItem('theme', theme);
+          const isDark = theme === 'dark';
+          darkIcons.forEach(i => i.classList.toggle('hidden', isDark));
+          lightIcons.forEach(i => i.classList.toggle('hidden', !isDark));
+          document.getElementById('testimonials').style.backgroundImage = `linear-gradient(rgba(${isDark ? '26, 32, 44, 0.92' : '255, 255, 255, 0.92'}), rgba(${isDark ? '26, 32, 44, 0.92' : '255, 255, 255, 0.92'})), url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=2070')`;
+      };
+      const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      setTheme(savedTheme);
+      themeToggleBtns.forEach(btn => btn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark')));
+
+      // --- Header scroll & Back to Top Button ---
+      window.addEventListener("scroll", () => {
+        header.classList.toggle("scrolled", window.scrollY > 50);
+        backToTopBtn.classList.toggle('hidden', window.scrollY <= 300);
+      });
+      backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // --- Mobile menu toggle ---
+      mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+
+      // --- Smooth scroll & Active Nav Link on Scroll ---
+      const sections = document.querySelectorAll('main section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  navLinks.forEach(link => {
+                      link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                  });
+              }
+          });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+      sections.forEach(section => observer.observe(section));
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetElement = document.querySelector(this.getAttribute('href'));
+            if(targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+            }
+        });
+      });
+      
+      // --- Scroll-triggered fade-in animation ---
+      const animationObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in-up').forEach(el => animationObserver.observe(el));
+
+        // --- Product Rendering, Filtering, Sorting, and AI Searching ---
+        const productGrid = document.getElementById('product-grid');
+        const filterBtns = document.querySelectorAll('.product-filter-btn');
+        const searchBars = document.querySelectorAll('#search-bar, #search-bar-mobile');
+        const sortSelect = document.getElementById('product-sort');
+        const aiSearchFeedback = document.getElementById('ai-search-feedback');
+        let currentFilters = {
+            category: 'all',
+            style: 'all',
+            searchTerm: '',
+            maxPrice: Infinity,
+            minPrice: 0,
+            sort: 'default'
+        };
+
+        const renderProducts = (productsToRender) => {
+            productGrid.innerHTML = '';
+            if (productsToRender.length === 0) {
+                productGrid.innerHTML = `<p class="col-span-full text-center text-secondary">Aucun produit ne correspond à votre recherche.</p>`;
+                return;
+            }
+            productsToRender.forEach(product => {
+                const priceHTML = product.salePrice
+                    ? `<span class="font-semibold text-lg" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span><span class="original-price text-sm">${product.price.toLocaleString('fr-FR')} DZD</span>`
+                    : `<span class="font-semibold text-lg" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+                
+                const stockMessage = product.stock > 0 && product.stock < 10 ? `Plus que ${product.stock} en stock !` : '';
+                const isOutOfStock = product.stock === 0;
+                const buttonText = isOutOfStock ? 'En rupture de stock' : 'Ajouter au Panier';
+                const buttonDisabled = isOutOfStock ? 'disabled' : '';
+
+                const productCardHTML = `
+                <div class="product-item bg-secondary rounded-lg shadow-custom overflow-hidden flex flex-col" data-id="${product.id}">
+                    <div class="relative overflow-hidden product-image-tilt">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
+                        ${product.badge ? `<div class="product-badge ${product.badge.color}">${product.badge.text}</div>` : ''}
+                        <button class="wishlist-btn" aria-label="Ajouter à la wishlist"><i class="far fa-heart text-xl"></i></button>
+                        <div class="product-hover-overlay">
+                            <button class="quick-view-btn w-full text-primary bg-white/90 py-2 rounded-md font-semibold">Aperçu rapide</button>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <p class="product-name font-bold text-lg text-primary">${product.name}</p>
+                        <div class="product-price flex items-baseline">${priceHTML}</div>
+                        <p class="stock-level text-sm text-red-500 font-semibold mt-2 h-5">${stockMessage}</p>
+                        <div class="mt-auto pt-2">
+                            <button class="add-to-cart-btn text-white px-6 py-2 rounded-full font-semibold mt-2 w-full transition-transform transform hover:scale-105" ${buttonDisabled} style="background-color: var(--accent-color);">${buttonText}</button>
+                        </div>
+                    </div>
+                </div>`;
+                productGrid.innerHTML += productCardHTML;
+            });
+            updateWishlistButtons();
+        };
+        
+        const parseSearchQuery = (query) => {
+            const filters = { category: 'all', style: 'all', maxPrice: Infinity, minPrice: 0, searchTerm: query };
+            const categoryKeywords = { robes: 'dresses', hauts: 'tops', pantalons: 'pants', accessoires: 'accessories' };
+            const styleKeywords = { elegant: 'elegant', casual: 'casual' };
+            
+            Object.keys(categoryKeywords).forEach(key => { if (query.includes(key)) filters.category = categoryKeywords[key]; });
+            Object.keys(styleKeywords).forEach(key => { if (query.includes(key)) filters.style = styleKeywords[key]; });
+            
+            const priceUnderMatch = query.match(/under\s*(\d+)|moins\s*de\s*(\d+)|<\s*(\d+)/);
+            if (priceUnderMatch) filters.maxPrice = parseInt(priceUnderMatch[1] || priceUnderMatch[2] || priceUnderMatch[3]);
+            
+            const priceOverMatch = query.match(/over\s*(\d+)|plus\s*de\s*(\d+)|>\s*(\d+)/);
+            if (priceOverMatch) filters.minPrice = parseInt(priceOverMatch[1] || priceOverMatch[2] || priceOverMatch[3]);
+
+            if (filters.category !== 'all' || filters.style !== 'all' || filters.maxPrice !== Infinity || filters.minPrice !== 0) {
+                 aiSearchFeedback.textContent = `Filtres IA actifs`;
+                 filters.searchTerm = ''; // Clear text search if AI filters are active
+            } else {
+                 aiSearchFeedback.textContent = '';
+            }
+            return filters;
+        };
+
+        const updateDisplayedProducts = () => {
+            let processedProducts = [...allProducts];
+            
+            // Apply all filters from the currentFilters object
+            if (currentFilters.category !== 'all') {
+                processedProducts = processedProducts.filter(p => p.category === currentFilters.category);
+            }
+            if (currentFilters.style !== 'all') {
+                processedProducts = processedProducts.filter(p => p.style === currentFilters.style);
+            }
+            if (currentFilters.searchTerm) {
+                processedProducts = processedProducts.filter(p => p.name.toLowerCase().includes(currentFilters.searchTerm));
+            }
+            processedProducts = processedProducts.filter(p => {
+                const price = p.salePrice || p.price;
+                return price >= currentFilters.minPrice && price <= currentFilters.maxPrice;
+            });
+
+            // Sort
+            const getPrice = p => p.salePrice || p.price;
+            if (currentFilters.sort === 'price-asc') processedProducts.sort((a, b) => getPrice(a) - getPrice(b));
+            else if (currentFilters.sort === 'price-desc') processedProducts.sort((a, b) => getPrice(b) - getPrice(a));
+            else if (currentFilters.sort === 'name-asc') processedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            
+            renderProducts(processedProducts);
+        };
+        
+        filterBtns.forEach(btn => btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilters.category = btn.dataset.filter;
+            updateDisplayedProducts();
+        }));
+
+        searchBars.forEach(searchBar => searchBar.addEventListener('input', e => {
+            const aiFilters = parseSearchQuery(e.target.value.toLowerCase());
+            currentFilters = { ...currentFilters, ...aiFilters };
+            updateDisplayedProducts();
+        }));
+
+        sortSelect.addEventListener('change', e => {
+            currentFilters.sort = e.target.value;
+            updateDisplayedProducts();
+        });
+
+        // --- Modals Initializer & HTML Injection ---
+        const modalsContainer = document.getElementById('modals-container');
+        modalsContainer.innerHTML = `
+            <!-- Newsletter Modal -->
+            <div id="newsletter-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]">
+                <div id="newsletter-modal-box" class="bg-primary p-8 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0">
+                    <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold font-heading text-primary">Rejoignez notre Newsletter</h2><button id="newsletter-modal-close" class="text-2xl text-secondary">&times;</button></div>
+                    <p class="text-secondary mb-6">Recevez nos nouveautés et offres exclusives avant tout le monde !</p>
+                    <form id="newsletter-form"><div class="mb-4"><label for="newsletter-name" class="block text-primary font-semibold mb-2">Prénom</label><input type="text" id="newsletter-name" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><div class="mb-6"><label for="newsletter-email" class="block text-primary font-semibold mb-2">Email</label><input type="email" id="newsletter-email" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><button type="submit" class="w-full text-white p-3 rounded-full font-bold text-lg transition" style="background-color: var(--accent-color);">M'inscrire</button><p id="newsletter-form-status" class="text-center mt-4"></p></form>
+                </div>
+            </div>
+            <!-- Checkout Modal -->
+            <div id="checkout-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]">
+                <div id="checkout-modal-box" class="bg-primary p-8 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0">
+                    <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold font-heading text-primary">Finaliser la Commande</h2><button id="checkout-modal-close" class="text-2xl text-secondary">&times;</button></div>
+                    <p class="text-secondary mb-6">Veuillez entrer vos informations pour compléter la commande.</p>
+                    <form id="checkout-form"><div class="mb-4"><label for="checkout-name" class="block text-primary font-semibold mb-2">Nom Complet</label><input type="text" id="checkout-name" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><div class="mb-4"><label for="checkout-email" class="block text-primary font-semibold mb-2">Email</label><input type="email" id="checkout-email" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><div class="mb-6"><label for="checkout-phone" class="block text-primary font-semibold mb-2">Téléphone</label><input type="tel" id="checkout-phone" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><button type="submit" class="w-full text-white p-3 rounded-full font-bold text-lg transition" style="background-color: var(--accent-color);">Confirmer la Commande</button><p id="checkout-form-status" class="text-center mt-4"></p></form>
+                </div>
+            </div>
+            <!-- AI Stylist Modal -->
+            <div id="ai-stylist-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="ai-stylist-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-xl font-bold font-heading text-primary flex items-center"><i class="fas fa-robot mr-2" style="color: var(--accent-color);"></i>Styliste Personnel</h2><button id="ai-stylist-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="ai-chat-history" class="flex-grow p-4 overflow-y-auto space-y-4"></div><div id="ai-chat-options" class="p-4 border-t border-color"></div></div></div>
+            <!-- Style Quiz Modal -->
+            <div id="style-quiz-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="style-quiz-modal-box" class="bg-primary p-6 rounded-lg shadow-xl w-full max-w-2xl mx-4 transform scale-95 opacity-0 flex flex-col h-[80vh]"><div class="flex justify-between items-center pb-4 border-b border-color"><h2 class="text-2xl font-bold font-heading text-primary">Découvrez Votre Style</h2><button id="style-quiz-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="style-quiz-content" class="flex-grow pt-4 overflow-y-auto"></div></div></div>
+            <!-- Wishlist Modal -->
+            <div id="wishlist-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="wishlist-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-2xl mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-2xl font-bold font-heading text-primary">Ma Wishlist</h2><button id="wishlist-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="wishlist-content" class="flex-grow p-6 overflow-y-auto"><div id="empty-wishlist-message" class="text-center text-secondary py-12"><i class="fas fa-heart-crack text-5xl mb-4"></i><p>Votre wishlist est vide.</p></div></div></div></div>
+            <!-- Quick View Modal -->
+            <div id="quick-view-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="quick-view-modal-box" class="bg-primary p-6 rounded-lg shadow-xl w-full max-w-4xl mx-4 transform scale-95 opacity-0"><button id="quick-view-modal-close" class="absolute top-4 right-4 text-2xl text-secondary">&times;</button><div id="quick-view-content" class="grid md:grid-cols-2 gap-8 items-center"></div></div></div>
+        `;
+        
+        const modals = {};
+        const initModal = (modalId) => {
+            const modalOverlay = document.getElementById(`${modalId}-overlay`);
+            const modalBox = document.getElementById(`${modalId}-box`);
+            const closeBtn = document.getElementById(`${modalId}-close`) || document.getElementById(`${modalId}-modal-close`);
+
+            const open = () => { if(modalOverlay) { modalOverlay.classList.remove('opacity-0', 'pointer-events-none'); modalBox.classList.remove('scale-95', 'opacity-0'); }};
+            const close = () => { 
+                if(modalOverlay) { 
+                    modalBox.classList.add('scale-95', 'opacity-0'); 
+                    setTimeout(() => modalOverlay.classList.add('opacity-0', 'pointer-events-none'), 300); 
+                }
+                if (modalId === 'quick-view-modal' && current3DAnimationId) {
+                    cancelAnimationFrame(current3DAnimationId);
+                    current3DAnimationId = null;
+                }
+            };
+            
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            if (modalOverlay) modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) close(); });
+            
+            modals[modalId] = { open, close };
+        };
+
+        ['quick-view-modal', 'newsletter-modal', 'ai-stylist-modal', 'style-quiz-modal', 'wishlist-modal', 'checkout-modal'].forEach(id => initModal(id));
+        document.querySelectorAll('[id^=newsletter-cta]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); modals['newsletter-modal'].open(); if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden'); }));
+        document.getElementById('ai-stylist-cta').addEventListener('click', () => { modals['ai-stylist-modal'].open(); window.ai_stylist_modal_on_open(); });
+        document.getElementById('style-quiz-cta').addEventListener('click', () => { modals['style-quiz-modal'].open(); window.style_quiz_modal_on_open(); });
+        document.querySelectorAll('#wishlist-toggle, #wishlist-toggle-mobile').forEach(btn => btn.addEventListener('click', () => { modals['wishlist-modal'].open(); window.wishlist_modal_on_open(); }));
+        
+        // --- Shopping Cart ---
+        let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        let discount = null;
+        const VALID_DISCOUNTS = { "BIENVENUE10": { type: "percentage", value: 10 }, "SOLDE2000": { type: "fixed", value: 2000 } };
+        const cartSidebarEl = document.getElementById('shopping-cart-sidebar');
+        cartSidebarEl.innerHTML = `
+          <div id="cart-sidebar-overlay" class="fixed inset-0 bg-black/60 opacity-0 pointer-events-none z-[90] transition-opacity duration-300"></div>
+          <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-primary transform translate-x-full shadow-xl z-[100] transition-transform duration-300 flex flex-col">
+            <div class="flex justify-between items-center p-6 border-b border-color"><h2 class="text-2xl font-bold font-heading text-primary">Votre Panier</h2><button id="cart-close-btn" class="text-2xl text-secondary">&times;</button></div>
+            <div id="cart-items" class="flex-grow p-6 overflow-y-auto"><div id="empty-cart-message" class="text-center text-secondary py-12"><i class="fas fa-shopping-cart text-5xl mb-4"></i><p>Votre panier est vide.</p></div></div>
+            <div id="cart-footer" class="p-6 border-t border-color">
+                <div class="mb-4"><div class="flex items-center space-x-2"><input type="text" id="discount-code" placeholder="Code promo" class="form-input w-full p-2 border rounded-md bg-secondary text-primary"><button id="apply-discount-btn" class="text-white px-4 py-2 rounded-md font-semibold" style="background-color: var(--accent-color);">Appliquer</button></div><p id="discount-status" class="text-sm mt-2 h-4"></p></div>
+                <div class="space-y-2 font-semibold text-lg"><div class="flex justify-between"><span>Sous-total</span><span id="cart-subtotal">0 DZD</span></div><div id="discount-display" class="hidden flex justify-between text-green-600"><span>Réduction</span><span id="cart-discount">-0 DZD</span></div><div class="flex justify-between text-primary font-bold text-xl pt-2 border-t mt-2"><span>Total</span><span id="cart-total">0 DZD</span></div></div>
+                <button id="checkout-btn" class="w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Passer à la caisse</button>
+            </div>
+          </div>`;
+
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-sidebar-overlay');
+        const openCart = () => { cartSidebar.classList.remove('translate-x-full'); cartOverlay.classList.remove('opacity-0', 'pointer-events-none'); };
+        const closeCart = () => { cartSidebar.classList.add('translate-x-full'); cartOverlay.classList.add('opacity-0', 'pointer-events-none'); };
+        
+        const updateCart = () => {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            cartItemsContainer.innerHTML = '';
+            cartItemsContainer.appendChild(emptyCartMessage);
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                document.getElementById('cart-footer').style.display = 'none';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                document.getElementById('cart-footer').style.display = 'block';
+                cart.forEach(item => {
+                    const cartItemEl = document.createElement('div');
+                    cartItemEl.className = 'flex items-start space-x-4 mb-6';
+                    const finalPrice = item.salePrice || item.price;
+                    cartItemEl.innerHTML = `<img src="${item.image}" alt="${item.name}" class="w-20 h-24 object-cover rounded-md"><div class="flex-grow"><p class="font-bold text-primary">${item.name}</p><p class="text-secondary text-sm">Taille: ${item.size}</p><p class="font-semibold text-sm" style="color: var(--accent-color);">${finalPrice.toLocaleString('fr-FR')} DZD</p><input type="number" min="1" value="${item.quantity}" data-id="${item.id}" data-size="${item.size}" class="cart-item-quantity w-16 p-1 border rounded-md bg-primary text-primary mt-2"></div><button data-id="${item.id}" data-size="${item.size}" class="remove-from-cart-btn text-red-500 text-lg"><i class="fas fa-trash-alt"></i></button>`;
+                    cartItemsContainer.appendChild(cartItemEl);
+                });
+            }
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('#cart-item-count, #cart-item-count-mobile').forEach(span => span.textContent = totalItems);
+            const subtotal = cart.reduce((sum, item) => sum + ((item.salePrice || item.price) * item.quantity), 0);
+            let discountAmount = 0;
+            if (discount) {
+                discountAmount = discount.type === "percentage" ? subtotal * (discount.value / 100) : discount.value;
+                document.getElementById('discount-display').classList.remove('hidden');
+                document.getElementById('cart-discount').textContent = `-${discountAmount.toLocaleString('fr-FR')} DZD`;
+            } else {
+                document.getElementById('discount-display').classList.add('hidden');
+            }
+            const total = Math.max(0, subtotal - discountAmount);
+            document.getElementById('cart-subtotal').textContent = `${subtotal.toLocaleString('fr-FR')} DZD`;
+            document.getElementById('cart-total').textContent = `${total.toLocaleString('fr-FR')} DZD`;
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        };
+
+        const addProductToCart = (productData, size) => {
+            const existingItem = cart.find(item => item.id === productData.id && item.size === size);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...productData, quantity: 1, size: size });
+            }
+            updateCart();
+            openCart();
+        };
+
+        document.body.addEventListener('click', e => {
+            const addToCartBtn = e.target.closest('.add-to-cart-btn');
+            if (addToCartBtn) {
+                const productEl = addToCartBtn.closest('[data-id]');
+                const productId = productEl.dataset.id;
+                const productData = allProducts.find(p => p.id === productId);
+                const size = productEl.querySelector('.product-size') ? productEl.querySelector('.product-size').value : 'Unique';
+                addProductToCart(productData, size);
+            }
+            if (e.target.closest('#checkout-btn')) { closeCart(); modals['checkout-modal'].open(); }
+            if (e.target.closest('#cart-close-btn') || e.target.id === 'cart-sidebar-overlay') closeCart();
+            if (e.target.closest('#apply-discount-btn')) {
+                const code = document.getElementById('discount-code').value.toUpperCase();
+                const discountStatus = document.getElementById('discount-status');
+                if (VALID_DISCOUNTS[code]) { discount = VALID_DISCOUNTS[code]; discountStatus.textContent = "Code promo appliqué !"; discountStatus.style.color = 'green'; } else { discount = null; discountStatus.textContent = "Code promo invalide."; discountStatus.style.color = 'red'; }
+                updateCart();
+            }
+            if (e.target.closest('.remove-from-cart-btn')) {
+                const { id, size } = e.target.closest('.remove-from-cart-btn').dataset;
+                cart = cart.filter(item => !(item.id === id && item.size === size));
+                updateCart();
+            }
+            if(e.target.closest('.quick-view-btn')) {
+                const productEl = e.target.closest('.product-item');
+                const productId = productEl.dataset.id;
+                const product = allProducts.find(p => p.id === productId);
+                
+                // Add to recently viewed
+                addToRecentlyViewed(productId);
+
+                const content = document.getElementById('quick-view-content');
+                const sizeOptions = { P001: ['S','M','L','XL'], P002: ['S','M','L'], P003: ['S','M','L','XL'], P004: ['Unique'], P005: ['S','M','L'], P006: ['S','M','L','XL'] };
+                const priceHTML = product.salePrice
+                    ? `<span class="text-2xl font-semibold my-4" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span> <span class="original-price text-lg">${product.price.toLocaleString('fr-FR')} DZD</span>`
+                    : `<span class="text-2xl font-semibold my-4" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+                content.innerHTML = `
+                    <div id="d-viewer-container" class="bg-secondary rounded-lg"></div>
+                    <div data-id="${product.id}" class="flex flex-col"><h2 class="product-name text-3xl font-bold font-heading text-primary">${product.name}</h2><div class="product-price flex items-baseline">${priceHTML}</div><p class="text-secondary mb-4">Faites glisser pour faire pivoter le produit. Ceci est une démo 3D.</p><div class="mt-auto"><label class="font-semibold text-primary">Taille:</label><select class="product-size form-input w-full p-2 mt-2 border rounded-md bg-secondary">${sizeOptions[product.id].map(s => `<option>${s}</option>`).join('')}</select><button class="add-to-cart-btn w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Ajouter au Panier</button></div></div>`;
+                
+                const viewerContainer = document.getElementById('d-viewer-container');
+                init3DViewer(viewerContainer, product);
+                modals['quick-view-modal'].open();
+            }
+        });
+        document.body.addEventListener('change', e => { if (e.target.classList.contains('cart-item-quantity')) { const { id, size } = e.target.dataset; const newQuantity = parseInt(e.target.value); const itemInCart = cart.find(item => item.id === id && item.size === size); if (itemInCart && newQuantity > 0) { itemInCart.quantity = newQuantity; updateCart(); } } });
+        document.querySelectorAll('#cart-toggle, #cart-toggle-mobile').forEach(btn => btn.addEventListener('click', openCart));
+      
+      // --- Wishlist ---
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      const updateWishlistButtons = () => { document.querySelectorAll('.wishlist-btn').forEach(btn => { const productId = btn.closest('.product-item').dataset.id; const isWished = wishlist.includes(productId); btn.classList.toggle('active', isWished); btn.querySelector('i').classList.toggle('far', !isWished); btn.querySelector('i').classList.toggle('fas', isWished); }); };
+      window.wishlist_modal_on_open = () => { const wishlistContent = document.getElementById('wishlist-content'); const emptyMsg = document.getElementById('empty-wishlist-message'); wishlistContent.innerHTML = ''; wishlistContent.appendChild(emptyMsg); emptyMsg.style.display = wishlist.length === 0 ? 'block' : 'none'; wishlist.forEach(productId => { const product = allProducts.find(p => p.id === productId); if (product) { const itemEl = document.createElement('div'); itemEl.className = 'wishlist-item flex items-center space-x-4 mb-6 border-b pb-4'; itemEl.dataset.id = productId; const finalPrice = product.salePrice || product.price; itemEl.innerHTML = `<img src="${product.image}" class="w-20 h-24 object-cover rounded-md"><div class="flex-grow"><p class="product-name font-bold">${product.name}</p><p class="product-price text-sm">${finalPrice.toLocaleString('fr-FR')} DZD</p><button class="add-to-cart-btn text-white text-xs px-3 py-1 rounded-full font-semibold mt-2" style="background-color: var(--accent-color);">Ajouter</button></div><button class="remove-from-wishlist-btn text-red-500 text-lg"><i class="fas fa-trash-alt"></i></button>`; wishlistContent.appendChild(itemEl); } }); };
+      document.body.addEventListener('click', e => {
+          if (e.target.closest('.wishlist-btn')) { const productId = e.target.closest('.product-item').dataset.id; if (wishlist.includes(productId)) wishlist = wishlist.filter(id => id !== productId); else wishlist.push(productId); localStorage.setItem('wishlist', JSON.stringify(wishlist)); updateWishlistButtons(); }
+          if (e.target.closest('.remove-from-wishlist-btn')) { const productId = e.target.closest('.wishlist-item').dataset.id; wishlist = wishlist.filter(id => id !== productId); localStorage.setItem('wishlist', JSON.stringify(wishlist)); updateWishlistButtons(); window.wishlist_modal_on_open(); }
+      });
+
+      // --- 3D Product Viewer Logic ---
+      const init3DViewer = (container, product) => {
+            if (!container) return;
+            // Scene
+            const scene = new THREE.Scene();
+            // Camera
+            const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 3;
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            // Light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(0, 1, 1);
+            scene.add(directionalLight);
+            // Object (Box with product texture)
+            const textureLoader = new THREE.TextureLoader();
+            const texture = textureLoader.load(product.image, () => {}, undefined, () => {}); // Added empty error handler
+            texture.colorSpace = THREE.SRGBColorSpace;
+            const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const material = new THREE.MeshStandardMaterial({ map: texture });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            
+            // Mouse Controls
+            let isMouseDown = false, prevMouseX = null, prevMouseY = null;
+            container.addEventListener('mousedown', e => { isMouseDown = true; });
+            container.addEventListener('mouseup', e => { isMouseDown = false; });
+            container.addEventListener('mouseleave', e => { isMouseDown = false; });
+            container.addEventListener('mousemove', e => {
+                if (isMouseDown) {
+                    const deltaX = e.clientX - prevMouseX;
+                    cube.rotation.y += deltaX * 0.01;
+                }
+                prevMouseX = e.clientX;
+            });
+            
+            // Animation loop
+            const animate = () => {
+                current3DAnimationId = requestAnimationFrame(animate);
+                if (!isMouseDown) {
+                    cube.rotation.y += 0.005; // Auto-rotate
+                }
+                renderer.render(scene, camera);
+            };
+            animate();
+      };
+
+
+      // --- AI Style Match Logic ---
+      const aiUploadContainer = document.getElementById('ai-image-preview-container');
+      const aiUploadInput = document.getElementById('ai-image-upload');
+      aiUploadContainer.addEventListener('click', () => aiUploadInput.click());
+      aiUploadInput.addEventListener('change', e => {
+          if (e.target.files && e.target.files[0]) {
+              const reader = new FileReader();
+              reader.onload = e => {
+                  document.getElementById('ai-image-preview').src = e.target.result;
+                  document.getElementById('ai-image-preview').classList.remove('hidden');
+                  document.getElementById('ai-upload-prompt').classList.add('hidden');
+                  document.getElementById('ai-style-match-loader').classList.remove('hidden');
+                  document.getElementById('ai-status-text').textContent = "Analyse de votre style en cours...";
+                  document.getElementById('ai-results-container').classList.add('hidden');
+                  setTimeout(() => {
+                      document.getElementById('ai-style-match-loader').classList.add('hidden');
+                      document.getElementById('ai-status-text').textContent = "Analyse terminée !";
+                      const resultsGrid = document.getElementById('ai-results-grid'); resultsGrid.innerHTML = '';
+                      const recommendedProducts = allProducts.filter(p => p.style === 'elegant').slice(0, 2);
+                      recommendedProducts.forEach(p => { const finalPrice = p.salePrice || p.price; resultsGrid.innerHTML += `<div data-id="${p.id}" class="bg-primary rounded-lg p-3 flex items-center gap-4 shadow-custom"><img src="${p.image}" class="w-16 h-20 object-cover rounded-md"/><div class="flex-grow"><p class="product-name font-bold text-sm">${p.name}</p><p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p></div><button class="add-to-cart-btn text-white text-2xl rounded-full w-10 h-10 flex-shrink-0" style="background-color:var(--accent-color);"><i class="fas fa-plus"></i></button></div>`; });
+                      document.getElementById('ai-results-container').classList.remove('hidden');
+                  }, 3000);
+              }
+              reader.readAsDataURL(e.target.files[0]);
+          }
+      });
+
+        // --- AI Stylist Logic ---
+        const aiChatHistory = document.getElementById('ai-chat-history');
+        const aiChatOptions = document.getElementById('ai-chat-options');
+        let userChoices = {};
+
+        const addMessage = (sender, content, isHtml = false) => {
+            if (!aiChatHistory) return;
+            const messageEl = document.createElement('div');
+            messageEl.className = 'flex flex-col';
+            let innerContent = '';
+            if (sender === 'ai') {
+                innerContent = `<div class="ai-bubble self-start">${isHtml ? content : content}</div>`;
+            } else {
+                innerContent = `<div class="user-bubble self-end">${content}</div>`;
+            }
+            messageEl.innerHTML = innerContent;
+            aiChatHistory.appendChild(messageEl);
+            aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+        };
+
+        const showOptions = (options) => {
+            if (!aiChatOptions) return;
+            aiChatOptions.innerHTML = '';
+            const optionsWrapper = document.createElement('div');
+            optionsWrapper.className = 'flex flex-wrap gap-2 justify-center';
+            options.forEach(opt => {
+                const button = document.createElement('button');
+                button.textContent = opt.text;
+                button.className = 'border border-color text-primary px-4 py-2 rounded-full hover:bg-secondary transition';
+                button.onclick = () => opt.handler(opt.value);
+                optionsWrapper.appendChild(button);
+            });
+            aiChatOptions.appendChild(optionsWrapper);
+        };
+
+        const handleOccasionChoice = (occasion) => {
+            addMessage('user', occasion);
+            userChoices.occasion = occasion;
+            aiChatOptions.innerHTML = '';
+            setTimeout(() => {
+                addMessage('ai', 'Excellent choix ! Et quel est votre style préféré ?');
+                showOptions([
+                    { text: 'Décontracté', value: 'casual', handler: handleStyleChoice },
+                    { text: 'Élégant', value: 'elegant', handler: handleStyleChoice },
+                ]);
+            }, 500);
+        };
+        
+        const handleStyleChoice = (style) => {
+            addMessage('user', style);
+            userChoices.style = style;
+            aiChatOptions.innerHTML = '';
+            setTimeout(() => {
+                addMessage('ai', 'Parfait. Je cherche les articles qui vous correspondent...');
+                aiChatOptions.innerHTML = '<p class="text-center text-secondary">Analyse en cours...</p>';
+                setTimeout(showRecommendations, 1500);
+            }, 500);
+        };
+        
+        const showRecommendations = () => {
+            aiChatOptions.innerHTML = '';
+            addMessage('ai', 'Voici ma sélection personnalisée pour vous :');
+            
+            const recommendations = allProducts.filter(p => p.style === userChoices.style).slice(0, 2);
+            
+            if (recommendations.length > 0) {
+                 recommendations.forEach(p => {
+                    const finalPrice = p.salePrice || p.price;
+                    const recommendationHtml = `
+                        <div class="bg-secondary rounded-lg p-3 flex items-center gap-4" data-id="${p.id}">
+                            <img src="${p.image}" class="w-16 h-20 object-cover rounded-md"/>
+                            <div class="flex-grow">
+                                <p class="product-name font-bold text-sm text-primary">${p.name}</p>
+                                <p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
+                            </div>
+                            <button class="add-to-cart-btn text-white text-2xl rounded-full w-10 h-10 flex-shrink-0" style="background-color: var(--accent-color);">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    `;
+                    addMessage('ai', recommendationHtml, true);
+                });
+            } else {
+                 addMessage('ai', "Oups, je n'ai pas trouvé de correspondance exacte.");
+            }
+            setTimeout(() => {
+              addMessage('ai', "Puis-je vous aider avec autre chose ?");
+              showOptions([{ text: 'Recommencer', value: 'restart', handler: startStylist }]);
+            }, 1000);
+        };
+
+        const startStylist = () => {
+            userChoices = {};
+            if(aiChatHistory) aiChatHistory.innerHTML = '';
+            setTimeout(() => {
+                addMessage('ai', 'Bonjour ! Je suis votre styliste personnel. Pour quelle occasion cherchez-vous une tenue ?');
+                showOptions([
+                    { text: 'Quotidien', value: 'Quotidien', handler: handleOccasionChoice },
+                    { text: 'Soirée', value: 'Soirée', handler: handleOccasionChoice },
+                    { text: 'Travail', value: 'Travail', handler: handleOccasionChoice },
+                ]);
+            }, 500);
+        };
+        window.ai_stylist_modal_on_open = startStylist;
+
+      // --- Recently Viewed ---
+      let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+      const recentlyViewedContainer = document.getElementById('recently-viewed-container');
+      const recentlyViewedSection = document.getElementById('recently-viewed-section');
+
+      const renderRecentlyViewed = () => {
+          if (recentlyViewed.length === 0) {
+              recentlyViewedSection.classList.add('hidden');
+              return;
+          }
+          recentlyViewedSection.classList.remove('hidden');
+          recentlyViewedContainer.innerHTML = '';
+          recentlyViewed.forEach(productId => {
+              const product = allProducts.find(p => p.id === productId);
+              if (product) {
+                  const priceHTML = product.salePrice
+                    ? `<span class="font-semibold" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span>`
+                    : `<span class="font-semibold" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+                  
+                   const card = `
+                    <div class="product-item bg-primary rounded-lg shadow-custom overflow-hidden flex flex-col w-64 flex-shrink-0" data-id="${product.id}">
+                        <div class="relative overflow-hidden">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                             <div class="product-hover-overlay !opacity-100 !transform-none !bg-transparent p-2 flex justify-end">
+                                <button class="quick-view-btn w-auto bg-white/80 text-primary px-3 py-1 rounded-full text-xs font-semibold">Voir</button>
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <p class="product-name font-bold text-sm text-primary truncate">${product.name}</p>
+                            <div class="product-price text-sm mt-1">${priceHTML}</div>
+                        </div>
+                    </div>`;
+                    recentlyViewedContainer.innerHTML += card;
+              }
+          });
+      };
+      
+      const addToRecentlyViewed = (productId) => {
+          recentlyViewed = recentlyViewed.filter(id => id !== productId); // Remove if exists
+          recentlyViewed.unshift(productId); // Add to the front
+          if (recentlyViewed.length > 10) recentlyViewed.pop(); // Keep list size manageable
+          localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+          renderRecentlyViewed();
+      };
+
+
+      // --- Social Proof Notification ---
+      const socialProof = document.getElementById('social-proof');
+      const showSocialProof = () => {
+          if (!socialProof) return;
+          const randomPurchase = allProducts[Math.floor(Math.random() * allProducts.length)];
+          const locations = ["Constantine", "Alger", "Oran", "Sétif"];
+          const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+          socialProof.innerHTML = `
+              <div class="flex items-center">
+                  <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                  <div>
+                      <p class="font-bold text-sm">Achat Récent</p>
+                      <p class="text-xs text-secondary">Quelqu'un à ${randomLocation} vient d'acheter <span class="font-semibold">${randomPurchase.name}</span></p>
+                  </div>
+              </div>
+          `;
+          socialProof.classList.remove('hidden');
+          setTimeout(() => {
+            socialProof.classList.remove('translate-y-20', 'opacity-0');
+          }, 100);
+
+          setTimeout(() => {
+              socialProof.classList.add('translate-y-20', 'opacity-0');
+               setTimeout(() => { socialProof.classList.add('hidden'); }, 500);
+          }, 5000);
+      };
+      setInterval(showSocialProof, 12000);
+
+      // --- Shop the Look ---
+      const shopDots = [
+        { el: document.querySelector('.lookbook-item:first-child .shop-dot:nth-of-type(1) .dot-popup'), productId: 'P002' },
+        { el: document.querySelector('.lookbook-item:first-child .shop-dot:nth-of-type(2) .dot-popup'), productId: 'P003' }
+      ];
+
+      shopDots.forEach(dot => {
+        const product = allProducts.find(p => p.id === dot.productId);
+        if(dot.el && product) {
+          const finalPrice = product.salePrice || product.price;
+          dot.el.innerHTML = `
+              <div data-id="${dot.productId}" class="relative">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-24 object-cover rounded-md mb-2">
+                <p class="product-name font-bold text-sm">${product.name}</p>
+                <p class="product-price text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
+                <button class="add-to-cart-btn text-white text-xs px-2 py-1 rounded-full font-semibold mt-2 w-full" style="background-color: var(--accent-color);">Ajouter</button>
+              </div>
+          `;
+        }
+      });
+
+
+      // --- Testimonial Slider ---
+      const slides = document.querySelectorAll('.testimonial-slide');
+      const prevBtn = document.querySelector('.testimonial-prev');
+      const nextBtn = document.querySelector('.testimonial-next');
+      let currentSlide = 0;
+
+      function showSlide(n) {
+          slides.forEach((slide, i) => slide.classList.toggle('active', i === n));
+          currentSlide = n;
+      }
+      if(slides.length > 0) {
+        nextBtn.addEventListener('click', () => showSlide((currentSlide + 1) % slides.length));
+        prevBtn.addEventListener('click', () => showSlide((currentSlide - 1 + slides.length) % slides.length));
+        setInterval(() => nextBtn.click(), 5000); // Auto-slide
+      }
+
+      // --- Countdown Timer ---
+      const countdown = () => {
+        if (!window.countDate) {
+          const futureDate = new Date();
+          futureDate.setDate(futureDate.getDate() + 7);
+          window.countDate = futureDate.getTime();
+        }
+
+        const now = new Date().getTime();
+        const gap = window.countDate - now;
+
+        const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+        const textDay = Math.floor(gap / day), textHour = Math.floor((gap % day) / hour), textMinute = Math.floor((gap % hour) / minute), textSecond = Math.floor((gap % minute) / second);
+
+        document.getElementById('days').innerText = textDay > 0 ? textDay : '0';
+        document.getElementById('hours').innerText = textHour >= 0 ? textHour : '0';
+        document.getElementById('minutes').innerText = textMinute >= 0 ? textMinute : '0';
+        document.getElementById('seconds').innerText = textSecond >= 0 ? textSecond : '0';
+      };
+      setInterval(countdown, 1000);
+      
+      // --- Style Quiz ---
+      const quizContent = document.getElementById('style-quiz-content');
+      let quizAnswers = {};
+      const quizData = [
+          { question: "Quelle est votre destination de rêve ?", key: "destination", answers: [ { text: "Paris", image: "https://images.unsplash.com/photo-1502602898657-3e91760c0341?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Bali", image: "https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
+          { question: "Choisissez une palette de couleurs :", key: "palette", answers: [ { text: "Nude & Neutres", image: "https://images.unsplash.com/photo-1554188248-986adbb73371?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Vives & Colorées", image: "https://images.unsplash.com/photo-1528372444533-70f41109b377?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
+      ];
+      
+      const showQuizQuestion = (index) => {
+          if (index >= quizData.length) { showQuizResults(); return; }
+          const q = quizData[index];
+          quizContent.innerHTML = `<h3 class="text-xl font-semibold text-center mb-6 text-primary">${q.question}</h3><div class="grid grid-cols-2 gap-4">${q.answers.map(a => `<div class="quiz-answer-card cursor-pointer" data-key="${q.key}" data-value="${a.value}"><img src="${a.image}" class="w-full h-48 object-cover rounded-lg"><p class="text-center font-semibold mt-2 text-secondary">${a.text}</p></div>`).join('')}</div>`;
+          document.querySelectorAll('.quiz-answer-card').forEach(card => card.addEventListener('click', () => { quizAnswers[card.dataset.key] = card.dataset.value; showQuizQuestion(index + 1); }));
+      };
+
+      const showQuizResults = () => {
+          const elegantScore = Object.values(quizAnswers).filter(a => a === 'elegant').length;
+          const resultStyle = elegantScore > Object.values(quizAnswers).length / 2 ? 'elegant' : 'casual';
+          const resultTitle = resultStyle === 'elegant' ? 'L\'Élégance Incarnée' : 'La Reine du Décontracté';
+          const resultDesc = resultStyle === 'elegant' ? "Vous aimez les coupes structurées, les belles matières et les pièces intemporelles." : "Vous privilégiez le confort sans sacrifier le style.";
+          const recommendedProducts = allProducts.filter(p => p.style === resultStyle);
+          quizContent.innerHTML = `<div class="text-center"><h3 class="text-3xl font-bold font-heading mb-2" style="color:var(--accent-color)">${resultTitle}</h3><p class="text-secondary mb-8">${resultDesc}</p><h4 class="text-xl font-bold font-heading mb-4 text-primary">Votre collection :</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">${recommendedProducts.slice(0, 2).map(p => `<div class="quiz-result-item bg-secondary rounded-lg p-3 flex items-center gap-4" data-id="${p.id}"><img src="${p.image}" class="w-20 h-24 object-cover rounded-md"/><div class="flex-grow"><p class="product-name font-bold text-sm text-primary">${p.name}</p><p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${(p.salePrice || p.price).toLocaleString('fr-FR')} DZD</p><button class="add-to-cart-btn text-white text-xs px-3 py-1 rounded-full font-semibold mt-2" style="background-color: var(--accent-color);">Ajouter</button></div></div>`).join('')}</div><button id="restart-quiz" class="mt-8 text-secondary underline">Recommencer</button></div>`;
+          document.getElementById('restart-quiz').addEventListener('click', () => showQuizQuestion(0));
+      };
+      window.style_quiz_modal_on_open = () => showQuizQuestion(0);
+      
+      // --- Gallery Lightbox ---
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+      galleryItems.forEach(item => item.addEventListener('click', () => { lightboxImg.src = item.src; lightbox.classList.remove('opacity-0', 'pointer-events-none'); }));
+      const closeLightbox = () => { lightbox.classList.add('opacity-0', 'pointer-events-none'); }
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+      // --- Contact Form ---
+      const contactForm = document.getElementById('contact-form');
+      contactForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const formStatus = document.getElementById('form-status');
+        formStatus.textContent = 'Message envoyé avec succès !';
+        formStatus.style.color = 'green';
+        contactForm.reset();
+        setTimeout(() => { formStatus.textContent = ''; }, 3000);
+      });
+      
+      // --- Initial Calls ---
+      updateDisplayedProducts();
+      updateCart();
+      updateWishlistButtons();
+      renderRecentlyViewed();
+    });
+  </script>
+</body>
+</html>
+
