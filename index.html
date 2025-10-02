@@ -1143,14 +1143,13 @@
                 updateCart();
             }
             if(e.target.closest('.quick-view-btn')) {
-                // Close any existing quick view before opening a new one
-                if (!modals['quick-view-modal'].classList?.contains('opacity-0')) {
-                    modals['quick-view-modal'].close();
-                }
-
-                const productEl = e.target.closest('.product-item');
+                const isModalAlreadyOpen = !document.getElementById('quick-view-modal-overlay').classList.contains('opacity-0');
+                
+                const productEl = e.target.closest('[data-id]');
                 const productId = productEl.dataset.id;
                 const product = allProducts.find(p => p.id === productId);
+
+                if(!product) return;
                 
                 addToRecentlyViewed(productId);
 
@@ -1211,7 +1210,12 @@
                 
                 const viewerContainer = document.getElementById('d-viewer-container');
                 init3DViewer(viewerContainer, product);
-                modals['quick-view-modal'].open();
+                
+                if (!isModalAlreadyOpen) {
+                    modals['quick-view-modal'].open();
+                } else {
+                    content.scrollTop = 0; // Reset scroll for new content
+                }
             }
         });
         document.body.addEventListener('change', e => { if (e.target.classList.contains('cart-item-quantity')) { const { id, size } = e.target.dataset; const newQuantity = parseInt(e.target.value); const itemInCart = cart.find(item => item.id === id && item.size === size); if (itemInCart && newQuantity > 0) { itemInCart.quantity = newQuantity; updateCart(); } } });
@@ -1655,5 +1659,6 @@
   </script>
 </body>
 </html>
+
 
 
