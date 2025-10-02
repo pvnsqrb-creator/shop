@@ -172,10 +172,10 @@
     }
 
     /* Modal styles */
-     #newsletter-modal-overlay, #checkout-modal-overlay, #ai-stylist-modal-overlay, #style-quiz-modal-overlay, #wishlist-modal-overlay, #quick-view-modal-overlay {
+     #newsletter-modal-overlay, #checkout-modal-overlay, #ai-stylist-modal-overlay, #style-quiz-modal-overlay, #wishlist-modal-overlay, #quick-view-modal-overlay, #live-chat-modal-overlay {
         transition: opacity 0.3s ease-in-out;
     }
-    #newsletter-modal-box, #checkout-modal-box, #ai-stylist-modal-box, #style-quiz-modal-box, #wishlist-modal-box, #quick-view-modal-box {
+    #newsletter-modal-box, #checkout-modal-box, #ai-stylist-modal-box, #style-quiz-modal-box, #wishlist-modal-box, #quick-view-modal-box, #live-chat-modal-box {
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 
@@ -238,7 +238,7 @@
 
 
     /* Shop the Look */
-    .lookbook-item { position: relative; }
+    .lookbook-item, #home { position: relative; }
     .shop-dot {
       position: absolute;
       width: 20px;
@@ -329,8 +329,8 @@
       transform: translateY(-5px);
       box-shadow: var(--shadow-custom-lg);
     }
-     /* AI Stylist Chat */
-    .ai-bubble {
+     /* Agent & User Chat Bubbles */
+    .agent-bubble {
         background-color: var(--bg-secondary);
         padding: 0.75rem 1rem;
         border-radius: 1rem 1rem 1rem 0;
@@ -342,6 +342,21 @@
         padding: 0.75rem 1rem;
         border-radius: 1rem 1rem 0 1rem;
         max-width: 80%;
+    }
+
+    /* Star Rating */
+    .star-rating {
+        display: inline-flex;
+        color: #f59e0b; /* amber-500 */
+    }
+    .star-rating .fa-star-half-alt {
+        color: #f59e0b;
+    }
+    .star-rating .far {
+        color: #d1d5db; /* gray-300 */
+    }
+    html[data-theme='dark'] .star-rating .far {
+        color: #4b5563; /* gray-600 */
     }
 
   </style>
@@ -427,10 +442,19 @@
   <main>
     <!-- Hero Section -->
     <section id="home" class="h-screen min-h-[700px] flex items-center justify-center text-white bg-cover bg-center parallax" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2070')">
-      <div class="text-center p-6 fade-in-up">
+      <div class="text-center p-6 fade-in-up z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg font-heading uppercase">DÉFINISSEZ VOTRE STYLE</h1>
         <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md">L'élégance à portée de main. Découvrez les collections qui vous ressemblent.</p>
         <a href="#collections" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);">Nos Nouveautés</a>
+      </div>
+      <!-- Shop the Look Dots -->
+      <div id="hero-shop-dots">
+          <div class="shop-dot" style="top: 40%; left: 35%;">
+              <div class="dot-popup" style="left: 30px; top: -50%;"></div>
+          </div>
+          <div class="shop-dot" style="top: 65%; left: 60%;">
+              <div class="dot-popup" style="left: -230px; top: -50%;"></div>
+          </div>
       </div>
     </section>
 
@@ -725,10 +749,17 @@
     </a>
   </div>
 
-  <!-- AI Stylist Floating Button -->
-  <button id="ai-stylist-cta" class="fixed bottom-5 left-5 w-14 h-14 rounded-full shadow-lg focus:outline-none transition-transform transform hover:scale-110 z-50 text-white flex items-center justify-center" style="background-color: var(--accent-color);">
-      <i class="fas fa-robot text-2xl"></i>
-  </button>
+  <!-- Floating Action Buttons (Left) -->
+  <div class="fixed bottom-5 left-5 z-50 flex flex-col space-y-3">
+    <!-- Live Chat Floating Button -->
+    <button id="live-chat-cta" class="w-14 h-14 rounded-full shadow-lg focus:outline-none transition-transform transform hover:scale-110 text-white flex items-center justify-center bg-blue-500 hover:bg-blue-600" aria-label="Open Live Chat">
+      <i class="fas fa-comment-dots text-2xl"></i>
+    </button>
+    <!-- AI Stylist Floating Button -->
+    <button id="ai-stylist-cta" class="w-14 h-14 rounded-full shadow-lg focus:outline-none transition-transform transform hover:scale-110 text-white flex items-center justify-center" style="background-color: var(--accent-color);">
+        <i class="fas fa-robot text-2xl"></i>
+    </button>
+  </div>
   
   <!-- Social Proof Notification -->
   <div id="social-proof" class="hidden fixed bottom-5 left-24 bg-primary text-primary p-4 rounded-lg shadow-custom-lg transform translate-y-20 opacity-0 z-50"></div>
@@ -748,12 +779,12 @@
     document.addEventListener("DOMContentLoaded", () => {
       // --- Central Product Data Store ---
       const allProducts = [
-        { id: 'P001', name: "Robe d'Été Florale", category: 'dresses', style: 'elegant', price: 8500, salePrice: 7500, stock: 15, image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800', badge: { text: 'Nouveau', color: 'bg-pink-500' } },
-        { id: 'P002', name: "Blouse en Soie", category: 'tops', style: 'elegant', price: 6200, salePrice: null, stock: 8, image: 'https://i.postimg.cc/x163nRwm/LHHHHH.png', badge: { text: 'Top Vente', color: 'bg-yellow-500' } },
-        { id: 'P003', name: "Jean Skinny Brut", category: 'pants', style: 'casual', price: 7800, salePrice: null, stock: 25, image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800', badge: null },
-        { id: 'P004', name: "Montre Élégante Dorée", category: 'accessories', style: 'elegant', price: 12000, salePrice: null, stock: 5, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800', badge: null },
-        { id: 'P005', name: "Robe de Soirée Noire", category: 'dresses', style: 'elegant', price: 15500, salePrice: null, stock: 30, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', badge: null },
-        { id: 'P006', name: "T-shirt en Coton Bio", category: 'tops', style: 'casual', price: 3500, salePrice: null, stock: 0, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', badge: null },
+        { id: 'P001', name: "Robe d'Été Florale", category: 'dresses', style: 'elegant', price: 8500, salePrice: 7500, stock: 15, image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800', badge: { text: 'Nouveau', color: 'bg-pink-500' }, rating: 4.5, reviews: [ { author: 'Fatima Z.', rating: 5, text: 'Magnifique robe, tissu léger et parfait pour l\'été !' }, { author: 'Amine B.', rating: 4, text: 'Très jolie, mais taille un peu grand.' } ] },
+        { id: 'P002', name: "Blouse en Soie", category: 'tops', style: 'elegant', price: 6200, salePrice: null, stock: 8, image: 'https://i.postimg.cc/x163nRwm/LHHHHH.png', badge: { text: 'Top Vente', color: 'bg-yellow-500' }, rating: 5, reviews: [ { author: 'Sarah L.', rating: 5, text: 'Qualité exceptionnelle, très agréable à porter.' } ] },
+        { id: 'P003', name: "Jean Skinny Brut", category: 'pants', style: 'casual', price: 7800, salePrice: null, stock: 25, image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4, reviews: [ { author: 'Karim D.', rating: 4, text: 'Bon jean, confortable.' } ] },
+        { id: 'P004', name: "Montre Élégante Dorée", category: 'accessories', style: 'elegant', price: 12000, salePrice: null, stock: 5, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.8, reviews: [ { author: 'Nadia K.', rating: 5, text: 'Encore plus belle en vrai, je recommande !' } ] },
+        { id: 'P005', name: "Robe de Soirée Noire", category: 'dresses', style: 'elegant', price: 15500, salePrice: null, stock: 30, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.7, reviews: [] },
+        { id: 'P006', name: "T-shirt en Coton Bio", category: 'tops', style: 'casual', price: 3500, salePrice: null, stock: 0, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.2, reviews: [] },
       ];
 
       const header = document.getElementById("header");
@@ -821,6 +852,17 @@
       }, { threshold: 0.1 });
       document.querySelectorAll('.fade-in-up').forEach(el => animationObserver.observe(el));
 
+        // --- Star Rating Generator ---
+        const generateStars = (rating) => {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) stars += '<i class="fas fa-star"></i>';
+                else if (i - 0.5 <= rating) stars += '<i class="fas fa-star-half-alt"></i>';
+                else stars += '<i class="far fa-star"></i>';
+            }
+            return `<div class="star-rating">${stars}</div>`;
+        };
+
         // --- Product Rendering, Filtering, Sorting, and AI Searching ---
         const productGrid = document.getElementById('product-grid');
         const filterBtns = document.querySelectorAll('.product-filter-btn');
@@ -864,7 +906,11 @@
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <p class="product-name font-bold text-lg text-primary">${product.name}</p>
-                        <div class="product-price flex items-baseline">${priceHTML}</div>
+                        <div class="flex items-center space-x-2 mt-1">
+                            ${generateStars(product.rating)}
+                            <span class="text-xs text-secondary">(${product.reviews.length} avis)</span>
+                        </div>
+                        <div class="product-price flex items-baseline mt-2">${priceHTML}</div>
                         <p class="stock-level text-sm text-red-500 font-semibold mt-2 h-5">${stockMessage}</p>
                         <div class="mt-auto pt-2">
                             <button class="add-to-cart-btn text-white px-6 py-2 rounded-full font-semibold mt-2 w-full transition-transform transform hover:scale-105" ${buttonDisabled} style="background-color: var(--accent-color);">${buttonText}</button>
@@ -970,7 +1016,9 @@
             <!-- Wishlist Modal -->
             <div id="wishlist-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="wishlist-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-2xl mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-2xl font-bold font-heading text-primary">Ma Wishlist</h2><button id="wishlist-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="wishlist-content" class="flex-grow p-6 overflow-y-auto"><div id="empty-wishlist-message" class="text-center text-secondary py-12"><i class="fas fa-heart-crack text-5xl mb-4"></i><p>Votre wishlist est vide.</p></div></div></div></div>
             <!-- Quick View Modal -->
-            <div id="quick-view-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="quick-view-modal-box" class="bg-primary p-6 rounded-lg shadow-xl w-full max-w-4xl mx-4 transform scale-95 opacity-0"><button id="quick-view-modal-close" class="absolute top-4 right-4 text-2xl text-secondary">&times;</button><div id="quick-view-content" class="grid md:grid-cols-2 gap-8 items-center"></div></div></div>
+            <div id="quick-view-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="quick-view-modal-box" class="bg-primary rounded-lg shadow-xl w-full max-w-6xl mx-4 transform scale-95 opacity-0 max-h-[90vh] flex flex-col"><button id="quick-view-modal-close" class="absolute top-4 right-4 text-2xl text-secondary z-10">&times;</button><div id="quick-view-content" class="overflow-y-auto p-8"></div></div></div>
+            <!-- Live Chat Modal -->
+            <div id="live-chat-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="live-chat-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-xl font-bold font-heading text-primary flex items-center"><i class="fas fa-headset mr-2" style="color: var(--accent-color);"></i>Live Support</h2><button id="live-chat-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="live-chat-history" class="flex-grow p-4 overflow-y-auto space-y-4"></div><div id="live-chat-input" class="p-4 border-t border-color"><div id="live-chat-options" class="flex flex-wrap gap-2 justify-center"></div></div></div></div>
         `;
         
         const modals = {};
@@ -997,7 +1045,7 @@
             modals[modalId] = { open, close };
         };
 
-        ['quick-view-modal', 'newsletter-modal', 'ai-stylist-modal', 'style-quiz-modal', 'wishlist-modal', 'checkout-modal'].forEach(id => initModal(id));
+        ['quick-view-modal', 'newsletter-modal', 'ai-stylist-modal', 'style-quiz-modal', 'wishlist-modal', 'checkout-modal', 'live-chat-modal'].forEach(id => initModal(id));
         document.querySelectorAll('[id^=newsletter-cta]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); modals['newsletter-modal'].open(); if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden'); }));
         document.getElementById('ai-stylist-cta').addEventListener('click', () => { modals['ai-stylist-modal'].open(); window.ai_stylist_modal_on_open(); });
         document.getElementById('style-quiz-cta').addEventListener('click', () => { modals['style-quiz-modal'].open(); window.style_quiz_modal_on_open(); });
@@ -1095,21 +1143,71 @@
                 updateCart();
             }
             if(e.target.closest('.quick-view-btn')) {
+                // Close any existing quick view before opening a new one
+                if (!modals['quick-view-modal'].classList?.contains('opacity-0')) {
+                    modals['quick-view-modal'].close();
+                }
+
                 const productEl = e.target.closest('.product-item');
                 const productId = productEl.dataset.id;
                 const product = allProducts.find(p => p.id === productId);
                 
-                // Add to recently viewed
                 addToRecentlyViewed(productId);
 
                 const content = document.getElementById('quick-view-content');
                 const sizeOptions = { P001: ['S','M','L','XL'], P002: ['S','M','L'], P003: ['S','M','L','XL'], P004: ['Unique'], P005: ['S','M','L'], P006: ['S','M','L','XL'] };
                 const priceHTML = product.salePrice
-                    ? `<span class="text-2xl font-semibold my-4" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span> <span class="original-price text-lg">${product.price.toLocaleString('fr-FR')} DZD</span>`
-                    : `<span class="text-2xl font-semibold my-4" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+                    ? `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span> <span class="original-price text-lg">${product.price.toLocaleString('fr-FR')} DZD</span>`
+                    : `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+                
+                const reviewsHTML = product.reviews.length > 0
+                    ? product.reviews.map(r => `<div class="border-t border-color py-4"><div class="flex items-center mb-1">${generateStars(r.rating)}<p class="font-bold text-primary ml-3">${r.author}</p></div><p class="text-secondary italic">"${r.text}"</p></div>`).join('')
+                    : '<p class="text-secondary py-4">Aucun avis pour ce produit.</p>';
+
+                const recommendations = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+                const recommendationsHTML = recommendations.map(p => `
+                    <div class="product-item bg-secondary rounded-lg shadow-custom overflow-hidden" data-id="${p.id}">
+                         <div class="relative overflow-hidden">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+                             <div class="product-hover-overlay !opacity-100 !transform-none !bg-transparent p-2 flex justify-end">
+                                <button class="quick-view-btn w-auto bg-white/80 text-primary px-3 py-1 rounded-full text-xs font-semibold">Voir</button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="font-bold text-sm text-primary truncate">${p.name}</p>
+                            <div class="text-xs mt-1">${generateStars(p.rating)}</div>
+                        </div>
+                    </div>`).join('');
+
                 content.innerHTML = `
-                    <div id="d-viewer-container" class="bg-secondary rounded-lg"></div>
-                    <div data-id="${product.id}" class="flex flex-col"><h2 class="product-name text-3xl font-bold font-heading text-primary">${product.name}</h2><div class="product-price flex items-baseline">${priceHTML}</div><p class="text-secondary mb-4">Faites glisser pour faire pivoter le produit. Ceci est une démo 3D.</p><div class="mt-auto"><label class="font-semibold text-primary">Taille:</label><select class="product-size form-input w-full p-2 mt-2 border rounded-md bg-secondary">${sizeOptions[product.id].map(s => `<option>${s}</option>`).join('')}</select><button class="add-to-cart-btn w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Ajouter au Panier</button></div></div>`;
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                           <div id="d-viewer-container" class="bg-secondary rounded-lg mb-4"></div>
+                           <p class="text-secondary text-sm text-center">Faites glisser pour faire pivoter le produit.</p>
+                        </div>
+                        <div data-id="${product.id}" class="flex flex-col">
+                            <h2 class="product-name text-3xl font-bold font-heading text-primary">${product.name}</h2>
+                            <div class="flex items-center space-x-2 my-2">
+                                ${generateStars(product.rating)}
+                                <span class="text-sm text-secondary">(${product.reviews.length} avis)</span>
+                            </div>
+                            <div class="product-price flex items-baseline">${priceHTML}</div>
+                            <div class="mt-6">
+                                <label class="font-semibold text-primary">Taille:</label>
+                                <select class="product-size form-input w-full p-2 mt-2 border rounded-md bg-secondary">${sizeOptions[product.id].map(s => `<option>${s}</option>`).join('')}</select>
+                            </div>
+                            <button class="add-to-cart-btn w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Ajouter au Panier</button>
+                        </div>
+                    </div>
+                    <div class="mt-10">
+                        <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Avis des Clients</h3>
+                        <div class="max-h-60 overflow-y-auto pr-4">${reviewsHTML}</div>
+                    </div>
+                     <div class="mt-10">
+                        <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Vous pourriez aussi aimer</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">${recommendationsHTML}</div>
+                    </div>
+                `;
                 
                 const viewerContainer = document.getElementById('d-viewer-container');
                 init3DViewer(viewerContainer, product);
@@ -1213,24 +1311,26 @@
         const aiChatOptions = document.getElementById('ai-chat-options');
         let userChoices = {};
 
-        const addMessage = (sender, content, isHtml = false) => {
-            if (!aiChatHistory) return;
+        const addAgentMessage = (container, content, isHtml = false) => {
+            if (!container) return;
             const messageEl = document.createElement('div');
-            messageEl.className = 'flex flex-col';
-            let innerContent = '';
-            if (sender === 'ai') {
-                innerContent = `<div class="ai-bubble self-start">${isHtml ? content : content}</div>`;
-            } else {
-                innerContent = `<div class="user-bubble self-end">${content}</div>`;
-            }
-            messageEl.innerHTML = innerContent;
-            aiChatHistory.appendChild(messageEl);
-            aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+            messageEl.className = 'flex flex-col items-start';
+            messageEl.innerHTML = `<div class="agent-bubble">${isHtml ? content : content}</div>`;
+            container.appendChild(messageEl);
+            container.scrollTop = container.scrollHeight;
+        };
+        const addUserMessage = (container, content) => {
+            if (!container) return;
+            const messageEl = document.createElement('div');
+            messageEl.className = 'flex flex-col items-end';
+            messageEl.innerHTML = `<div class="user-bubble">${content}</div>`;
+            container.appendChild(messageEl);
+            container.scrollTop = container.scrollHeight;
         };
 
-        const showOptions = (options) => {
-            if (!aiChatOptions) return;
-            aiChatOptions.innerHTML = '';
+        const showOptions = (container, options) => {
+            if (!container) return;
+            container.innerHTML = '';
             const optionsWrapper = document.createElement('div');
             optionsWrapper.className = 'flex flex-wrap gap-2 justify-center';
             options.forEach(opt => {
@@ -1240,16 +1340,16 @@
                 button.onclick = () => opt.handler(opt.value);
                 optionsWrapper.appendChild(button);
             });
-            aiChatOptions.appendChild(optionsWrapper);
+            container.appendChild(optionsWrapper);
         };
 
         const handleOccasionChoice = (occasion) => {
-            addMessage('user', occasion);
+            addUserMessage(aiChatHistory, occasion);
             userChoices.occasion = occasion;
             aiChatOptions.innerHTML = '';
             setTimeout(() => {
-                addMessage('ai', 'Excellent choix ! Et quel est votre style préféré ?');
-                showOptions([
+                addAgentMessage(aiChatHistory, 'Excellent choix ! Et quel est votre style préféré ?');
+                showOptions(aiChatOptions, [
                     { text: 'Décontracté', value: 'casual', handler: handleStyleChoice },
                     { text: 'Élégant', value: 'elegant', handler: handleStyleChoice },
                 ]);
@@ -1257,11 +1357,11 @@
         };
         
         const handleStyleChoice = (style) => {
-            addMessage('user', style);
+            addUserMessage(aiChatHistory, style);
             userChoices.style = style;
             aiChatOptions.innerHTML = '';
             setTimeout(() => {
-                addMessage('ai', 'Parfait. Je cherche les articles qui vous correspondent...');
+                addAgentMessage(aiChatHistory, 'Parfait. Je cherche les articles qui vous correspondent...');
                 aiChatOptions.innerHTML = '<p class="text-center text-secondary">Analyse en cours...</p>';
                 setTimeout(showRecommendations, 1500);
             }, 500);
@@ -1269,7 +1369,7 @@
         
         const showRecommendations = () => {
             aiChatOptions.innerHTML = '';
-            addMessage('ai', 'Voici ma sélection personnalisée pour vous :');
+            addAgentMessage(aiChatHistory, 'Voici ma sélection personnalisée pour vous :');
             
             const recommendations = allProducts.filter(p => p.style === userChoices.style).slice(0, 2);
             
@@ -1288,14 +1388,14 @@
                             </button>
                         </div>
                     `;
-                    addMessage('ai', recommendationHtml, true);
+                    addAgentMessage(aiChatHistory, recommendationHtml, true);
                 });
             } else {
-                 addMessage('ai', "Oups, je n'ai pas trouvé de correspondance exacte.");
+                 addAgentMessage(aiChatHistory, "Oups, je n'ai pas trouvé de correspondance exacte.");
             }
             setTimeout(() => {
-              addMessage('ai', "Puis-je vous aider avec autre chose ?");
-              showOptions([{ text: 'Recommencer', value: 'restart', handler: startStylist }]);
+              addAgentMessage(aiChatHistory, "Puis-je vous aider avec autre chose ?");
+              showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: startStylist }]);
             }, 1000);
         };
 
@@ -1303,8 +1403,8 @@
             userChoices = {};
             if(aiChatHistory) aiChatHistory.innerHTML = '';
             setTimeout(() => {
-                addMessage('ai', 'Bonjour ! Je suis votre styliste personnel. Pour quelle occasion cherchez-vous une tenue ?');
-                showOptions([
+                addAgentMessage(aiChatHistory, 'Bonjour ! Je suis votre styliste personnel. Pour quelle occasion cherchez-vous une tenue ?');
+                showOptions(aiChatOptions, [
                     { text: 'Quotidien', value: 'Quotidien', handler: handleOccasionChoice },
                     { text: 'Soirée', value: 'Soirée', handler: handleOccasionChoice },
                     { text: 'Travail', value: 'Travail', handler: handleOccasionChoice },
@@ -1312,6 +1412,50 @@
             }, 500);
         };
         window.ai_stylist_modal_on_open = startStylist;
+
+      // --- Live Chat Logic ---
+        const liveChatHistory = document.getElementById('live-chat-history');
+        const liveChatOptions = document.getElementById('live-chat-options');
+
+        const showLiveChatOptions = (options) => {
+            if (!liveChatOptions) return;
+            liveChatOptions.innerHTML = '';
+            options.forEach(opt => {
+                const button = document.createElement('button');
+                button.textContent = opt.text;
+                button.className = 'border border-color text-primary px-3 py-1 rounded-full text-sm hover:bg-secondary transition';
+                button.onclick = () => handleLiveChatChoice(opt.text, opt.response);
+                liveChatOptions.appendChild(button);
+            });
+        };
+
+        const handleLiveChatChoice = (choiceText, responseText) => {
+            addUserMessage(liveChatHistory, choiceText);
+            liveChatOptions.innerHTML = '<p class="text-xs text-secondary text-center">Notre agent est en train d\'écrire...</p>';
+            setTimeout(() => {
+                addAgentMessage(liveChatHistory, responseText);
+                startLiveChat(false); // Re-show initial options without welcome message
+            }, 1500);
+        };
+        
+        const startLiveChat = (isFirstTime = true) => {
+            if (isFirstTime) {
+                liveChatHistory.innerHTML = '';
+                setTimeout(() => {
+                    addAgentMessage(liveChatHistory, 'Bonjour ! Comment puis-je vous aider aujourd\'hui ?');
+                }, 500);
+            }
+            showLiveChatOptions([
+                { text: 'Suivi de commande', response: 'Pour suivre votre commande, veuillez nous fournir votre numéro de commande.' },
+                { text: 'Infos livraison', response: 'Nous livrons dans toute l\'Algérie en 2 à 5 jours. La livraison est gratuite dès 10 000 DZD d\'achat.' },
+                { text: 'Politique de retour', response: 'Vous pouvez retourner un article dans les 7 jours suivant la réception pour un échange ou un remboursement.' },
+            ]);
+        };
+
+        document.getElementById('live-chat-cta').addEventListener('click', () => {
+            modals['live-chat-modal'].open();
+            startLiveChat();
+        });
 
       // --- Recently Viewed ---
       let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
@@ -1388,25 +1532,34 @@
       setInterval(showSocialProof, 12000);
 
       // --- Shop the Look ---
-      const shopDots = [
+      const populateShopDots = (dots) => {
+        dots.forEach(dot => {
+            const product = allProducts.find(p => p.id === dot.productId);
+            if(dot.el && product) {
+              const finalPrice = product.salePrice || product.price;
+              dot.el.innerHTML = `
+                  <div data-id="${dot.productId}" class="relative">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-24 object-cover rounded-md mb-2">
+                    <p class="product-name font-bold text-sm">${product.name}</p>
+                    <p class="product-price text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
+                    <button class="add-to-cart-btn text-white text-xs px-2 py-1 rounded-full font-semibold mt-2 w-full" style="background-color: var(--accent-color);">Ajouter</button>
+                  </div>
+              `;
+            }
+        });
+      };
+      
+      const lookbookDots = [
         { el: document.querySelector('.lookbook-item:first-child .shop-dot:nth-of-type(1) .dot-popup'), productId: 'P002' },
         { el: document.querySelector('.lookbook-item:first-child .shop-dot:nth-of-type(2) .dot-popup'), productId: 'P003' }
       ];
-
-      shopDots.forEach(dot => {
-        const product = allProducts.find(p => p.id === dot.productId);
-        if(dot.el && product) {
-          const finalPrice = product.salePrice || product.price;
-          dot.el.innerHTML = `
-              <div data-id="${dot.productId}" class="relative">
-                <img src="${product.image}" alt="${product.name}" class="w-full h-24 object-cover rounded-md mb-2">
-                <p class="product-name font-bold text-sm">${product.name}</p>
-                <p class="product-price text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
-                <button class="add-to-cart-btn text-white text-xs px-2 py-1 rounded-full font-semibold mt-2 w-full" style="background-color: var(--accent-color);">Ajouter</button>
-              </div>
-          `;
-        }
-      });
+      const heroDots = [
+        { el: document.querySelector('#hero-shop-dots .shop-dot:nth-of-type(1) .dot-popup'), productId: 'P005' },
+        { el: document.querySelector('#hero-shop-dots .shop-dot:nth-of-type(2) .dot-popup'), productId: 'P004' }
+      ];
+      
+      populateShopDots(lookbookDots);
+      populateShopDots(heroDots);
 
 
       // --- Testimonial Slider ---
@@ -1450,8 +1603,8 @@
       const quizContent = document.getElementById('style-quiz-content');
       let quizAnswers = {};
       const quizData = [
-          { question: "Quelle est votre destination de rêve ?", key: "destination", answers: [ { text: "Paris", image: "https://images.unsplash.com/photo-1502602898657-3e91760c0341?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Bali", image: "https://images.unsplash.com/photo-1573790387438-4da905039392?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
-          { question: "Choisissez une palette de couleurs :", key: "palette", answers: [ { text: "Nude & Neutres", image: "https://images.unsplash.com/photo-1554188248-986adbb73371?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Vives & Colorées", image: "https://images.unsplash.com/photo-1528372444533-70f41109b377?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
+          { question: "Quelle est votre destination de rêve ?", key: "destination", answers: [ { text: "Paris", image: "https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Bali", image: "https://images.unsplash.com/photo-1587542980590-a78ddb531733?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
+          { question: "Choisissez une palette de couleurs :", key: "palette", answers: [ { text: "Nude & Neutres", image: "https://images.unsplash.com/photo-1543353384-850682a57da8?auto=format&fit=crop&q=60&w=500", value: "elegant" }, { text: "Vives & Colorées", image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&q=60&w=500", value: "casual" } ] },
       ];
       
       const showQuizQuestion = (index) => {
@@ -1502,4 +1655,5 @@
   </script>
 </body>
 </html>
+
 
