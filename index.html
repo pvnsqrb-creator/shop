@@ -25,10 +25,10 @@
   <!-- Three.js for 3D Viewer -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <!-- Google Fonts: Poppins & Oswald -->
+  <!-- Google Fonts: Poppins, Oswald, Tajawal (for Arabic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Oswald:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
   
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -63,7 +63,41 @@
     .font-heading {
       font-family: 'Oswald', sans-serif;
     }
+
+    /* Arabic Font Styling */
+    html[lang="ar"] body {
+        font-family: 'Tajawal', sans-serif;
+    }
+    html[lang="ar"] .font-heading {
+        font-family: 'Tajawal', sans-serif;
+        font-weight: 700;
+    }
     
+    /* RTL adjustments */
+    html[dir="rtl"] .original-price {
+        margin-left: 0;
+        margin-right: 0.5rem;
+    }
+    html[dir="rtl"] .search-results-container {
+        left: auto;
+        right: 0;
+    }
+     html[dir="rtl"] .fa-search {
+        right: auto;
+        left: 1rem;
+    }
+     html[dir="rtl"] .fa-chevron-down {
+        right: auto;
+        left: 1rem;
+    }
+    html[dir="rtl"] .agent-bubble {
+        border-radius: 1rem 1rem 0 1rem;
+    }
+    html[dir="rtl"] .user-bubble {
+        border-radius: 1rem 1rem 1rem 0;
+    }
+
+
     /* Reusable component styles */
     .bg-primary { background-color: var(--bg-primary); }
     .bg-secondary { background-color: var(--bg-secondary); }
@@ -148,9 +182,10 @@
     }
     
     /* Product filter & card */
-    .product-filter-btn.active {
+    .product-filter-btn.active, .size-filter-btn.active {
       background-color: var(--accent-color);
       color: white;
+      border-color: var(--accent-color);
     }
     .product-item {
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, opacity 0.3s ease-in-out;
@@ -172,10 +207,14 @@
     }
 
     /* Modal styles */
-     #newsletter-modal-overlay, #checkout-modal-overlay, #ai-stylist-modal-overlay, #style-quiz-modal-overlay, #wishlist-modal-overlay, #quick-view-modal-overlay, #live-chat-modal-overlay {
+     #newsletter-modal-overlay, #checkout-modal-overlay, #ai-stylist-modal-overlay, 
+     #style-quiz-modal-overlay, #wishlist-modal-overlay, #quick-view-modal-overlay, 
+     #live-chat-modal-overlay, #size-guide-modal-overlay, #notify-me-modal-overlay {
         transition: opacity 0.3s ease-in-out;
     }
-    #newsletter-modal-box, #checkout-modal-box, #ai-stylist-modal-box, #style-quiz-modal-box, #wishlist-modal-box, #quick-view-modal-box, #live-chat-modal-box {
+    #newsletter-modal-box, #checkout-modal-box, #ai-stylist-modal-box, 
+    #style-quiz-modal-box, #wishlist-modal-box, #quick-view-modal-box, 
+    #live-chat-modal-box, #size-guide-modal-box, #notify-me-modal-box {
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 
@@ -192,19 +231,17 @@
         color: white;
         z-index: 10;
     }
-    /* Sale Price Style */
-    .original-price {
-        text-decoration: line-through;
-        color: var(--text-secondary);
-        margin-left: 0.5rem;
+    html[dir="rtl"] .product-badge {
+        left: auto;
+        right: 1rem;
     }
+
     /* Out of Stock Style */
-    .add-to-cart-btn:disabled {
+    .add-to-cart-btn:disabled, .notify-me-btn {
         background-color: #a0aec0; /* gray-400 */
-        cursor: not-allowed;
-        transform: none;
+        cursor: pointer;
     }
-    html[data-theme='dark'] .add-to-cart-btn:disabled {
+    html[data-theme='dark'] .add-to-cart-btn:disabled, html[data-theme='dark'] .notify-me-btn {
         background-color: #4a5568; /* gray-600 */
     }
 
@@ -293,6 +330,10 @@
         transition: all 0.2s ease;
         z-index: 10;
     }
+     html[dir="rtl"] .wishlist-btn {
+        right: auto;
+        left: 1rem;
+    }
     .wishlist-btn:hover {
         background-color: white;
         transform: scale(1.1);
@@ -300,48 +341,6 @@
     .wishlist-btn.active i {
         color: #ef4444; /* red-500 */
         font-weight: 900;
-    }
-    
-    /* Product Image Tilt Effect */
-    .product-image-tilt {
-      perspective: 1000px;
-      transform-style: preserve-3d;
-    }
-    .product-image-tilt img {
-      transition: transform 0.5s ease-out;
-    }
-
-    /* AI Style Match */
-    #ai-style-match-loader > div {
-        animation: scanner 2s linear infinite;
-    }
-    @keyframes scanner {
-        0% { top: 0; }
-        50% { top: 100%; }
-        100% { top: 0; }
-    }
-
-    /* Style Quiz */
-    .quiz-answer-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .quiz-answer-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-custom-lg);
-    }
-     /* Agent & User Chat Bubbles */
-    .agent-bubble {
-        background-color: var(--bg-secondary);
-        padding: 0.75rem 1rem;
-        border-radius: 1rem 1rem 1rem 0;
-        max-width: 80%;
-    }
-    .user-bubble {
-        background-color: var(--accent-color);
-        color: white;
-        padding: 0.75rem 1rem;
-        border-radius: 1rem 1rem 0 1rem;
-        max-width: 80%;
     }
 
     /* Star Rating */
@@ -359,6 +358,106 @@
         color: #4b5563; /* gray-600 */
     }
 
+    /* Blog Card */
+    .blog-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .blog-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-custom-xl);
+    }
+    .blog-card:hover .blog-card-image img {
+        transform: scale(1.05);
+    }
+    .blog-card-image img {
+        transition: transform 0.3s ease;
+    }
+
+    /* Search Autocomplete */
+    .search-results-container {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        box-shadow: var(--shadow-custom-lg);
+        z-index: 100;
+    }
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    }
+    .search-result-item:hover {
+        background-color: var(--bg-secondary);
+    }
+    .search-result-item + .search-result-item {
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Quick Add Button */
+    .quick-add-btn {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: var(--accent-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        z-index: 10;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+     html[dir="rtl"] .quick-add-btn {
+        right: auto;
+        left: 1rem;
+    }
+    .product-item:hover .quick-add-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .quick-add-btn:hover {
+        background-color: white;
+        transform: scale(1.1);
+    }
+
+    /* Price Range Slider */
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+    }
+    input[type=range]:focus {
+        outline: none;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        cursor: pointer;
+        background: var(--border-color);
+        border-radius: 5px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        cursor: pointer;
+        margin-top: -6px;
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -374,16 +473,17 @@
       <ul class="hidden md:flex items-center space-x-6">
         <li class="relative">
             <div class="relative">
-                <input type="search" id="search-bar" placeholder="e.g. robes elegant under 10000" class="form-input w-48 p-2 border border-color rounded-full bg-secondary text-primary transition-all duration-300 focus:w-72">
+                <input type="search" id="search-bar" data-translate-placeholder="search_placeholder" placeholder="e.g. robes elegant under 10000" class="form-input w-48 p-2 border border-color rounded-full bg-secondary text-primary transition-all duration-300 focus:w-72" autocomplete="off">
                 <i class="fas fa-search absolute top-1/2 right-4 transform -translate-y-1/2 text-secondary"></i>
+                <div id="search-results-desktop" class="search-results-container hidden"></div>
             </div>
             <p id="ai-search-feedback" class="absolute top-full left-0 text-xs text-secondary mt-1 h-4"></p>
         </li>
-        <li><a href="#about" class="nav-link text-secondary hover:text-violet-500 font-semibold">À Propos</a></li>
-        <li><a href="#collections" class="nav-link text-secondary hover:text-violet-500 font-semibold">Collections</a></li>
-        <li><a href="#offers" class="nav-link text-secondary hover:text-violet-500 font-semibold">Offres</a></li>
-        <li><a href="#gallery" class="nav-link text-secondary hover:text-violet-500 font-semibold">Lookbook</a></li>
-        <li><a href="#contact" class="nav-link text-secondary hover:text-violet-500 font-semibold">Contact</a></li>
+        <li><a href="#about" class="nav-link text-secondary hover:text-violet-500 font-semibold" data-translate-key="nav_about">À Propos</a></li>
+        <li><a href="#collections" class="nav-link text-secondary hover:text-violet-500 font-semibold" data-translate-key="nav_collections">Collections</a></li>
+        <li><a href="#blog" class="nav-link text-secondary hover:text-violet-500 font-semibold" data-translate-key="nav_journal">Journal</a></li>
+        <li><a href="#gallery" class="nav-link text-secondary hover:text-violet-500 font-semibold" data-translate-key="nav_lookbook">Lookbook</a></li>
+        <li><a href="#contact" class="nav-link text-secondary hover:text-violet-500 font-semibold" data-translate-key="nav_contact">Contact</a></li>
         <li>
           <button id="wishlist-toggle" class="relative text-secondary hover:text-violet-500">
             <i class="fas fa-heart text-xl"></i>
@@ -396,12 +496,20 @@
           </button>
         </li>
         <li>
+            <div class="relative">
+                <button id="lang-toggle" class="text-secondary hover:text-violet-500 font-semibold flex items-center"><i class="fas fa-globe mr-1"></i> <span id="current-lang">FR</span></button>
+                <div id="lang-menu" class="hidden absolute top-full right-0 mt-2 bg-primary rounded-md shadow-lg border border-color w-24">
+                    <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-secondary" data-lang="fr">Français</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-secondary" data-lang="ar">العربية</a>
+                </div>
+            </div>
+        </li>
+        <li>
           <button id="theme-toggle" class="text-secondary hover:text-violet-500">
             <i class="fas fa-moon text-xl" id="theme-toggle-dark-icon"></i>
             <i class="fas fa-sun text-xl hidden" id="theme-toggle-light-icon"></i>
           </button>
         </li>
-         <li><a href="#" id="newsletter-cta-header" class="text-white px-5 py-2 rounded-full hover:bg-violet-600 transition-transform transform hover:scale-105 shadow-custom" style="background-color: var(--accent-color);">Newsletter</a></li>
       </ul>
       
       <!-- Mobile Menu Button -->
@@ -425,16 +533,23 @@
     
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-primary shadow-custom-lg">
-      <div class="p-4">
-        <input type="search" id="search-bar-mobile" placeholder="Rechercher..." class="form-input w-full p-2 border border-color rounded-full bg-secondary text-primary">
+      <div class="p-4 relative">
+        <input type="search" id="search-bar-mobile" data-translate-placeholder="search_placeholder_mobile" placeholder="Rechercher..." class="form-input w-full p-2 border border-color rounded-full bg-secondary text-primary" autocomplete="off">
+        <div id="search-results-mobile" class="search-results-container hidden w-full"></div>
       </div>
-      <a href="#about" class="block py-3 px-6 text-secondary hover:bg-secondary">À Propos</a>
-      <a href="#collections" class="block py-3 px-6 text-secondary hover:bg-secondary">Collections</a>
-      <a href="#offers" class="block py-3 px-6 text-secondary hover:bg-secondary">Offres</a>
-      <a href="#gallery" class="block py-3 px-6 text-secondary hover:bg-secondary">Lookbook</a>
-      <a href="#contact" class="block py-3 px-6 text-secondary hover:bg-secondary">Contact</a>
-       <div class="p-4">
-        <a href="#" id="newsletter-cta-mobile" class="block text-center w-full text-white px-5 py-2 rounded-full" style="background-color: var(--accent-color);">Newsletter</a>
+      <a href="#about" class="block py-3 px-6 text-secondary hover:bg-secondary" data-translate-key="nav_about">À Propos</a>
+      <a href="#collections" class="block py-3 px-6 text-secondary hover:bg-secondary" data-translate-key="nav_collections">Collections</a>
+      <a href="#blog" class="block py-3 px-6 text-secondary hover:bg-secondary" data-translate-key="nav_journal">Journal</a>
+      <a href="#gallery" class="block py-3 px-6 text-secondary hover:bg-secondary" data-translate-key="nav_lookbook">Lookbook</a>
+      <a href="#contact" class="block py-3 px-6 text-secondary hover:bg-secondary" data-translate-key="nav_contact">Contact</a>
+       <div class="p-4 border-t border-color flex justify-center">
+            <div class="relative">
+                <button id="lang-toggle-mobile" class="text-secondary hover:text-violet-500 font-semibold flex items-center"><i class="fas fa-globe mr-1"></i> <span id="current-lang-mobile">FR</span></button>
+                 <div id="lang-menu-mobile" class="hidden absolute bottom-full mb-2 bg-primary rounded-md shadow-lg border border-color w-24">
+                    <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-secondary" data-lang="fr">Français</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-secondary" data-lang="ar">العربية</a>
+                </div>
+            </div>
       </div>
     </div>
   </header>
@@ -443,12 +558,12 @@
     <!-- Hero Section -->
     <section id="home" class="h-screen min-h-[700px] flex items-center justify-center text-white bg-cover bg-center parallax" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2070')">
       <div class="text-center p-6 fade-in-up z-10">
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg font-heading uppercase">DÉFINISSEZ VOTRE STYLE</h1>
-        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md">L'élégance à portée de main. Découvrez les collections qui vous ressemblent.</p>
-        <a href="#collections" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);">Nos Nouveautés</a>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg font-heading uppercase" data-translate-key="hero_title">DÉFINISSEZ VOTRE STYLE</h1>
+        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md" data-translate-key="hero_subtitle">L'élégance à portée de main. Découvrez les collections qui vous ressemblent.</p>
+        <a href="#collections" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);" data-translate-key="hero_cta">Nos Nouveautés</a>
       </div>
       <!-- Shop the Look Dots -->
-      <div id="hero-shop-dots">
+      <div id="hero-shop-dots" class="hidden md:block">
           <div class="shop-dot" style="top: 40%; left: 35%;">
               <div class="dot-popup" style="left: 30px; top: -50%;"></div>
           </div>
@@ -466,11 +581,11 @@
             <img loading="lazy" src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&q=80&w=2070" alt="Intérieur de la boutique Style Avenue" class="rounded-lg shadow-custom-xl w-full h-auto object-cover">
           </div>
           <div class="fade-in-up" style="transition-delay: 150ms;">
-            <h2 class="text-4xl font-bold font-heading mb-4 text-primary">BIENVENUE CHEZ STYLE AVENUE</h2>
-            <p class="text-secondary mb-4 text-lg">
+            <h2 class="text-4xl font-bold font-heading mb-4 text-primary" data-translate-key="about_title">BIENVENUE CHEZ STYLE AVENUE</h2>
+            <p class="text-secondary mb-4 text-lg" data-translate-key="about_p1">
               Style Avenue est plus qu'une boutique, c'est une célébration de l'individualité. Née à Constantine, notre mission est de proposer des pièces uniques et de haute qualité qui permettent à chacun d'exprimer sa personnalité.
             </p>
-            <p class="text-secondary mb-6 text-lg">
+            <p class="text-secondary mb-6 text-lg" data-translate-key="about_p2">
              Nous sélectionnons avec soin chaque article pour son design, sa coupe et ses matières durables. Notre équipe de passionnés est là pour vous offrir des conseils personnalisés et une expérience shopping inoubliable.
             </p>
           </div>
@@ -478,67 +593,65 @@
       </div>
     </section>
     
-    <!-- AI Style Match Section -->
-    <section id="ai-style-match" class="py-20 bg-secondary">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 fade-in-up">
-                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">AI STYLE MATCH</h2>
-                <p class="text-secondary max-w-2xl mx-auto">Téléchargez une photo de votre style et laissez notre IA vous proposer des articles faits pour vous.</p>
-            </div>
-            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-                <div class="text-center fade-in-up">
-                    <div id="ai-image-preview-container" class="w-full h-96 bg-primary rounded-lg shadow-custom flex items-center justify-center border-2 border-dashed border-color relative overflow-hidden cursor-pointer">
-                        <div id="ai-style-match-loader" class="hidden absolute inset-0 bg-black/50">
-                            <div class="absolute h-1 w-full bg-violet-400 shadow-[0_0_10px_theme(colors.violet.400)]"></div>
-                        </div>
-                        <img id="ai-image-preview" src="" alt="Aperçu du style" class="hidden max-w-full max-h-full object-contain">
-                        <div id="ai-upload-prompt" class="text-center text-secondary">
-                            <i class="fas fa-camera text-5xl mb-4"></i>
-                            <p>Cliquez ici pour téléverser une image</p>
-                        </div>
-                    </div>
-                    <input type="file" id="ai-image-upload" class="hidden" accept="image/*">
-                    <p id="ai-status-text" class="mt-4 font-semibold text-primary h-6"></p>
-                </div>
-                <div id="ai-results-container" class="fade-in-up hidden" style="transition-delay: 200ms;">
-                    <h3 class="text-2xl font-bold font-heading mb-4 text-primary">Votre match est prêt !</h3>
-                    <div id="ai-results-grid" class="space-y-4">
-                        <!-- AI Results will be injected here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Featured Products Section -->
-    <section id="collections" class="py-20 bg-primary">
+    <section id="collections" class="py-20 bg-secondary">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12 fade-in-up">
-                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">NOS NOUVEAUTÉS</h2>
-                <p class="text-secondary max-w-2xl mx-auto">Découvrez une sélection de nos pièces les plus récentes.</p>
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary" data-translate-key="collections_title">NOS NOUVEAUTÉS</h2>
+                <p class="text-secondary max-w-2xl mx-auto" data-translate-key="collections_subtitle">Découvrez une sélection de nos pièces les plus récentes.</p>
             </div>
 
             <!-- Filters and Sorting Controls -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-12 fade-in-up">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 fade-in-up">
                 <div id="product-filters" class="flex justify-center flex-wrap gap-2 md:space-x-4 mb-4 md:mb-0">
-                    <button class="product-filter-btn active px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="all">Tous</button>
-                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="dresses">Robes</button>
-                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="tops">Hauts</button>
-                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="pants">Pantalons</button>
-                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-secondary text-primary" data-filter="accessories">Accessoires</button>
+                    <button class="product-filter-btn active px-4 py-2 font-semibold rounded-full transition bg-primary text-primary" data-filter="all" data-translate-key="filter_all">Tous</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-primary text-primary" data-filter="dresses" data-translate-key="filter_dresses">Robes</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-primary text-primary" data-filter="tops" data-translate-key="filter_tops">Hauts</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-primary text-primary" data-filter="pants" data-translate-key="filter_pants">Pantalons</button>
+                    <button class="product-filter-btn px-4 py-2 font-semibold rounded-full transition bg-primary text-primary" data-filter="accessories" data-translate-key="filter_accessories">Accessoires</button>
                 </div>
                 <div class="relative">
-                    <select id="product-sort" class="form-input appearance-none w-48 p-2 pr-8 border border-color rounded-full bg-secondary text-primary">
-                        <option value="default">Trier par</option>
-                        <option value="price-asc">Prix: Croissant</option>
-                        <option value="price-desc">Prix: Décroissant</option>
-                        <option value="name-asc">Nom: A-Z</option>
+                    <select id="product-sort" class="form-input appearance-none w-48 p-2 pr-8 border border-color rounded-full bg-primary text-primary">
+                        <option value="default" data-translate-key="sort_default">Trier par</option>
+                        <option value="price-asc" data-translate-key="sort_price_asc">Prix: Croissant</option>
+                        <option value="price-desc" data-translate-key="sort_price_desc">Prix: Décroissant</option>
+                        <option value="name-asc" data-translate-key="sort_name_asc">Nom: A-Z</option>
                     </select>
                     <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary pointer-events-none"></i>
                 </div>
             </div>
 
-            <div id="product-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 fade-in-up">
+            <!-- Advanced Filters -->
+             <div class="mb-12 p-6 bg-primary rounded-lg shadow-custom fade-in-up">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="price-range" class="block text-sm font-semibold text-primary mb-2">Gamme de prix</label>
+                        <input type="range" id="price-range" min="3000" max="20000" step="100" value="20000" class="w-full">
+                        <div class="flex justify-between text-xs text-secondary mt-1">
+                            <span>3000 DZD</span>
+                            <span id="price-range-value">20000 DZD</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Taille</label>
+                        <div id="size-filters" class="flex flex-wrap gap-2">
+                            <button class="size-filter-btn px-3 py-1 border border-color rounded-full text-sm" data-size="S">S</button>
+                            <button class="size-filter-btn px-3 py-1 border border-color rounded-full text-sm" data-size="M">M</button>
+                            <button class="size-filter-btn px-3 py-1 border border-color rounded-full text-sm" data-size="L">L</button>
+                            <button class="size-filter-btn px-3 py-1 border border-color rounded-full text-sm" data-size="XL">XL</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-primary mb-2">Disponibilité</label>
+                         <div class="flex items-center">
+                            <input type="checkbox" id="in-stock-filter" class="h-4 w-4 rounded" style="color: var(--accent-color)">
+                            <label for="in-stock-filter" class="ml-2 text-sm text-secondary">En stock uniquement</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-in-up">
                 <!-- Products will be dynamically injected here by JavaScript -->
             </div>
         </div>
@@ -547,46 +660,72 @@
     <!-- Style Quiz CTA Section -->
     <section id="style-quiz-cta-section" class="py-20 parallax text-white" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1552664199-fd31f7431a55?auto=format&fit=crop&q=80&w=2070');">
         <div class="container mx-auto px-6 text-center fade-in-up">
-            <h2 class="text-4xl font-bold font-heading mb-4">PAS SÛR DE VOTRE STYLE ?</h2>
-            <p class="text-gray-300 max-w-2xl mx-auto mb-8">Répondez à notre quiz rapide et découvrez la collection parfaite pour vous.</p>
-            <button id="style-quiz-cta" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color);">Commencez le Quiz</button>
+            <h2 class="text-4xl font-bold font-heading mb-4" data-translate-key="quiz_title">PAS SÛR DE VOTRE STYLE ?</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-8" data-translate-key="quiz_subtitle">Répondez à notre quiz rapide et découvrez la collection parfaite pour vous.</p>
+            <button id="style-quiz-cta" class="text-white px-8 py-3 rounded-full transition-all transform hover:scale-105 text-lg font-bold shadow-xl uppercase" style="background-color: var(--accent-color);" data-translate-key="quiz_cta">Commencez le Quiz</button>
         </div>
     </section>
     
-    <!-- Offers Section -->
-    <section id="offers" class="py-20 bg-primary">
-      <div class="container mx-auto px-6">
-        <div class="text-center mb-16 fade-in-up">
-          <h2 class="text-4xl font-bold font-heading mb-4 text-primary">OFFRES SPÉCIALES</h2>
-          <p class="text-secondary max-w-2xl mx-auto">Profitez de nos promotions exclusives pour enrichir votre garde-robe.</p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <!-- Flash Sale Offer -->
-          <div class="md:col-span-2 bg-secondary p-8 rounded-lg shadow-custom-xl text-center flex flex-col md:flex-row items-center gap-8 fade-in-up border-4 border-dashed" style="border-color: var(--accent-color);">
-              <div class="text-center md:text-left flex-grow">
-                <h3 class="text-3xl font-bold font-heading mb-2 text-red-500">VENTE FLASH</h3>
-                <p class="text-5xl font-bold mb-4 text-primary">-30%</p>
-                <p class="font-semibold text-secondary mb-2">Sur une sélection de Robes de Soirée!</p>
-                <p class="text-secondary">L'offre se termine dans :</p>
-                <div id="countdown-timer" class="flex justify-center md:justify-start space-x-4 mt-4 text-primary">
-                    <div><span id="days" class="text-3xl font-bold">0</span><p>Jours</p></div>
-                    <div><span id="hours" class="text-3xl font-bold">0</span><p>Heures</p></div>
-                    <div><span id="minutes" class="text-3xl font-bold">0</span><p>Min</p></div>
-                    <div><span id="seconds" class="text-3xl font-bold">0</span><p>Sec</p></div>
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-primary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary" data-translate-key="blog_title">LE JOURNAL</h2>
+                <p class="text-secondary max-w-2xl mx-auto" data-translate-key="blog_subtitle">Conseils de style, tendances et inspirations de notre équipe.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 fade-in-up">
+                <!-- Blog Post 1 -->
+                <div class="blog-card bg-secondary rounded-lg shadow-custom-lg overflow-hidden">
+                    <a href="#" class="block">
+                        <div class="blog-card-image overflow-hidden h-64">
+                            <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=800" alt="Man in stylish autumn wear" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-secondary mb-2" data-translate-key="blog1_meta">1 Octobre 2025 · Tendances</p>
+                            <h3 class="text-xl font-bold font-heading text-primary mb-3" data-translate-key="blog1_title">Les 5 Tendances Incontournables de l'Automne à Alger</h3>
+                            <p class="text-secondary mb-4" data-translate-key="blog1_excerpt">Découvrez comment adopter les couleurs et les matières phares de la saison...</p>
+                            <span class="font-semibold" style="color: var(--accent-color);" data-translate-key="read_more">Lire la suite &rarr;</span>
+                        </div>
+                    </a>
                 </div>
-              </div>
-               <a href="#collections" class="w-full md:w-auto mt-6 md:mt-0 flex-shrink-0 text-white p-4 rounded-full font-bold text-lg transition transform hover:scale-105" style="background-color: var(--accent-color);">Découvrir</a>
-          </div>
+                <!-- Blog Post 2 -->
+                <div class="blog-card bg-secondary rounded-lg shadow-custom-lg overflow-hidden">
+                     <a href="#" class="block">
+                        <div class="blog-card-image overflow-hidden h-64">
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=800" alt="Various stylish outfits" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-secondary mb-2" data-translate-key="blog2_meta">25 Septembre 2025 · Conseils</p>
+                            <h3 class="text-xl font-bold font-heading text-primary mb-3" data-translate-key="blog2_title">Comment Construire une Garde-Robe Capsule</h3>
+                            <p class="text-secondary mb-4" data-translate-key="blog2_excerpt">Nos astuces pour sélectionner des pièces polyvalentes et intemporelles...</p>
+                             <span class="font-semibold" style="color: var(--accent-color);" data-translate-key="read_more">Lire la suite &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="blog-card bg-secondary rounded-lg shadow-custom-lg overflow-hidden">
+                     <a href="#" class="block">
+                        <div class="blog-card-image overflow-hidden h-64">
+                           <img src="https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&q=80&w=800" alt="Woman posing in a beautiful dress" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-secondary mb-2" data-translate-key="blog3_meta">18 Septembre 2025 · Inspiration</p>
+                            <h3 class="text-xl font-bold font-heading text-primary mb-3" data-translate-key="blog3_title">La Robe Parfaite pour Chaque Occasion</h3>
+                            <p class="text-secondary mb-4" data-translate-key="blog3_excerpt">Du bureau au dîner, trouvez la coupe qui vous mettra en valeur...</p>
+                             <span class="font-semibold" style="color: var(--accent-color);" data-translate-key="read_more">Lire la suite &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Gallery Section -->
     <section id="gallery" class="py-20 bg-secondary">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">NOTRE LOOKBOOK</h2>
-                <p class="text-secondary max-w-2xl mx-auto">Inspirez-vous de nos tenues et créez votre propre style.</p>
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary" data-translate-key="lookbook_title">NOTRE LOOKBOOK</h2>
+                <p class="text-secondary max-w-2xl mx-auto" data-translate-key="lookbook_subtitle">Inspirez-vous de nos tenues et créez votre propre style.</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-up">
                 <div class="lookbook-item overflow-hidden rounded-lg shadow-lg">
@@ -612,10 +751,10 @@
     </section>
 
     <!-- Recently Viewed Section -->
-    <section id="recently-viewed-section" class="py-20 bg-secondary hidden">
+    <section id="recently-viewed-section" class="py-20 bg-primary hidden">
         <div class="container mx-auto px-6">
             <div class="mb-12 fade-in-up">
-                <h2 class="text-3xl font-bold font-heading mb-4 text-primary">RÉCEMMENT CONSULTÉS</h2>
+                <h2 class="text-3xl font-bold font-heading mb-4 text-primary" data-translate-key="recently_viewed_title">RÉCEMMENT CONSULTÉS</h2>
             </div>
             <div id="recently-viewed-container" class="flex gap-8 overflow-x-auto pb-4">
                 <!-- Recently viewed products will be injected here -->
@@ -626,19 +765,19 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-20 parallax" style="background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&q=80&w=2070');">
       <div class="container mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold font-heading mb-4 fade-in-up text-primary">NOS CLIENTES ADORENT</h2>
-        <p class="text-secondary mb-12 max-w-2xl mx-auto fade-in-up">Découvrez les témoignages de notre communauté.</p>
+        <h2 class="text-4xl font-bold font-heading mb-4 fade-in-up text-primary" data-translate-key="testimonials_title">NOS CLIENTES ADORENT</h2>
+        <p class="text-secondary mb-12 max-w-2xl mx-auto fade-in-up" data-translate-key="testimonials_subtitle">Découvrez les témoignages de notre communauté.</p>
         
         <div class="relative max-w-3xl mx-auto bg-primary p-8 rounded-lg shadow-custom-xl fade-in-up">
           <div id="testimonial-slider-container">
             <div class="testimonial-slide active">
               <img loading="lazy" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200&h=200" alt="Photo de Amira K." class="w-24 h-24 rounded-full mx-auto mb-6 border-4 object-cover" style="border-color: var(--accent-color);">
-              <p class="text-secondary italic text-lg mb-6">"J'ai enfin trouvé une boutique avec des pièces originales et de qualité. Ma nouvelle robe est magnifique, je n'ai que des compliments !"</p>
+              <p class="text-secondary italic text-lg mb-6" data-translate-key="testimonial1_text">"J'ai enfin trouvé une boutique avec des pièces originales et de qualité. Ma nouvelle robe est magnifique, je n'ai que des compliments !"</p>
               <p class="font-bold text-primary text-xl">- Amira K.</p>
             </div>
             <div class="testimonial-slide">
               <img loading="lazy" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200" alt="Photo de Sarah L." class="w-24 h-24 rounded-full mx-auto mb-6 border-4 object-cover" style="border-color: var(--accent-color);">
-              <p class="text-secondary italic text-lg mb-6">"Le service client est incroyable. J'ai été conseillée par téléphone et la vendeuse a été adorable et de très bon conseil. Livraison ultra rapide."</p>
+              <p class="text-secondary italic text-lg mb-6" data-translate-key="testimonial2_text">"Le service client est incroyable. J'ai été conseillée par téléphone et la vendeuse a été adorable et de très bon conseil. Livraison ultra rapide."</p>
               <p class="font-bold text-primary text-xl">- Sarah L.</p>
             </div>
           </div>
@@ -656,8 +795,8 @@
     <section id="contact" class="py-20 bg-primary">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12 fade-in-up">
-                <h2 class="text-4xl font-bold font-heading mb-4 text-primary">CONTACTEZ-NOUS</h2>
-                <p class="text-secondary max-w-xl mx-auto">Une question ? Envoyez-nous un message ou passez nous voir en boutique !</p>
+                <h2 class="text-4xl font-bold font-heading mb-4 text-primary" data-translate-key="contact_title">CONTACTEZ-NOUS</h2>
+                <p class="text-secondary max-w-xl mx-auto" data-translate-key="contact_subtitle">Une question ? Envoyez-nous un message ou passez nous voir en boutique !</p>
             </div>
 
             <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 bg-secondary p-8 rounded-lg shadow-custom-lg">
@@ -665,31 +804,31 @@
                 <div class="fade-in-up">
                   <form id="contact-form" action="#" method="POST" >
                       <div class="mb-4">
-                          <label for="name" class="block text-primary font-semibold mb-2">Nom Complet</label>
+                          <label for="name" class="block text-primary font-semibold mb-2" data-translate-key="form_name">Nom Complet</label>
                           <input type="text" id="name" name="name" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required>
                       </div>
                       <div class="mb-4">
-                          <label for="email" class="block text-primary font-semibold mb-2">Email</label>
+                          <label for="email" class="block text-primary font-semibold mb-2" data-translate-key="form_email">Email</label>
                           <input type="email" id="email" name="email" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required>
                       </div>
                       <div class="mb-6">
-                          <label for="message" class="block text-primary font-semibold mb-2">Votre Message</label>
-                          <textarea id="message" name="message" rows="5" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required placeholder="J'aimerais avoir plus d'informations sur la robe florale..."></textarea>
+                          <label for="message" class="block text-primary font-semibold mb-2" data-translate-key="form_message">Votre Message</label>
+                          <textarea id="message" name="message" rows="5" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-primary text-primary" required data-translate-placeholder="form_message_placeholder" placeholder="J'aimerais avoir plus d'informations sur la robe florale..."></textarea>
                       </div>
                       <button type="submit" class="w-full text-white p-3 rounded-full font-bold text-lg transition flex items-center justify-center space-x-2" style="background-color: var(--accent-color); hover:background-color: var(--accent-color-dark);">
-                          <span>Envoyer</span>
+                          <span data-translate-key="form_send">Envoyer</span>
                       </button>
                       <div id="form-status" class="mt-4 text-center"></div>
                   </form>
                    <div class="mt-12">
-                     <h3 class="text-2xl font-bold mb-4 text-primary">Nos Coordonnées</h3>
+                     <h3 class="text-2xl font-bold mb-4 text-primary" data-translate-key="contact_info_title">Nos Coordonnées</h3>
                       <div class="space-y-6">
                           <div class="flex items-center">
                               <div class="bg-primary p-3 rounded-full mr-4 shadow-custom-sm">
                                   <i class="fas fa-map-marker-alt text-2xl" style="color: var(--accent-color);"></i>
                               </div>
                               <div>
-                                <p class="font-bold text-primary">Adresse</p>
+                                <p class="font-bold text-primary" data-translate-key="address_label">Adresse</p>
                                 <p class="text-secondary">78 Boulevard de la Mode, Constantine, Algérie</p>
                               </div>
                           </div>
@@ -698,7 +837,7 @@
                                   <i class="fas fa-phone text-2xl" style="color: var(--accent-color);"></i>
                               </div>
                               <div>
-                                <p class="font-bold text-primary">Téléphone</p>
+                                <p class="font-bold text-primary" data-translate-key="phone_label">Téléphone</p>
                                 <p class="text-secondary">+213 555 111 222</p>
                               </div>
                           </div>
@@ -733,7 +872,7 @@
               <i class="fab fa-facebook text-2xl"></i>
             </a>
           </div>
-          <p class="text-gray-500">&copy; 2025 Style Avenue. Tous droits réservés.</p>
+          <p class="text-gray-500" data-translate-key="footer_rights">&copy; 2025 Style Avenue. Tous droits réservés.</p>
       </div>
   </footer>
   
@@ -762,7 +901,7 @@
   </div>
   
   <!-- Social Proof Notification -->
-  <div id="social-proof" class="hidden fixed bottom-5 left-24 bg-primary text-primary p-4 rounded-lg shadow-custom-lg transform translate-y-20 opacity-0 z-50"></div>
+  <div id="social-proof" class="hidden fixed bottom-24 md:bottom-5 left-5 right-5 md:left-24 md:right-auto bg-primary text-primary p-4 rounded-lg shadow-custom-lg transform translate-y-20 opacity-0 z-50 max-w-sm"></div>
 
   <!-- Gallery Lightbox -->
     <div id="lightbox" class="fixed inset-0 bg-black/80 flex items-center justify-center opacity-0 pointer-events-none z-[100]">
@@ -773,18 +912,19 @@
   <!-- All Modals and Sidebars will be injected here -->
     <div id="shopping-cart-sidebar"></div>
     <div id="modals-container"></div>
+    <input type="file" id="ai-stylist-image-upload" class="hidden" accept="image/*">
 
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       // --- Central Product Data Store ---
       const allProducts = [
-        { id: 'P001', name: "Robe d'Été Florale", category: 'dresses', style: 'elegant', price: 8500, salePrice: 7500, stock: 15, image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800', badge: { text: 'Nouveau', color: 'bg-pink-500' }, rating: 4.5, reviews: [ { author: 'Fatima Z.', rating: 5, text: 'Magnifique robe, tissu léger et parfait pour l\'été !' }, { author: 'Amine B.', rating: 4, text: 'Très jolie, mais taille un peu grand.' } ] },
-        { id: 'P002', name: "Blouse en Soie", category: 'tops', style: 'elegant', price: 6200, salePrice: null, stock: 8, image: 'https://i.postimg.cc/x163nRwm/LHHHHH.png', badge: { text: 'Top Vente', color: 'bg-yellow-500' }, rating: 5, reviews: [ { author: 'Sarah L.', rating: 5, text: 'Qualité exceptionnelle, très agréable à porter.' } ] },
-        { id: 'P003', name: "Jean Skinny Brut", category: 'pants', style: 'casual', price: 7800, salePrice: null, stock: 25, image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4, reviews: [ { author: 'Karim D.', rating: 4, text: 'Bon jean, confortable.' } ] },
-        { id: 'P004', name: "Montre Élégante Dorée", category: 'accessories', style: 'elegant', price: 12000, salePrice: null, stock: 5, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.8, reviews: [ { author: 'Nadia K.', rating: 5, text: 'Encore plus belle en vrai, je recommande !' } ] },
-        { id: 'P005', name: "Robe de Soirée Noire", category: 'dresses', style: 'elegant', price: 15500, salePrice: null, stock: 30, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.7, reviews: [] },
-        { id: 'P006', name: "T-shirt en Coton Bio", category: 'tops', style: 'casual', price: 3500, salePrice: null, stock: 0, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.2, reviews: [] },
+        { id: 'P001', name: "Robe d'Été Florale", category: 'dresses', style: 'elegant', price: 8500, salePrice: 7500, stock: 15, image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=800', badge: { text: 'Nouveau', color: 'bg-pink-500' }, rating: 4.5, reviews: [ { author: 'Fatima Z.', rating: 5, text: 'Magnifique robe, tissu léger et parfait pour l\'été !' }, { author: 'Amine B.', rating: 4, text: 'Très jolie, mais taille un peu grand.' } ], sizes: ['S', 'M', 'L'] },
+        { id: 'P002', name: "Blouse en Soie", category: 'tops', style: 'elegant', price: 6200, salePrice: null, stock: 8, image: 'https://i.postimg.cc/x163nRwm/LHHHHH.png', badge: { text: 'Top Vente', color: 'bg-yellow-500' }, rating: 5, reviews: [ { author: 'Sarah L.', rating: 5, text: 'Qualité exceptionnelle, très agréable à porter.' } ], sizes: ['S', 'M'] },
+        { id: 'P003', name: "Jean Skinny Brut", category: 'pants', style: 'casual', price: 7800, salePrice: null, stock: 25, image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4, reviews: [ { author: 'Karim D.', rating: 4, text: 'Bon jean, confortable.' } ], sizes: ['M', 'L', 'XL'] },
+        { id: 'P004', name: "Montre Élégante Dorée", category: 'accessories', style: 'elegant', price: 12000, salePrice: null, stock: 5, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.8, reviews: [ { author: 'Nadia K.', rating: 5, text: 'Encore plus belle en vrai, je recommande !' } ], sizes: ['Unique'] },
+        { id: 'P005', name: "Robe de Soirée Noire", category: 'dresses', style: 'elegant', price: 15500, salePrice: null, stock: 30, image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.7, reviews: [], sizes: ['S', 'M', 'L'] },
+        { id: 'P006', name: "T-shirt en Coton Bio", category: 'tops', style: 'casual', price: 3500, salePrice: null, stock: 0, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800', badge: null, rating: 4.2, reviews: [], sizes: ['S', 'M', 'L', 'XL'] },
       ];
 
       const header = document.getElementById("header");
@@ -792,6 +932,171 @@
       const mobileMenu = document.getElementById("mobile-menu");
       const backToTopBtn = document.getElementById('back-to-top');
       let current3DAnimationId = null; // To control the 3D animation loop
+
+      // --- Multi-Language Support ---
+      const translations = {
+        fr: {
+            nav_about: "À Propos",
+            nav_collections: "Collections",
+            nav_journal: "Journal",
+            nav_lookbook: "Lookbook",
+            nav_contact: "Contact",
+            search_placeholder: "e.g. robes elegant under 10000",
+            search_placeholder_mobile: "Rechercher...",
+            hero_title: "DÉFINISSEZ VOTRE STYLE",
+            hero_subtitle: "L'élégance à portée de main. Découvrez les collections qui vous ressemblent.",
+            hero_cta: "Nos Nouveautés",
+            about_title: "BIENVENUE CHEZ STYLE AVENUE",
+            about_p1: "Style Avenue est plus qu'une boutique, c'est une célébration de l'individualité. Née à Constantine, notre mission est de proposer des pièces uniques et de haute qualité qui permettent à chacun d'exprimer sa personnalité.",
+            about_p2: "Nous sélectionnons avec soin chaque article pour son design, sa coupe et ses matières durables. Notre équipe de passionnés est là pour vous offrir des conseils personnalisés et une expérience shopping inoubliable.",
+            collections_title: "NOS NOUVEAUTÉS",
+            collections_subtitle: "Découvrez une sélection de nos pièces les plus récentes.",
+            filter_all: "Tous",
+            filter_dresses: "Robes",
+            filter_tops: "Hauts",
+            filter_pants: "Pantalons",
+            filter_accessories: "Accessoires",
+            sort_default: "Trier par",
+            sort_price_asc: "Prix: Croissant",
+            sort_price_desc: "Prix: Décroissant",
+            sort_name_asc: "Nom: A-Z",
+            quiz_title: "PAS SÛR DE VOTRE STYLE ?",
+            quiz_subtitle: "Répondez à notre quiz rapide et découvrez la collection parfaite pour vous.",
+            quiz_cta: "Commencez le Quiz",
+            blog_title: "LE JOURNAL",
+            blog_subtitle: "Conseils de style, tendances et inspirations de notre équipe.",
+            blog1_meta: "1 Octobre 2025 · Tendances",
+            blog1_title: "Les 5 Tendances Incontournables de l'Automne à Alger",
+            blog1_excerpt: "Découvrez comment adopter les couleurs et les matières phares de la saison...",
+            blog2_meta: "25 Septembre 2025 · Conseils",
+            blog2_title: "Comment Construire une Garde-Robe Capsule",
+            blog2_excerpt: "Nos astuces pour sélectionner des pièces polyvalentes et intemporelles...",
+            blog3_meta: "18 Septembre 2025 · Inspiration",
+            blog3_title: "La Robe Parfaite pour Chaque Occasion",
+            blog3_excerpt: "Du bureau au dîner, trouvez la coupe qui vous mettra en valeur...",
+            read_more: "Lire la suite →",
+            lookbook_title: "NOTRE LOOKBOOK",
+            lookbook_subtitle: "Inspirez-vous de nos tenues et créez votre propre style.",
+            recently_viewed_title: "RÉCEMMENT CONSULTÉS",
+            testimonials_title: "NOS CLIENTES ADORENT",
+            testimonials_subtitle: "Découvrez les témoignages de notre communauté.",
+            testimonial1_text: "\"J'ai enfin trouvé une boutique avec des pièces originales et de qualité. Ma nouvelle robe est magnifique, je n'ai que des compliments !\"",
+            testimonial2_text: "\"Le service client est incroyable. J'ai été conseillée par téléphone et la vendeuse a été adorable et de très bon conseil. Livraison ultra rapide.\"",
+            contact_title: "CONTACTEZ-NOUS",
+            contact_subtitle: "Une question ? Envoyez-nous un message ou passez nous voir en boutique !",
+            form_name: "Nom Complet",
+            form_email: "Email",
+            form_message: "Votre Message",
+            form_message_placeholder: "J'aimerais avoir plus d'informations sur la robe florale...",
+            form_send: "Envoyer",
+            contact_info_title: "Nos Coordonnées",
+            address_label: "Adresse",
+            phone_label: "Téléphone",
+            footer_rights: "© 2025 Style Avenue. Tous droits réservés.",
+            // ... Add more keys as needed
+        },
+        ar: {
+            nav_about: "من نحن",
+            nav_collections: "المجموعات",
+            nav_journal: "المجلة",
+            nav_lookbook: "أحدث الإطلالات",
+            nav_contact: "اتصل بنا",
+            search_placeholder: "مثال: فساتين أنيقة أقل من 10000",
+            search_placeholder_mobile: "بحث...",
+            hero_title: "حددي أسلوبك",
+            hero_subtitle: "الأناقة في متناول يدك. اكتشفي المجموعات التي تشبهك.",
+            hero_cta: "جديدنا",
+            about_title: "مرحبًا بكم في ستايل أفنيو",
+            about_p1: "ستايل أفنيو هو أكثر من مجرد بوتيك، إنه احتفال بالفردية. وُلد في قسنطينة، ومهمتنا هي تقديم قطع فريدة وعالية الجودة تسمح للجميع بالتعبير عن شخصيتهم.",
+            about_p2: "نختار كل قطعة بعناية لتصميمها وقصتها وموادها المستدامة. فريقنا الشغوف هنا ليقدم لكم نصائح شخصية وتجربة تسوق لا تُنسى.",
+            collections_title: "جديدنا",
+            collections_subtitle: "اكتشفوا تشكيلة من أحدث قطعنا.",
+            filter_all: "الكل",
+            filter_dresses: "فساتين",
+            filter_tops: "بلوزات",
+            filter_pants: "سراويل",
+            filter_accessories: "إكسسوارات",
+            sort_default: "الترتيب حسب",
+            sort_price_asc: "السعر: من الأقل إلى الأعلى",
+            sort_price_desc: "السعر: من الأعلى إلى الأقل",
+            sort_name_asc: "الاسم: أ-ي",
+            quiz_title: "لست متأكدة من أسلوبك؟",
+            quiz_subtitle: "أجيبي على اختبارنا السريع واكتشفي المجموعة المثالية لك.",
+            quiz_cta: "ابدئي الاختبار",
+            blog_title: "المجلة",
+            blog_subtitle: "نصائح في الأناقة، أحدث الصيحات وإلهامات من فريقنا.",
+            blog1_meta: "1 أكتوبر 2025 · صيحات",
+            blog1_title: "أهم 5 صيحات لخريف الجزائر",
+            blog1_excerpt: "اكتشفي كيفية اعتماد ألوان وأقمشة الموسم...",
+            blog2_meta: "25 سبتمبر 2025 · نصائح",
+            blog2_title: "كيفية بناء خزانة ملابس أساسية",
+            blog2_excerpt: "نصائحنا لاختيار قطع متعددة الاستخدامات وعابرة للزمن...",
+            blog3_meta: "18 سبتمبر 2025 · إلهام",
+            blog3_title: "الفستان المثالي لكل مناسبة",
+            blog3_excerpt: "من المكتب إلى العشاء، اعثري على القصة التي تبرز جمالك...",
+            read_more: "اقرأ المزيد ←",
+            lookbook_title: "أحدث إطلالاتنا",
+            lookbook_subtitle: "استلهمي من إطلالاتنا وابتكري أسلوبك الخاص.",
+            recently_viewed_title: "شوهدت مؤخرا",
+            testimonials_title: "زبائننا يحبوننا",
+            testimonials_subtitle: "اكتشفوا شهادات مجتمعنا.",
+            testimonial1_text: "\"أخيرًا وجدت بوتيكًا بقطع أصلية وذات جودة. فستاني الجديد رائع، أتلقى الإطراءات فقط!\"",
+            testimonial2_text: "\"خدمة العملاء لا تصدق. تم نصحي عبر الهاتف وكانت البائعة رائعة وقدمت نصائح ممتازة. توصيل فائق السرعة.\"",
+            contact_title: "اتصل بنا",
+            contact_subtitle: "لديك سؤال؟ أرسل لنا رسالة أو قم بزيارتنا في المتجر!",
+            form_name: "الاسم الكامل",
+            form_email: "البريد الإلكتروني",
+            form_message: "رسالتك",
+            form_message_placeholder: "أود الحصول على مزيد من المعلومات حول الفستان الزهري...",
+            form_send: "إرسال",
+            contact_info_title: "معلومات الاتصال",
+            address_label: "العنوان",
+            phone_label: "الهاتف",
+            footer_rights: "© 2025 ستايل أفنيو. جميع الحقوق محفوظة.",
+        }
+      };
+
+      const setLanguage = (lang) => {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if(translations[lang][key]) el.textContent = translations[lang][key];
+        });
+
+         document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-translate-placeholder');
+             if(translations[lang][key]) el.placeholder = translations[lang][key];
+        });
+
+        document.getElementById('current-lang').textContent = lang.toUpperCase();
+        document.getElementById('current-lang-mobile').textContent = lang.toUpperCase();
+        localStorage.setItem('language', lang);
+      };
+
+      const langToggle = document.getElementById('lang-toggle');
+      const langMenu = document.getElementById('lang-menu');
+      langToggle.addEventListener('click', () => langMenu.classList.toggle('hidden'));
+      
+      const langToggleMobile = document.getElementById('lang-toggle-mobile');
+      const langMenuMobile = document.getElementById('lang-menu-mobile');
+      langToggleMobile.addEventListener('click', () => langMenuMobile.classList.toggle('hidden'));
+
+      document.querySelectorAll('#lang-menu a, #lang-menu-mobile a').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const lang = e.target.getAttribute('data-lang');
+            setLanguage(lang);
+            langMenu.classList.add('hidden');
+            langMenuMobile.classList.add('hidden');
+        });
+      });
+
+      // Set initial language
+      const savedLang = localStorage.getItem('language') || 'fr';
+      setLanguage(savedLang);
+
 
       // --- Dark Mode Toggle ---
       const themeToggleBtns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
@@ -873,9 +1178,11 @@
             category: 'all',
             style: 'all',
             searchTerm: '',
-            maxPrice: Infinity,
-            minPrice: 0,
-            sort: 'default'
+            maxPrice: 20000,
+            minPrice: 3000,
+            sort: 'default',
+            size: null,
+            inStockOnly: false,
         };
 
         const renderProducts = (productsToRender) => {
@@ -891,15 +1198,17 @@
                 
                 const stockMessage = product.stock > 0 && product.stock < 10 ? `Plus que ${product.stock} en stock !` : '';
                 const isOutOfStock = product.stock === 0;
-                const buttonText = isOutOfStock ? 'En rupture de stock' : 'Ajouter au Panier';
-                const buttonDisabled = isOutOfStock ? 'disabled' : '';
+                const buttonHTML = isOutOfStock 
+                    ? `<button class="notify-me-btn text-white px-6 py-2 rounded-full font-semibold mt-2 w-full transition-transform transform hover:scale-105">Me notifier</button>`
+                    : `<button class="add-to-cart-btn text-white px-6 py-2 rounded-full font-semibold mt-2 w-full transition-transform transform hover:scale-105" style="background-color: var(--accent-color);">Ajouter au Panier</button>`;
 
                 const productCardHTML = `
-                <div class="product-item bg-secondary rounded-lg shadow-custom overflow-hidden flex flex-col" data-id="${product.id}">
+                <div class="product-item bg-primary rounded-lg shadow-custom overflow-hidden flex flex-col" data-id="${product.id}">
                     <div class="relative overflow-hidden product-image-tilt">
                         <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
                         ${product.badge ? `<div class="product-badge ${product.badge.color}">${product.badge.text}</div>` : ''}
                         <button class="wishlist-btn" aria-label="Ajouter à la wishlist"><i class="far fa-heart text-xl"></i></button>
+                        <button class="quick-add-btn" aria-label="Ajout rapide"><i class="fas fa-plus"></i></button>
                         <div class="product-hover-overlay">
                             <button class="quick-view-btn w-full text-primary bg-white/90 py-2 rounded-md font-semibold">Aperçu rapide</button>
                         </div>
@@ -913,7 +1222,7 @@
                         <div class="product-price flex items-baseline mt-2">${priceHTML}</div>
                         <p class="stock-level text-sm text-red-500 font-semibold mt-2 h-5">${stockMessage}</p>
                         <div class="mt-auto pt-2">
-                            <button class="add-to-cart-btn text-white px-6 py-2 rounded-full font-semibold mt-2 w-full transition-transform transform hover:scale-105" ${buttonDisabled} style="background-color: var(--accent-color);">${buttonText}</button>
+                            ${buttonHTML}
                         </div>
                     </div>
                 </div>`;
@@ -921,43 +1230,17 @@
             });
             updateWishlistButtons();
         };
-        
-        const parseSearchQuery = (query) => {
-            const filters = { category: 'all', style: 'all', maxPrice: Infinity, minPrice: 0, searchTerm: query };
-            const categoryKeywords = { robes: 'dresses', hauts: 'tops', pantalons: 'pants', accessoires: 'accessories' };
-            const styleKeywords = { elegant: 'elegant', casual: 'casual' };
-            
-            Object.keys(categoryKeywords).forEach(key => { if (query.includes(key)) filters.category = categoryKeywords[key]; });
-            Object.keys(styleKeywords).forEach(key => { if (query.includes(key)) filters.style = styleKeywords[key]; });
-            
-            const priceUnderMatch = query.match(/under\s*(\d+)|moins\s*de\s*(\d+)|<\s*(\d+)/);
-            if (priceUnderMatch) filters.maxPrice = parseInt(priceUnderMatch[1] || priceUnderMatch[2] || priceUnderMatch[3]);
-            
-            const priceOverMatch = query.match(/over\s*(\d+)|plus\s*de\s*(\d+)|>\s*(\d+)/);
-            if (priceOverMatch) filters.minPrice = parseInt(priceOverMatch[1] || priceOverMatch[2] || priceOverMatch[3]);
-
-            if (filters.category !== 'all' || filters.style !== 'all' || filters.maxPrice !== Infinity || filters.minPrice !== 0) {
-                 aiSearchFeedback.textContent = `Filtres IA actifs`;
-                 filters.searchTerm = ''; // Clear text search if AI filters are active
-            } else {
-                 aiSearchFeedback.textContent = '';
-            }
-            return filters;
-        };
 
         const updateDisplayedProducts = () => {
             let processedProducts = [...allProducts];
             
-            // Apply all filters from the currentFilters object
-            if (currentFilters.category !== 'all') {
-                processedProducts = processedProducts.filter(p => p.category === currentFilters.category);
-            }
-            if (currentFilters.style !== 'all') {
-                processedProducts = processedProducts.filter(p => p.style === currentFilters.style);
-            }
-            if (currentFilters.searchTerm) {
-                processedProducts = processedProducts.filter(p => p.name.toLowerCase().includes(currentFilters.searchTerm));
-            }
+            // Apply all filters
+            if (currentFilters.category !== 'all') processedProducts = processedProducts.filter(p => p.category === currentFilters.category);
+            if (currentFilters.style !== 'all') processedProducts = processedProducts.filter(p => p.style === currentFilters.style);
+            if (currentFilters.searchTerm) processedProducts = processedProducts.filter(p => p.name.toLowerCase().includes(currentFilters.searchTerm.toLowerCase()));
+            if (currentFilters.size) processedProducts = processedProducts.filter(p => p.sizes.includes(currentFilters.size));
+            if (currentFilters.inStockOnly) processedProducts = processedProducts.filter(p => p.stock > 0);
+            
             processedProducts = processedProducts.filter(p => {
                 const price = p.salePrice || p.price;
                 return price >= currentFilters.minPrice && price <= currentFilters.maxPrice;
@@ -972,6 +1255,7 @@
             renderProducts(processedProducts);
         };
         
+        // --- Event Listeners for Basic Filters ---
         filterBtns.forEach(btn => btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -979,16 +1263,118 @@
             updateDisplayedProducts();
         }));
 
-        searchBars.forEach(searchBar => searchBar.addEventListener('input', e => {
-            const aiFilters = parseSearchQuery(e.target.value.toLowerCase());
-            currentFilters = { ...currentFilters, ...aiFilters };
-            updateDisplayedProducts();
-        }));
-
         sortSelect.addEventListener('change', e => {
             currentFilters.sort = e.target.value;
             updateDisplayedProducts();
         });
+
+        // --- Event Listeners for Advanced Filters ---
+        const priceRange = document.getElementById('price-range');
+        const priceRangeValue = document.getElementById('price-range-value');
+        priceRange.addEventListener('input', e => {
+            currentFilters.maxPrice = parseInt(e.target.value);
+            priceRangeValue.textContent = `${e.target.value} DZD`;
+            updateDisplayedProducts();
+        });
+
+        const sizeFilterBtns = document.querySelectorAll('.size-filter-btn');
+        sizeFilterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const size = btn.dataset.size;
+                if (btn.classList.contains('active')) {
+                    btn.classList.remove('active');
+                    currentFilters.size = null;
+                } else {
+                    sizeFilterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilters.size = size;
+                }
+                updateDisplayedProducts();
+            });
+        });
+
+        document.getElementById('in-stock-filter').addEventListener('change', e => {
+            currentFilters.inStockOnly = e.target.checked;
+            updateDisplayedProducts();
+        });
+        
+        // --- Enhanced Search with Autocomplete ---
+        const searchResultsDesktop = document.getElementById('search-results-desktop');
+        const searchResultsMobile = document.getElementById('search-results-mobile');
+
+        const handleSearchInput = (e, resultsContainer) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            // AI-based filtering from search query
+            const aiFilters = parseSearchQuery(searchTerm);
+            let combinedSearchTerm = searchTerm;
+            
+            // If AI filters are detected, clear the simple search term to avoid conflicts
+            if (aiFilters.category !== 'all' || aiFilters.style !== 'all' || aiFilters.maxPrice !== Infinity || aiFilters.minPrice !== 0) {
+                 aiSearchFeedback.textContent = `Filtres IA actifs`;
+                 combinedSearchTerm = ''; // Clear text search if AI filters are active
+            } else {
+                 aiSearchFeedback.textContent = '';
+            }
+            
+            // Update main product grid based on filters or search term
+            currentFilters = { ...currentFilters, ...aiFilters, searchTerm: combinedSearchTerm };
+            updateDisplayedProducts();
+
+            // Handle autocomplete dropdown
+            if (searchTerm.length < 2) {
+                resultsContainer.innerHTML = '';
+                resultsContainer.classList.add('hidden');
+                return;
+            }
+
+            const matchedProducts = allProducts.filter(p => p.name.toLowerCase().includes(searchTerm)).slice(0, 5);
+            
+            if (matchedProducts.length > 0) {
+                resultsContainer.innerHTML = matchedProducts.map(p => {
+                    const price = p.salePrice || p.price;
+                    return `
+                        <div class="search-result-item" data-id="${p.id}">
+                            <img src="${p.image}" alt="${p.name}" class="w-12 h-16 object-cover rounded-md mr-4">
+                            <div class="flex-grow">
+                                <p class="font-semibold text-sm text-primary">${p.name}</p>
+                                <p class="text-xs" style="color:var(--accent-color)">${price.toLocaleString('fr-FR')} DZD</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                resultsContainer.classList.remove('hidden');
+            } else {
+                resultsContainer.innerHTML = '<p class="p-4 text-sm text-secondary">Aucun résultat</p>';
+                resultsContainer.classList.remove('hidden');
+            }
+        };
+
+        searchBars.forEach(searchBar => {
+            const resultsContainer = searchBar.id === 'search-bar' ? searchResultsDesktop : searchResultsMobile;
+            searchBar.addEventListener('input', (e) => handleSearchInput(e, resultsContainer));
+            searchBar.addEventListener('focus', (e) => handleSearchInput(e, resultsContainer));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#search-bar') && !e.target.closest('#search-results-desktop')) {
+                searchResultsDesktop.classList.add('hidden');
+            }
+            if (!e.target.closest('#search-bar-mobile') && !e.target.closest('#search-results-mobile')) {
+                 searchResultsMobile.classList.add('hidden');
+            }
+             if (e.target.closest('.search-result-item')) {
+                const productId = e.target.closest('.search-result-item').dataset.id;
+                // Find product and trigger quick view
+                const product = allProducts.find(p => p.id === productId);
+                if(product) {
+                    triggerQuickView(product);
+                    searchResultsDesktop.classList.add('hidden');
+                    searchResultsMobile.classList.add('hidden');
+                }
+            }
+        });
+
 
         // --- Modals Initializer & HTML Injection ---
         const modalsContainer = document.getElementById('modals-container');
@@ -1016,9 +1402,13 @@
             <!-- Wishlist Modal -->
             <div id="wishlist-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="wishlist-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-2xl mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-2xl font-bold font-heading text-primary">Ma Wishlist</h2><button id="wishlist-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="wishlist-content" class="flex-grow p-6 overflow-y-auto"><div id="empty-wishlist-message" class="text-center text-secondary py-12"><i class="fas fa-heart-crack text-5xl mb-4"></i><p>Votre wishlist est vide.</p></div></div></div></div>
             <!-- Quick View Modal -->
-            <div id="quick-view-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="quick-view-modal-box" class="bg-primary rounded-lg shadow-xl w-full max-w-6xl mx-4 transform scale-95 opacity-0 max-h-[90vh] flex flex-col"><button id="quick-view-modal-close" class="absolute top-4 right-4 text-2xl text-secondary z-10">&times;</button><div id="quick-view-content" class="overflow-y-auto p-8"></div></div></div>
+            <div id="quick-view-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="quick-view-modal-box" class="bg-primary rounded-lg shadow-xl w-11/12 max-w-lg md:max-w-4xl lg:max-w-6xl transform scale-95 opacity-0 max-h-[90vh] flex flex-col"><button id="quick-view-modal-close" class="absolute top-4 right-4 text-2xl text-secondary z-10">&times;</button><div id="quick-view-content" class="overflow-y-auto p-4 sm:p-8"></div></div></div>
             <!-- Live Chat Modal -->
             <div id="live-chat-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="live-chat-modal-box" class="bg-primary p-0 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0 flex flex-col h-[70vh]"><div class="flex justify-between items-center p-4 border-b border-color"><h2 class="text-xl font-bold font-heading text-primary flex items-center"><i class="fas fa-headset mr-2" style="color: var(--accent-color);"></i>Live Support</h2><button id="live-chat-modal-close" class="text-2xl text-secondary">&times;</button></div><div id="live-chat-history" class="flex-grow p-4 overflow-y-auto space-y-4"></div><div id="live-chat-input" class="p-4 border-t border-color"><div id="live-chat-options" class="flex flex-wrap gap-2 justify-center"></div></div></div></div>
+            <!-- Size Guide Modal -->
+             <div id="size-guide-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="size-guide-modal-box" class="bg-primary p-8 rounded-lg shadow-xl w-full max-w-lg mx-4 transform scale-95 opacity-0"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold font-heading text-primary">Guide des Tailles</h2><button id="size-guide-modal-close" class="text-2xl text-secondary">&times;</button></div><table class="w-full text-left table-auto"><thead><tr><th class="p-2 border-b">Taille</th><th class="p-2 border-b">Poitrine (cm)</th><th class="p-2 border-b">Taille (cm)</th><th class="p-2 border-b">Hanches (cm)</th></tr></thead><tbody><tr><td class="p-2 border-b">S</td><td class="p-2 border-b">82-86</td><td class="p-2 border-b">62-66</td><td class="p-2 border-b">90-94</td></tr><tr><td class="p-2 border-b">M</td><td class="p-2 border-b">86-90</td><td class="p-2 border-b">66-70</td><td class="p-2 border-b">94-98</td></tr><tr><td class="p-2 border-b">L</td><td class="p-2 border-b">90-94</td><td class="p-2 border-b">70-74</td><td class="p-2 border-b">98-102</td></tr><tr><td class="p-2 border-b">XL</td><td class="p-2 border-b">94-98</td><td class="p-2 border-b">74-78</td><td class="p-2 border-b">102-106</td></tr></tbody></table></div></div>
+            <!-- Notify Me Modal -->
+            <div id="notify-me-modal-overlay" class="fixed inset-0 bg-black/60 flex items-center justify-center opacity-0 pointer-events-none z-[100]"><div id="notify-me-modal-box" class="bg-primary p-8 rounded-lg shadow-xl w-full max-w-md mx-4 transform scale-95 opacity-0"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold font-heading text-primary">Prévenez-moi !</h2><button id="notify-me-modal-close" class="text-2xl text-secondary">&times;</button></div><p class="text-secondary mb-6">Laissez votre email pour être notifié(e) dès que ce produit est de retour en stock.</p><form id="notify-me-form"><input type="hidden" id="notify-product-id"><div class="mb-6"><label for="notify-email" class="block text-primary font-semibold mb-2">Email</label><input type="email" id="notify-email" class="form-input w-full p-3 border border-color rounded-lg focus:outline-none bg-secondary text-primary" required></div><button type="submit" class="w-full text-white p-3 rounded-full font-bold text-lg transition" style="background-color: var(--accent-color);">Envoyer</button><p id="notify-form-status" class="text-center mt-4"></p></form></div></div>
         `;
         
         const modals = {};
@@ -1045,7 +1435,9 @@
             modals[modalId] = { open, close };
         };
 
-        ['quick-view-modal', 'newsletter-modal', 'ai-stylist-modal', 'style-quiz-modal', 'wishlist-modal', 'checkout-modal', 'live-chat-modal'].forEach(id => initModal(id));
+        ['quick-view-modal', 'newsletter-modal', 'ai-stylist-modal', 'style-quiz-modal', 
+         'wishlist-modal', 'checkout-modal', 'live-chat-modal', 'size-guide-modal', 'notify-me-modal'].forEach(id => initModal(id));
+        
         document.querySelectorAll('[id^=newsletter-cta]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); modals['newsletter-modal'].open(); if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden'); }));
         document.getElementById('ai-stylist-cta').addEventListener('click', () => { modals['ai-stylist-modal'].open(); window.ai_stylist_modal_on_open(); });
         document.getElementById('style-quiz-cta').addEventListener('click', () => { modals['style-quiz-modal'].open(); window.style_quiz_modal_on_open(); });
@@ -1120,15 +1512,109 @@
             openCart();
         };
 
+        const triggerQuickView = (product) => {
+            if(!product) return;
+            const isModalAlreadyOpen = !document.getElementById('quick-view-modal-overlay').classList.contains('opacity-0');
+            addToRecentlyViewed(product.id);
+            const content = document.getElementById('quick-view-content');
+            
+            const priceHTML = product.salePrice
+                ? `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span> <span class="original-price text-lg">${product.price.toLocaleString('fr-FR')} DZD</span>`
+                : `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
+            
+            const reviewsHTML = product.reviews.length > 0
+                ? product.reviews.map(r => `<div class="border-t border-color py-4"><div class="flex items-center mb-1">${generateStars(r.rating)}<p class="font-bold text-primary ml-3">${r.author}</p></div><p class="text-secondary italic">"${r.text}"</p></div>`).join('')
+                : '<p class="text-secondary py-4">Aucun avis pour ce produit.</p>';
+            
+            const recommendations = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+            const recommendationsHTML = recommendations.map(p => `
+                <div class="product-item bg-secondary rounded-lg shadow-custom overflow-hidden" data-id="${p.id}">
+                     <div class="relative overflow-hidden">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+                         <div class="product-hover-overlay !opacity-100 !transform-none !bg-transparent p-2 flex justify-end">
+                            <button class="quick-view-btn w-auto bg-white/80 text-primary px-3 py-1 rounded-full text-xs font-semibold">Voir</button>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <p class="font-bold text-sm text-primary truncate">${p.name}</p>
+                        <div class="text-xs mt-1">${generateStars(p.rating)}</div>
+                    </div>
+                </div>`).join('');
+            
+            content.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                       <div id="d-viewer-container" class="bg-secondary rounded-lg mb-4"></div>
+                       <p class="text-secondary text-sm text-center">Faites glisser pour faire pivoter le produit.</p>
+                    </div>
+                    <div data-id="${product.id}" class="flex flex-col">
+                        <h2 class="product-name text-3xl font-bold font-heading text-primary">${product.name}</h2>
+                        <div class="flex items-center space-x-2 my-2">
+                            ${generateStars(product.rating)}
+                            <span class="text-sm text-secondary">(${product.reviews.length} avis)</span>
+                        </div>
+                        <div class="product-price flex items-baseline">${priceHTML}</div>
+                        <div class="mt-6">
+                            <div class="flex justify-between items-center">
+                                <label class="font-semibold text-primary">Taille:</label>
+                                <a href="#" id="size-guide-link" class="text-sm underline" style="color:var(--accent-color)">Guide des tailles</a>
+                            </div>
+                            <select class="product-size form-input w-full p-2 mt-2 border rounded-md bg-secondary">${product.sizes.map(s => `<option>${s}</option>`).join('')}</select>
+                        </div>
+                        <button class="add-to-cart-btn w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Ajouter au Panier</button>
+                    </div>
+                </div>
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Avis des Clients</h3>
+                    <div class="max-h-60 overflow-y-auto pr-4">${reviewsHTML}</div>
+                </div>
+                 <div class="mt-10">
+                    <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Vous pourriez aussi aimer</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">${recommendationsHTML}</div>
+                </div>
+            `;
+            const viewerContainer = document.getElementById('d-viewer-container');
+            init3DViewer(viewerContainer, product);
+
+            document.getElementById('size-guide-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                modals['size-guide-modal'].open();
+            });
+            
+            if (!isModalAlreadyOpen) {
+                modals['quick-view-modal'].open();
+            } else {
+                content.scrollTop = 0; // Reset scroll for new content
+            }
+        };
+
         document.body.addEventListener('click', e => {
-            const addToCartBtn = e.target.closest('.add-to-cart-btn');
-            if (addToCartBtn) {
-                const productEl = addToCartBtn.closest('[data-id]');
-                const productId = productEl.dataset.id;
+            const productEl = e.target.closest('[data-id]');
+            const productId = productEl ? productEl.dataset.id : null;
+            
+            // Add to cart
+            if (e.target.closest('.add-to-cart-btn')) {
                 const productData = allProducts.find(p => p.id === productId);
                 const size = productEl.querySelector('.product-size') ? productEl.querySelector('.product-size').value : 'Unique';
                 addProductToCart(productData, size);
             }
+            // Quick Add
+            if (e.target.closest('.quick-add-btn')) {
+                const product = allProducts.find(p => p.id === productId);
+                if (product) {
+                    if (product.sizes.length > 1) {
+                        triggerQuickView(product); // Has sizes, so open quick view to select one
+                    } else {
+                        addProductToCart(product, 'Unique'); // No sizes needed, add directly
+                    }
+                }
+            }
+            // Notify Me
+            if (e.target.closest('.notify-me-btn')) {
+                document.getElementById('notify-product-id').value = productId;
+                modals['notify-me-modal'].open();
+            }
+
             if (e.target.closest('#checkout-btn')) { closeCart(); modals['checkout-modal'].open(); }
             if (e.target.closest('#cart-close-btn') || e.target.id === 'cart-sidebar-overlay') closeCart();
             if (e.target.closest('#apply-discount-btn')) {
@@ -1143,81 +1629,23 @@
                 updateCart();
             }
             if(e.target.closest('.quick-view-btn')) {
-                const isModalAlreadyOpen = !document.getElementById('quick-view-modal-overlay').classList.contains('opacity-0');
-                
-                const productEl = e.target.closest('[data-id]');
-                const productId = productEl.dataset.id;
                 const product = allProducts.find(p => p.id === productId);
-
-                if(!product) return;
-                
-                addToRecentlyViewed(productId);
-
-                const content = document.getElementById('quick-view-content');
-                const sizeOptions = { P001: ['S','M','L','XL'], P002: ['S','M','L'], P003: ['S','M','L','XL'], P004: ['Unique'], P005: ['S','M','L'], P006: ['S','M','L','XL'] };
-                const priceHTML = product.salePrice
-                    ? `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.salePrice.toLocaleString('fr-FR')} DZD</span> <span class="original-price text-lg">${product.price.toLocaleString('fr-FR')} DZD</span>`
-                    : `<span class="text-2xl font-semibold my-2" style="color:var(--accent-color)">${product.price.toLocaleString('fr-FR')} DZD</span>`;
-                
-                const reviewsHTML = product.reviews.length > 0
-                    ? product.reviews.map(r => `<div class="border-t border-color py-4"><div class="flex items-center mb-1">${generateStars(r.rating)}<p class="font-bold text-primary ml-3">${r.author}</p></div><p class="text-secondary italic">"${r.text}"</p></div>`).join('')
-                    : '<p class="text-secondary py-4">Aucun avis pour ce produit.</p>';
-
-                const recommendations = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
-                const recommendationsHTML = recommendations.map(p => `
-                    <div class="product-item bg-secondary rounded-lg shadow-custom overflow-hidden" data-id="${p.id}">
-                         <div class="relative overflow-hidden">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
-                             <div class="product-hover-overlay !opacity-100 !transform-none !bg-transparent p-2 flex justify-end">
-                                <button class="quick-view-btn w-auto bg-white/80 text-primary px-3 py-1 rounded-full text-xs font-semibold">Voir</button>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <p class="font-bold text-sm text-primary truncate">${p.name}</p>
-                            <div class="text-xs mt-1">${generateStars(p.rating)}</div>
-                        </div>
-                    </div>`).join('');
-
-                content.innerHTML = `
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                           <div id="d-viewer-container" class="bg-secondary rounded-lg mb-4"></div>
-                           <p class="text-secondary text-sm text-center">Faites glisser pour faire pivoter le produit.</p>
-                        </div>
-                        <div data-id="${product.id}" class="flex flex-col">
-                            <h2 class="product-name text-3xl font-bold font-heading text-primary">${product.name}</h2>
-                            <div class="flex items-center space-x-2 my-2">
-                                ${generateStars(product.rating)}
-                                <span class="text-sm text-secondary">(${product.reviews.length} avis)</span>
-                            </div>
-                            <div class="product-price flex items-baseline">${priceHTML}</div>
-                            <div class="mt-6">
-                                <label class="font-semibold text-primary">Taille:</label>
-                                <select class="product-size form-input w-full p-2 mt-2 border rounded-md bg-secondary">${sizeOptions[product.id].map(s => `<option>${s}</option>`).join('')}</select>
-                            </div>
-                            <button class="add-to-cart-btn w-full mt-4 text-white p-3 rounded-full font-bold text-lg" style="background-color: var(--accent-color);">Ajouter au Panier</button>
-                        </div>
-                    </div>
-                    <div class="mt-10">
-                        <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Avis des Clients</h3>
-                        <div class="max-h-60 overflow-y-auto pr-4">${reviewsHTML}</div>
-                    </div>
-                     <div class="mt-10">
-                        <h3 class="text-2xl font-bold font-heading text-primary border-b border-color pb-2 mb-4">Vous pourriez aussi aimer</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">${recommendationsHTML}</div>
-                    </div>
-                `;
-                
-                const viewerContainer = document.getElementById('d-viewer-container');
-                init3DViewer(viewerContainer, product);
-                
-                if (!isModalAlreadyOpen) {
-                    modals['quick-view-modal'].open();
-                } else {
-                    content.scrollTop = 0; // Reset scroll for new content
-                }
+                triggerQuickView(product);
             }
         });
+
+        // Notify Me form submission
+        document.getElementById('notify-me-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const status = document.getElementById('notify-form-status');
+            status.textContent = "Merci ! Nous vous préviendrons.";
+            status.style.color = 'green';
+            setTimeout(() => {
+                modals['notify-me-modal'].close();
+                status.textContent = "";
+            }, 2000);
+        });
+
         document.body.addEventListener('change', e => { if (e.target.classList.contains('cart-item-quantity')) { const { id, size } = e.target.dataset; const newQuantity = parseInt(e.target.value); const itemInCart = cart.find(item => item.id === id && item.size === size); if (itemInCart && newQuantity > 0) { itemInCart.quantity = newQuantity; updateCart(); } } });
         document.querySelectorAll('#cart-toggle, #cart-toggle-mobile').forEach(btn => btn.addEventListener('click', openCart));
       
@@ -1283,28 +1711,22 @@
       };
 
 
-      // --- AI Style Match Logic ---
-      const aiUploadContainer = document.getElementById('ai-image-preview-container');
-      const aiUploadInput = document.getElementById('ai-image-upload');
-      aiUploadContainer.addEventListener('click', () => aiUploadInput.click());
-      aiUploadInput.addEventListener('change', e => {
+      // --- AI Stylist Image Analysis Logic ---
+      const aiStylistImageUpload = document.getElementById('ai-stylist-image-upload');
+      aiStylistImageUpload.addEventListener('change', e => {
           if (e.target.files && e.target.files[0]) {
               const reader = new FileReader();
               reader.onload = e => {
-                  document.getElementById('ai-image-preview').src = e.target.result;
-                  document.getElementById('ai-image-preview').classList.remove('hidden');
-                  document.getElementById('ai-upload-prompt').classList.add('hidden');
-                  document.getElementById('ai-style-match-loader').classList.remove('hidden');
-                  document.getElementById('ai-status-text').textContent = "Analyse de votre style en cours...";
-                  document.getElementById('ai-results-container').classList.add('hidden');
+                  addAgentMessage(aiChatHistory, 'Merci ! J\'analyse l\'image pour trouver des articles correspondants...');
                   setTimeout(() => {
-                      document.getElementById('ai-style-match-loader').classList.add('hidden');
-                      document.getElementById('ai-status-text').textContent = "Analyse terminée !";
-                      const resultsGrid = document.getElementById('ai-results-grid'); resultsGrid.innerHTML = '';
-                      const recommendedProducts = allProducts.filter(p => p.style === 'elegant').slice(0, 2);
-                      recommendedProducts.forEach(p => { const finalPrice = p.salePrice || p.price; resultsGrid.innerHTML += `<div data-id="${p.id}" class="bg-primary rounded-lg p-3 flex items-center gap-4 shadow-custom"><img src="${p.image}" class="w-16 h-20 object-cover rounded-md"/><div class="flex-grow"><p class="product-name font-bold text-sm">${p.name}</p><p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p></div><button class="add-to-cart-btn text-white text-2xl rounded-full w-10 h-10 flex-shrink-0" style="background-color:var(--accent-color);"><i class="fas fa-plus"></i></button></div>`; });
-                      document.getElementById('ai-results-container').classList.remove('hidden');
-                  }, 3000);
+                       addAgentMessage(aiChatHistory, 'D\'après l\'image, voici ce qui pourrait vous plaire :');
+                       const recommendedProducts = allProducts.filter(p => p.style === 'elegant').slice(0, 2);
+                       recommendedProducts.forEach(p => addAgentMessage(aiChatHistory, createProductHtml(p), true));
+                       setTimeout(() => {
+                            addAgentMessage(aiChatHistory, "Puis-je vous aider avec autre chose ?");
+                            showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }]);
+                       }, 1000);
+                  }, 2500);
               }
               reader.readAsDataURL(e.target.files[0]);
           }
@@ -1340,7 +1762,7 @@
             options.forEach(opt => {
                 const button = document.createElement('button');
                 button.textContent = opt.text;
-                button.className = 'border border-color text-primary px-4 py-2 rounded-full hover:bg-secondary transition';
+                button.className = 'border border-color text-primary px-4 py-2 rounded-full hover:bg-secondary transition text-sm';
                 button.onclick = () => opt.handler(opt.value);
                 optionsWrapper.appendChild(button);
             });
@@ -1363,28 +1785,59 @@
         const handleStyleChoice = (style) => {
             addUserMessage(aiChatHistory, style);
             userChoices.style = style;
+            localStorage.setItem('preferredStyle', style); // Save style preference
             aiChatOptions.innerHTML = '';
             setTimeout(() => {
+                addAgentMessage(aiChatHistory, 'J\'ai quelques idées ! Avez-vous un budget en tête ?');
+                showOptions(aiChatOptions, [
+                    { text: 'Moins de 8000 DZD', value: {min: 0, max: 7999}, handler: (range) => handleBudgetChoice('Moins de 8000 DZD', range) },
+                    { text: '8000 - 15000 DZD', value: {min: 8000, max: 15000}, handler: (range) => handleBudgetChoice('8000 - 15000 DZD', range) },
+                    { text: 'Tout budget', value: {min: 0, max: Infinity}, handler: (range) => handleBudgetChoice('Tout budget', range) },
+                ]);
+            }, 500);
+        };
+
+        const handleBudgetChoice = (choiceText, range) => {
+            addUserMessage(aiChatHistory, choiceText);
+            userChoices.minPrice = range.min;
+            userChoices.maxPrice = range.max;
+            userChoices.shownProducts = []; // Reset for new search
+            setTimeout(() => {
                 addAgentMessage(aiChatHistory, 'Parfait. Je cherche les articles qui vous correspondent...');
-                aiChatOptions.innerHTML = '<p class="text-center text-secondary">Analyse en cours...</p>';
-                setTimeout(showRecommendations, 1500);
+                showRecommendations();
             }, 500);
         };
         
         const showRecommendations = () => {
-            aiChatOptions.innerHTML = '';
-            addAgentMessage(aiChatHistory, 'Voici ma sélection personnalisée pour vous :');
-            
-            const recommendations = allProducts.filter(p => p.style === userChoices.style).slice(0, 2);
-            
-            if (recommendations.length > 0) {
-                 recommendations.forEach(p => {
-                    const finalPrice = p.salePrice || p.price;
-                    const recommendationHtml = `
-                        <div class="bg-secondary rounded-lg p-3 flex items-center gap-4" data-id="${p.id}">
-                            <img src="${p.image}" class="w-16 h-20 object-cover rounded-md"/>
+            aiChatOptions.innerHTML = '<p class="text-center text-secondary">Analyse en cours...</p>';
+
+            setTimeout(() => {
+                const getPrice = p => p.salePrice || p.price;
+                const recommendations = allProducts.filter(p =>
+                    p.style === userChoices.style &&
+                    p.category !== 'accessories' &&
+                    getPrice(p) >= userChoices.minPrice &&
+                    getPrice(p) <= userChoices.maxPrice &&
+                    !userChoices.shownProducts.includes(p.id) // Exclude already shown products
+                );
+
+                let recommendedProduct = recommendations[0] || null;
+
+                if (recommendedProduct) {
+                     if(userChoices.shownProducts.length === 0) {
+                         addAgentMessage(aiChatHistory, 'Voici ma sélection personnalisée pour vous :');
+                     } else {
+                         addAgentMessage(aiChatHistory, 'Voici une autre suggestion :');
+                     }
+
+                    userChoices.shownProducts.push(recommendedProduct.id); // Add to shown list
+
+                     const finalPrice = recommendedProduct.salePrice || recommendedProduct.price;
+                     const recommendationHtml = `
+                        <div class="bg-secondary rounded-lg p-3 flex items-center gap-4" data-id="${recommendedProduct.id}">
+                            <img src="${recommendedProduct.image}" class="w-16 h-20 object-cover rounded-md"/>
                             <div class="flex-grow">
-                                <p class="product-name font-bold text-sm text-primary">${p.name}</p>
+                                <p class="product-name font-bold text-sm text-primary">${recommendedProduct.name}</p>
                                 <p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
                             </div>
                             <button class="add-to-cart-btn text-white text-2xl rounded-full w-10 h-10 flex-shrink-0" style="background-color: var(--accent-color);">
@@ -1393,53 +1846,281 @@
                         </div>
                     `;
                     addAgentMessage(aiChatHistory, recommendationHtml, true);
-                });
-            } else {
-                 addAgentMessage(aiChatHistory, "Oups, je n'ai pas trouvé de correspondance exacte.");
-            }
+                    
+                    setTimeout(() => {
+                        addAgentMessage(aiChatHistory, "Qu'en pensez-vous ?");
+                        
+                        const nextOptions = [
+                            { text: 'Accessoire assorti', value: 'accessory', handler: () => handleFindAccessory(recommendedProduct.style) },
+                            { text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }
+                        ];
+
+                        if (recommendations.length > 1) {
+                            nextOptions.splice(1, 0, { text: 'Articles similaires', value: 'similar', handler: () => {
+                                addUserMessage(aiChatHistory, "Montrez-moi des articles similaires.");
+                                showRecommendations();
+                            }});
+                        }
+
+                        showOptions(aiChatOptions, nextOptions);
+
+                    }, 1000);
+
+                } else {
+                     if(userChoices.shownProducts.length === 0) {
+                        addAgentMessage(aiChatHistory, "Oups, je n'ai rien trouvé correspondant à vos critères. Essayons une autre option ?");
+                     } else {
+                        addAgentMessage(aiChatHistory, "Je n'ai pas d'autres articles similaires à vous proposer dans cette sélection.");
+                     }
+                     setTimeout(() => {
+                        showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }]);
+                     }, 1000);
+                }
+            }, 1500);
+        };
+        
+        const handleOutfitBuilder = () => {
+            addUserMessage(aiChatHistory, 'Créer une tenue complète.');
+            userChoices = { outfitBuilder: true, completeOutfit: {} };
+            aiChatOptions.innerHTML = '';
             setTimeout(() => {
-              addAgentMessage(aiChatHistory, "Puis-je vous aider avec autre chose ?");
-              showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: startStylist }]);
+                addAgentMessage(aiChatHistory, 'Excellente idée ! Commençons par la pièce principale. Que préférez-vous ?');
+                showOptions(aiChatOptions, [
+                    { text: 'Un Haut', value: 'tops', handler: handleOutfitPrimaryChoice },
+                    { text: 'Une Robe', value: 'dresses', handler: handleOutfitPrimaryChoice },
+                ]);
+            }, 500);
+        };
+        
+        const handleOutfitPrimaryChoice = (category) => {
+            addUserMessage(aiChatHistory, category === 'tops' ? 'Un Haut' : 'Une Robe');
+            userChoices.primaryCategory = category;
+            const primaryItem = allProducts.find(p => p.category === category);
+            userChoices.completeOutfit.primary = primaryItem;
+            userChoices.style = primaryItem.style; // Set style for the rest of the outfit
+
+            aiChatOptions.innerHTML = '<p class="text-center text-secondary">Je sélectionne une pièce...</p>';
+            setTimeout(() => {
+                addAgentMessage(aiChatHistory, `Voici un excellent choix pour commencer :`);
+                addAgentMessage(aiChatHistory, createProductHtml(primaryItem), true);
+                 setTimeout(() => {
+                    if (category === 'tops') {
+                        addAgentMessage(aiChatHistory, 'Maintenant, trouvons un bas pour aller avec.');
+                        handleOutfitBottomChoice();
+                    } else {
+                        addAgentMessage(aiChatHistory, 'Trouvons maintenant un accessoire pour compléter cette robe.');
+                        handleOutfitAccessoryChoice();
+                    }
+                }, 1000);
+            }, 1500);
+        };
+
+        const handleOutfitBottomChoice = () => {
+             const bottomItem = allProducts.find(p => p.category === 'pants' && p.style === userChoices.style);
+             userChoices.completeOutfit.bottom = bottomItem;
+              setTimeout(() => {
+                addAgentMessage(aiChatHistory, 'Que pensez-vous de cet ensemble ?');
+                addAgentMessage(aiChatHistory, createProductHtml(bottomItem), true);
+                setTimeout(() => {
+                    addAgentMessage(aiChatHistory, 'Il ne manque plus qu\'un accessoire !');
+                    handleOutfitAccessoryChoice();
+                }, 1000);
+             }, 1500);
+        };
+
+        const handleOutfitAccessoryChoice = () => {
+            const accessoryItem = allProducts.find(p => p.category === 'accessories' && p.style === userChoices.style);
+            userChoices.completeOutfit.accessory = accessoryItem;
+             setTimeout(() => {
+                addAgentMessage(aiChatHistory, 'Et pour la touche finale :');
+                addAgentMessage(aiChatHistory, createProductHtml(accessoryItem), true);
+                 setTimeout(() => {
+                    addAgentMessage(aiChatHistory, 'Et voilà ! Une tenue complète. J\'espère que cela vous plaît.');
+                     showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }]);
+                }, 1000);
+            }, 1500);
+        };
+        
+        const createProductHtml = (product) => {
+             const finalPrice = product.salePrice || product.price;
+             return `<div class="bg-secondary rounded-lg p-3 flex items-center gap-4" data-id="${product.id}">
+                        <img src="${product.image}" class="w-16 h-20 object-cover rounded-md"/>
+                        <div class="flex-grow">
+                            <p class="product-name font-bold text-sm text-primary">${product.name}</p>
+                            <p class="product-price font-semibold text-xs" style="color:var(--accent-color)">${finalPrice.toLocaleString('fr-FR')} DZD</p>
+                        </div>
+                        <button class="add-to-cart-btn text-white text-2xl rounded-full w-10 h-10 flex-shrink-0" style="background-color: var(--accent-color);"><i class="fas fa-plus"></i></button>
+                    </div>`;
+        };
+
+
+        const handleFindAccessory = (style) => {
+            addUserMessage(aiChatHistory, "Oui, avec plaisir !");
+            aiChatOptions.innerHTML = '<p class="text-center text-secondary">Je cherche l\'accessoire parfait...</p>';
+            setTimeout(() => {
+                const matchingAccessory = allProducts.find(p => p.category === 'accessories' && p.style === style);
+                if (matchingAccessory) {
+                    addAgentMessage(aiChatHistory, `Excellent ! Je pense que ceci irait parfaitement avec :`);
+                    addAgentMessage(aiChatHistory, createProductHtml(matchingAccessory), true);
+                } else {
+                    addAgentMessage(aiChatHistory, "Je n'ai pas trouvé d'accessoire parfaitement assorti pour le moment, désolé !");
+                }
+                 setTimeout(() => {
+                    addAgentMessage(aiChatHistory, "Puis-je vous aider avec autre chose ?");
+                    showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }]);
+                }, 1000);
+            }, 1500);
+        };
+
+        const handleTrendingChoice = () => {
+            addUserMessage(aiChatHistory, "Qu'est-ce qui est tendance ?");
+            aiChatOptions.innerHTML = '';
+            setTimeout(() => {
+                addAgentMessage(aiChatHistory, 'Bonne question ! Voici les articles qui sont très populaires en ce moment :');
+                const trendingProducts = allProducts.filter(p => p.badge && p.badge.text === 'Top Vente').slice(0, 2);
+                 if (trendingProducts.length > 0) {
+                    trendingProducts.forEach(p => addAgentMessage(aiChatHistory, createProductHtml(p), true) );
+                }
+                setTimeout(() => {
+                    addAgentMessage(aiChatHistory, "Est-ce que l'un de ces articles vous plaît, ou souhaitez-vous explorer autre chose ?");
+                    showOptions(aiChatOptions, [{ text: 'Recommencer', value: 'restart', handler: () => startStylist(false) }]);
+                }, 1000);
             }, 1000);
         };
 
-        const startStylist = () => {
-            userChoices = {};
-            if(aiChatHistory) aiChatHistory.innerHTML = '';
+        const handleSurpriseChoice = () => {
+            addUserMessage(aiChatHistory, "Surprenez-moi !");
+            aiChatOptions.innerHTML = '<p class="text-center text-secondary">Je cherche la perle rare...</p>';
             setTimeout(() => {
-                addAgentMessage(aiChatHistory, 'Bonjour ! Je suis votre styliste personnel. Pour quelle occasion cherchez-vous une tenue ?');
+                const randomProduct = allProducts[Math.floor(Math.random() * allProducts.length)];
+                addAgentMessage(aiChatHistory, "Que pensez-vous de ceci ?");
+                addAgentMessage(aiChatHistory, createProductHtml(randomProduct), true);
+                 setTimeout(() => {
+                    addAgentMessage(aiChatHistory, "Alors, coup de coeur ?");
+                    showOptions(aiChatOptions, [{ text: 'Autre chose !', value: 'restart', handler: () => startStylist(false) }]);
+                }, 1000);
+            }, 1500);
+        };
+        
+        const handleImageAnalysis = () => {
+            addUserMessage(aiChatHistory, "Analyser une image.");
+            aiStylistImageUpload.click();
+            aiChatOptions.innerHTML = '<p class="text-center text-secondary">Veuillez sélectionner une image à analyser...</p>';
+        };
+
+        const startStylist = (isFirstTime = true) => {
+            userChoices = {};
+            if(isFirstTime) aiChatHistory.innerHTML = '';
+            setTimeout(() => {
+                const preferredStyle = localStorage.getItem('preferredStyle');
+                if(isFirstTime && preferredStyle) {
+                     addAgentMessage(aiChatHistory, `Bonjour ! Prêt(e) à découvrir d'autres articles au style <span class="font-semibold">${preferredStyle}</span> ? Ou souhaitez-vous explorer autre chose ?`);
+                } else if (isFirstTime) {
+                    addAgentMessage(aiChatHistory, 'Bonjour ! Je suis votre styliste personnel. Comment puis-je vous inspirer aujourd\'hui ?');
+                }
+                
                 showOptions(aiChatOptions, [
-                    { text: 'Quotidien', value: 'Quotidien', handler: handleOccasionChoice },
-                    { text: 'Soirée', value: 'Soirée', handler: handleOccasionChoice },
-                    { text: 'Travail', value: 'Travail', handler: handleOccasionChoice },
+                    { text: 'Trouver une tenue', value: 'occasion', handler: () => {
+                        addUserMessage(aiChatHistory, "Je cherche une tenue.");
+                        setTimeout(() => {
+                             addAgentMessage(aiChatHistory, 'Avec plaisir ! Pour quelle occasion ?');
+                             showOptions(aiChatOptions, [
+                                { text: 'Quotidien', value: 'Quotidien', handler: handleOccasionChoice },
+                                { text: 'Soirée', value: 'Soirée', handler: handleOccasionChoice },
+                                { text: 'Travail', value: 'Travail', handler: handleOccasionChoice },
+                            ]);
+                        }, 500);
+                    }},
+                    { text: 'Créer une tenue complète', value: 'outfit_builder', handler: handleOutfitBuilder },
+                    { text: 'Qu\'est-ce qui est tendance ?', value: 'trending', handler: handleTrendingChoice },
+                    { text: 'Analyser une image', value: 'image_analysis', handler: handleImageAnalysis },
                 ]);
-            }, 500);
+            }, isFirstTime ? 500 : 100);
         };
         window.ai_stylist_modal_on_open = startStylist;
 
       // --- Live Chat Logic ---
         const liveChatHistory = document.getElementById('live-chat-history');
+        const liveChatInput = document.getElementById('live-chat-input');
         const liveChatOptions = document.getElementById('live-chat-options');
 
         const showLiveChatOptions = (options) => {
-            if (!liveChatOptions) return;
-            liveChatOptions.innerHTML = '';
+            liveChatInput.innerHTML = `<div id="live-chat-options" class="flex flex-wrap gap-2 justify-center"></div>`;
+            const optionsContainer = document.getElementById('live-chat-options');
             options.forEach(opt => {
                 const button = document.createElement('button');
                 button.textContent = opt.text;
                 button.className = 'border border-color text-primary px-3 py-1 rounded-full text-sm hover:bg-secondary transition';
-                button.onclick = () => handleLiveChatChoice(opt.text, opt.response);
-                liveChatOptions.appendChild(button);
+                button.onclick = () => handleLiveChatChoice(opt.value, opt.text);
+                optionsContainer.appendChild(button);
             });
         };
 
-        const handleLiveChatChoice = (choiceText, responseText) => {
-            addUserMessage(liveChatHistory, choiceText);
-            liveChatOptions.innerHTML = '<p class="text-xs text-secondary text-center">Notre agent est en train d\'écrire...</p>';
+        const showTextInput = (placeholder, callback) => {
+            liveChatInput.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="live-chat-text-input" placeholder="${placeholder}" class="form-input w-full p-2 border rounded-md bg-secondary text-primary">
+                    <button id="live-chat-submit-btn" class="text-white px-4 py-2 rounded-md font-semibold" style="background-color: var(--accent-color);">Envoyer</button>
+                </div>`;
+            document.getElementById('live-chat-submit-btn').onclick = () => {
+                const input = document.getElementById('live-chat-text-input');
+                if (input.value) {
+                    callback(input.value);
+                }
+            };
+             document.getElementById('live-chat-text-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const input = document.getElementById('live-chat-text-input');
+                     if (input.value) {
+                        callback(input.value);
+                    }
+                }
+            });
+        };
+        
+        const handleLiveChatChoice = (value, text) => {
+            addUserMessage(liveChatHistory, text);
+            liveChatInput.innerHTML = '<p class="text-xs text-secondary text-center">Notre agent est en train d\'écrire...</p>';
+
             setTimeout(() => {
-                addAgentMessage(liveChatHistory, responseText);
-                startLiveChat(false); // Re-show initial options without welcome message
-            }, 1500);
+                switch(value) {
+                    case 'order_tracking':
+                        addAgentMessage(liveChatHistory, "Bien sûr. Quel est votre numéro de commande ?");
+                        showTextInput("Ex: 12345", (orderNumber) => {
+                            addUserMessage(liveChatHistory, `Commande #${orderNumber}`);
+                            liveChatInput.innerHTML = '<p class="text-xs text-secondary text-center">Notre agent vérifie...</p>';
+                            setTimeout(() => {
+                                addAgentMessage(liveChatHistory, `Votre commande #${orderNumber} est en cours de préparation et sera expédiée demain. Merci de votre patience !`);
+                                startLiveChat(false);
+                            }, 1500);
+                        });
+                        break;
+                    case 'product_question':
+                         addAgentMessage(liveChatHistory, "Avec plaisir. Quel est le nom du produit qui vous intéresse ?");
+                         showTextInput("Ex: Robe d'Été Florale", (productName) => {
+                            addUserMessage(liveChatHistory, productName);
+                             liveChatInput.innerHTML = '<p class="text-xs text-secondary text-center">Notre agent recherche...</p>';
+                             setTimeout(() => {
+                                const product = allProducts.find(p => p.name.toLowerCase().includes(productName.toLowerCase()));
+                                if (product) {
+                                    addAgentMessage(liveChatHistory, `Concernant la "${product.name}", nos tailles sont standard. Nous recommandons de prendre votre taille habituelle. Le tissu est de haute qualité et très confortable.`);
+                                } else {
+                                    addAgentMessage(liveChatHistory, "Désolé, je n'ai pas trouvé ce produit. Pouvez-vous vérifier le nom ?");
+                                }
+                                startLiveChat(false);
+                            }, 1500);
+                         });
+                        break;
+                    case 'shipping_info':
+                        addAgentMessage(liveChatHistory, 'Nous livrons dans toute l\'Algérie en 2 à 5 jours. La livraison est gratuite dès 10 000 DZD d\'achat.');
+                        startLiveChat(false);
+                        break;
+                    case 'human_agent':
+                        addAgentMessage(liveChatHistory, "Bien sûr. Pour parler à un conseiller, vous pouvez nous appeler au +213 555 111 222 pendant nos heures d'ouverture (9h-18h).");
+                        startLiveChat(false);
+                        break;
+                }
+            }, 1000);
         };
         
         const startLiveChat = (isFirstTime = true) => {
@@ -1450,9 +2131,10 @@
                 }, 500);
             }
             showLiveChatOptions([
-                { text: 'Suivi de commande', response: 'Pour suivre votre commande, veuillez nous fournir votre numéro de commande.' },
-                { text: 'Infos livraison', response: 'Nous livrons dans toute l\'Algérie en 2 à 5 jours. La livraison est gratuite dès 10 000 DZD d\'achat.' },
-                { text: 'Politique de retour', response: 'Vous pouvez retourner un article dans les 7 jours suivant la réception pour un échange ou un remboursement.' },
+                { text: 'Suivi de commande', value: 'order_tracking' },
+                { text: 'Question sur un produit', value: 'product_question' },
+                { text: 'Infos livraison', value: 'shipping_info' },
+                { text: 'Parler à un conseiller', value: 'human_agent' },
             ]);
         };
 
@@ -1659,6 +2341,4 @@
   </script>
 </body>
 </html>
-
-
 
