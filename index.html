@@ -458,6 +458,26 @@
         margin-top: -6px;
     }
 
+    /* Falling items animation for hero section */
+    @keyframes fall {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .falling-item {
+      position: absolute;
+      top: -5%; /* Start just off-screen */
+      color: rgba(255, 255, 255, 0.4);
+      animation-name: fall;
+      animation-timing-function: linear;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -556,7 +576,10 @@
 
   <main>
     <!-- Hero Section -->
-    <section id="home" class="h-screen min-h-[700px] flex items-center justify-center text-white bg-cover bg-center parallax" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2070')">
+    <section id="home" class="relative h-screen min-h-[700px] flex items-center justify-center text-white bg-cover bg-center parallax" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=2070')">
+      <!-- Falling items container -->
+      <div id="falling-items-container" class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"></div>
+
       <div class="text-center p-6 fade-in-up z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg font-heading uppercase" data-translate-key="hero_title">DÉFINISSEZ VOTRE STYLE</h1>
         <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto drop-shadow-md" data-translate-key="hero_subtitle">L'élégance à portée de main. Découvrez les collections qui vous ressemblent.</p>
@@ -2332,6 +2355,31 @@
         setTimeout(() => { formStatus.textContent = ''; }, 3000);
       });
       
+      // --- Falling Items Animation for Hero Section ---
+      const fallingContainer = document.getElementById('falling-items-container');
+      if(fallingContainer) {
+        const icons = ['fa-shopping-bag', 'fa-tshirt', 'fa-shoe-prints', 'fa-gem', 'fa-glasses'];
+        
+        function createFallingItem() {
+          const item = document.createElement('i');
+          item.classList.add('fas', icons[Math.floor(Math.random() * icons.length)], 'falling-item');
+          
+          item.style.left = `${Math.random() * 100}vw`;
+          item.style.animationDuration = `${Math.random() * 8 + 5}s`; // 5 to 13 seconds
+          item.style.animationDelay = `${Math.random() * 5}s`;
+          item.style.fontSize = `${Math.random() * 1.5 + 0.5}rem`; // 0.5rem to 2rem
+          
+          fallingContainer.appendChild(item);
+          
+          item.addEventListener('animationend', () => {
+            item.remove();
+          }, { once: true });
+        }
+        
+        // Generate items periodically
+        setInterval(createFallingItem, 500);
+      }
+
       // --- Initial Calls ---
       updateDisplayedProducts();
       updateCart();
@@ -2341,4 +2389,3 @@
   </script>
 </body>
 </html>
-
