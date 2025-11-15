@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" class="light">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoFrance - Concessionnaire Démo V2</title>
+    <title>ABC Exporte - Exportation de Véhicules vers l'Algérie</title>
     
     <!-- Importation de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,10 +12,9 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     
-    <!-- Configuration de Tailwind (pour les polices et le mode sombre) -->
+    <!-- Configuration de Tailwind (pour les polices) -->
     <script>
         tailwind.config = {
-            darkMode: 'class', // Active le mode sombre basé sur une classe HTML
             theme: {
                 extend: {
                     fontFamily: {
@@ -63,11 +62,6 @@
             animation: blink-caret .75s step-end infinite;
         }
         
-        /* Adaptation du curseur pour le mode sombre */
-        .dark .typewriter-cursor {
-            border-right-color: #60A5FA; /* Bleu clair pour le mode sombre */
-        }
-
         /* Animation de clignotement du curseur */
         @keyframes blink-caret {
             from, to { border-color: transparent }
@@ -190,61 +184,174 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* NOUVEAU: Styles pour le Carrousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            position: relative;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 500px; /* Hauteur fixe pour le carrousel */
+            object-fit: cover;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 2.5rem 1.5rem 1.5rem; /* p-10 p-6 pb-6 */
+            color: white;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 9999px; /* rounded-full */
+            width: 3rem; /* w-12 */
+            height: 3rem; /* h-12 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.2s;
+        }
+        .carousel-btn:hover {
+            background-color: white;
+        }
+        .carousel-btn.prev {
+            left: 1rem; /* left-4 */
+        }
+        .carousel-btn.next {
+            right: 1rem; /* right-4 */
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 1rem; /* bottom-4 */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem; /* space-x-2 */
+            z-index: 10;
+        }
+        .carousel-dot {
+            width: 0.75rem; /* w-3 */
+            height: 0.75rem; /* h-3 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .carousel-dot.active {
+            background-color: white;
+        }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 overflow-x-hidden">
+<body class="bg-black text-white font-sans transition-colors duration-300 overflow-x-hidden">
 
     <!-- Barre de progression de défilement -->
     <div id="scroll-progress-bar"></div>
 
     <!-- =========== EN-TÊTE ET NAVIGATION =========== -->
-    <header class="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md z-50 transition-colors duration-300">
+    <header class="fixed top-0 left-0 right-0 bg-black shadow-md z-50 transition-colors duration-300">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#accueil" class="text-2xl font-bold text-blue-700 dark:text-blue-400">AutoFrance</a>
+            <div class="text-white">
+                <a href="#accueil" class="text-2xl font-bold block">ABC Exporte</a>
+                <span class="text-xs text-blue-400">✈️ Exportation vers l'Algérie</span>
+            </div>
             
             <!-- Liens de navigation (mis à jour) -->
             <div class="hidden md:flex space-x-4 items-center">
-                <a href="#accueil" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Accueil</a>
-                <a href="#vehicules" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Véhicules</a>
-                <a href="#pourquoi-nous" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Pourquoi Nous ?</a>
-                <a href="#contact" class="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+                <a href="#accueil" class="text-gray-300 hover:text-white transition-colors">Accueil</a>
+                <a href="#vehicules" class="text-gray-300 hover:text-white transition-colors">Véhicules</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a>
             </div>
             
             <div class="flex items-center space-x-2">
-                <!-- Bouton Favoris (simulé) -->
-                <button id="favorite-nav-btn" aria-label="Voir les favoris" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative">
-                    <ion-icon name="heart-outline" class="text-xl text-red-500"></ion-icon>
-                    <span id="favorite-count" class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                <!-- NOUVEAU: Bouton Recherche -->
+                <button id="search-nav-btn" aria-label="Rechercher par catégorie" class="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-700 transition-colors relative">
+                    <ion-icon name="search-outline" class="text-xl"></ion-icon>
                 </button>
                 
-                <!-- Bouton Mode Sombre/Clair -->
-                <button id="theme-toggle" aria-label="Changer le thème" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                    <ion-icon name="moon-outline" id="theme-icon-moon" class="text-xl"></ion-icon>
-                    <ion-icon name="sunny-outline" id="theme-icon-sun" class="text-xl hidden"></ion-icon>
-                </button>
+                <!-- NOUVEAU: Bouton Emplacement -->
+                <a href="#emplacement" aria-label="Voir l'emplacement" class="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">
+                    <ion-icon name="location-outline" class="text-xl"></ion-icon>
+                </a>
+
+                <!-- NOUVEAU: Bouton Appel -->
+                <a href="tel:+33123456789" aria-label="Nous appeler" class="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-700 transition-colors">
+                    <ion-icon name="call-outline" class="text-xl"></ion-icon>
+                </a>
                 
                 <!-- MODIFIÉ: Menu burger pour mobile -->
-                <button id="burger-btn" class="md:hidden p-2" aria-label="Ouvrir le menu">
+                <button id="burger-btn" class="md:hidden p-2 text-gray-300" aria-label="Ouvrir le menu">
                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </nav>
     </header>
 
+    <!-- NOUVEAU: Dropdown de Recherche de Catégorie -->
+    <div id="search-dropdown" class="hidden fixed top-[68px] md:top-[69px] left-0 right-0 z-40 bg-gray-950 text-white shadow-lg border-t border-gray-800 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h3 class="text-lg font-semibold text-center mb-4">Rechercher par Catégorie</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <button class="search-category-btn p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors flex flex-col items-center justify-center" data-category="citadine">
+                    <ion-icon name="car-sport-outline" class="text-3xl mx-auto mb-2"></ion-icon>
+                    <span class="font-medium">Citadine</span>
+                </button>
+                <button class="search-category-btn p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors flex flex-col items-center justify-center" data-category="suv">
+                    <ion-icon name="speedometer-outline" class="text-3xl mx-auto mb-2"></ion-icon> <!-- Using a different icon for variety -->
+                    <span class="font-medium">SUV</span>
+                </button>
+                <button class="search-category-btn p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors flex flex-col items-center justify-center" data-category="berline">
+                    <ion-icon name="car-outline" class="text-3xl mx-auto mb-2"></ion-icon>
+                    <span class="font-medium">Berline</span>
+                </button>
+                <button class="search-category-btn p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors flex flex-col items-center justify-center" data-category="sport">
+                    <ion-icon name="rocket-outline" class="text-3xl mx-auto mb-2"></ion-icon>
+                    <span class="font-medium">Sport</span>
+                </button>
+                <button class="search-category-btn p-4 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors flex flex-col items-center justify-center" data-category="electrique">
+                    <ion-icon name="battery-charging-outline" class="text-3xl mx-auto mb-2"></ion-icon>
+                    <span class="font-medium">Électrique</span>
+                </button>
+                <button class="search-category-btn p-4 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors col-span-2 sm:col-span-3 lg:col-span-5" data-category="toutes">
+                    <span class="font-medium">Voir toutes les catégories</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- NOUVEAU: Menu Mobile -->
-    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-screen bg-white dark:bg-gray-900 z-[60] p-8 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-screen bg-gray-950 z-[60] p-8 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
         <!-- Bouton de fermeture -->
         <button id="close-menu-btn" class="absolute top-6 right-6 p-2" aria-label="Fermer le menu">
-            <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
         
-        <a href="#accueil" class="mobile-menu-link text-3xl font-bold text-blue-700 dark:text-blue-400 mb-8 block">AutoFrance</a>
+        <div class="mobile-menu-link mb-8 block">
+            <a href="#accueil" class="text-3xl font-bold text-white block">ABC Exporte</a>
+            <span class="text-sm text-blue-400">✈️ Exportation vers l'Algérie</span>
+        </div>
         
         <nav class="flex flex-col space-y-6">
-            <a href="#accueil" class="mobile-menu-link text-2xl text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Accueil</a>
-            <a href="#vehicules" class="mobile-menu-link text-2xl text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Véhicules</a>
-            <a href="#pourquoi-nous" class="mobile-menu-link text-2xl text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Pourquoi Nous ?</a>
-            <a href="#contact" class="mobile-menu-link text-2xl text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+            <a href="#accueil" class="mobile-menu-link text-2xl text-gray-700 hover:text-blue-600 transition-colors">Accueil</a>
+            <a href="#vehicules" class="mobile-menu-link text-2xl text-gray-700 hover:text-blue-600 transition-colors">Véhicules</a>
+            <a href="#contact" class="mobile-menu-link text-2xl text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
         </nav>
     </div>
 
@@ -265,32 +372,26 @@
             </div>
         </section>
 
-        <!-- NOUVEAU: Section Offres Spéciales -->
-        <section id="offres-speciales" class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <!-- NOUVEAU: Section Carrousel "En Vedette" -->
+        <section id="featured-carousel" class="py-20 bg-black text-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal-on-scroll">Nos Offres du Moment</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Offre 1 (MODIFIÉE) -->
-                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg reveal-on-scroll transition-transform duration-300 hover:scale-105 overflow-hidden">
-                        <img src="https://i.imgur.com/Qkf70eh.jpeg" alt="Le Mois de l'Hybride" class="w-full h-48 object-cover">
-                        <div class="p-6 text-center">
-                            <h3 class="text-2xl font-bold mb-2">Le Mois de l'Hybride</h3>
-                            <p class="text-gray-700 dark:text-gray-300">Jusqu'à 1500€ de prime à la conversion supplémentaire pour l'achat d'un véhicule hybride d'occasion.</p>
-                        </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal-on-scroll">Nos Véhicules en Vedette</h2>
+                
+                <div id="vehicle-carousel" class="carousel-container shadow-lg reveal-on-scroll">
+                    <div id="carousel-track" class="carousel-track">
+                        <!-- Les "slides" seront injectées par JS -->
                     </div>
-                    <!-- Offre 2 -->
-                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center shadow-lg reveal-on-scroll transition-transform duration-300 hover:scale-105">
-                        <ion-icon name="cog-outline" class="text-5xl text-blue-600 dark:text-blue-400 mx-auto mb-4"></ion-icon>
-                        <h3 class="text-2xl font-bold mb-2">Contrôle Technique Offert</h3>
-                        <p class="text-gray-700 dark:text-gray-300">Pour tout achat d'un véhicule d'occasion de plus de 4 ans, nous vous offrons le premier contrôle technique.</p>
-                    </div>
-                    <!-- Offre 3 -->
-                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center shadow-lg reveal-on-scroll transition-transform duration-300 hover:scale-105">
-                        <ion-icon name="shield-checkmark-outline" class="text-5xl text-blue-600 dark:text-blue-400 mx-auto mb-4"></ion-icon>
-                        <h3 class="text-2xl font-bold mb-2">Extension de Garantie</h3>
-                        <p class="text-gray-700 dark:text-gray-300">Profitez d'un an de garantie constructeur supplémentaire sur tous nos véhicules neufs en stock.</p>
+                    <button id="carousel-prev" class="carousel-btn prev" aria-label="Précédent">
+                        <ion-icon name="chevron-back-outline" class="text-2xl text-gray-800"></ion-icon>
+                    </button>
+                    <button id="carousel-next" class="carousel-btn next" aria-label="Suivant">
+                        <ion-icon name="chevron-forward-outline" class="text-2xl text-gray-800"></ion-icon>
+                    </button>
+                    <div id="carousel-dots" class="carousel-dots">
+                        <!-- Les "dots" seront injectés par JS -->
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -298,64 +399,21 @@
 
         <!-- NOUVEAU: Section Financement (SUPPRIMÉE) -->
 
-        <!-- NOUVEAU: Section Pourquoi Nous Choisir -->
-        <section id="pourquoi-nous" class="relative py-20 transition-colors duration-300 bg-cover bg-center bg-fixed" style="background-image: url('https://i.imgur.com/TFUlTKQ.jpeg');">
-            <!-- Superposition sombre pour la lisibilité -->
-            <div class="absolute inset-0 bg-black opacity-70"></div>
-            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal-on-scroll text-white">Pourquoi Choisir AutoFrance ?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Avantage 1 -->
-                    <div class="text-center reveal-on-scroll group">
-                        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-                            <ion-icon name="shield-checkmark-outline" class="text-4xl"></ion-icon>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">150 Points de Contrôle</h3>
-                        <p class="text-gray-200">Chaque véhicule d'occasion est méticuleusement inspecté pour garantir votre sécurité et tranquillité d'esprit.</p>
-                    </div>
-                    <!-- Avantage 2 -->
-                    <div class="text-center reveal-on-scroll group">
-                        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-                            <ion-icon name="swap-horizontal-outline" class="text-4xl"></ion-icon>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Reprise Garantie 24h</h3>
-                        <p class="text-gray-200">Obtenez une offre de reprise ferme pour votre ancien véhicule en moins de 24 heures, sans obligation d'achat.</p>
-					</div>
-                    <!-- Avantage 3 -->
-                    <div class="text-center reveal-on-scroll group">
-                        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-                            <ion-icon name="document-text-outline" class="text-4xl"></ion-icon>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Financement Sur Place</h3>
-                        <p class="text-gray-200">Nos experts en financement trouvent la solution adaptée à votre budget (Crédit, LOA, LLD) directement en concession.</p>
-                    </div>
-                    <!-- Avantage 4 -->
-                    <div class="text-center reveal-on-scroll group">
-                        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
-                            <ion-icon name="home-outline" class="text-4xl"></ion-icon>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 text-white">Essai à Domicile</h3>
-                        <p class="text-gray-200">Nous amenons le véhicule de votre choix directement chez vous pour un essai dans vos conditions habituelles.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- NOUVEAU: Section À Propos (SUPPRIMÉE) -->
         
         <!-- =========== SECTION VÉHICULES (Mise à jour majeure) =========== -->
-        <section id="vehicules" class="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+        <section id="vehicules" class="py-20 bg-black transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 reveal-on-scroll">Nos Véhicules</h2>
 
                 <!-- =========== FILTRES DE RECHERCHE AVANCÉS =========== -->
-                <div class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md reveal-on-scroll">
+                <div class="mb-12 p-6 bg-gray-900 rounded-lg shadow-md reveal-on-scroll">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         
                         <!-- Filtre Catégorie -->
                         <div>
                             <label for="filter-category" class="block text-sm font-medium mb-1">Catégorie</label>
-                            <select id="filter-category" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <select id="filter-category" class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                 <option value="toutes">Toutes les catégories</option>
                                 <option value="citadine">Citadine</option>
                                 <option value="suv">SUV</option>
@@ -367,7 +425,7 @@
                         <!-- Filtre Carburant -->
                         <div>
                             <label for="filter-fuel" class="block text-sm font-medium mb-1">Carburant</label>
-                            <select id="filter-fuel" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <select id="filter-fuel" class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                 <option value="tous">Tous les carburants</option>
                                 <option value="essence">Essence</option>
                                 <option value="diesel">Diesel</option>
@@ -378,7 +436,7 @@
                         <!-- Filtre Statut -->
                         <div>
                             <label for="filter-status" class="block text-sm font-medium mb-1">Statut</label>
-                            <select id="filter-status" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <select id="filter-status" class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                 <option value="tous">Tous les statuts</option>
                                 <option value="neuf">Neuf</option>
                                 <option value="occasion">Occasion</option>
@@ -387,7 +445,7 @@
                         <!-- Filtre Année -->
                         <div>
                             <label for="filter-year" class="block text-sm font-medium mb-1">Année (min)</label>
-                            <select id="filter-year" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <select id="filter-year" class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                 <option value="toutes">Toutes les années</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>
@@ -401,34 +459,34 @@
                         <div class="md:col-span-2 lg:col-span-4">
                             <label for="search-bar" class="block text-sm font-medium mb-1">Rechercher par nom</label>
                             <input type="search" id="search-bar" placeholder="Ex: Peugeot 308..."
-                                   class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                   class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         </div>
 
                         <!-- Filtre Prix (Curseur) -->
                         <div class="md:col-span-2 lg:col-span-2">
-                            <label for="filter-price" class="block text-sm font-medium mb-1">Tranche de Prix</label>
-                            <input type="range" id="filter-price" min="10000" max="80000" value="80000" step="1000"
-                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                <span>10 000 €</span>
-                                <span id="price-value-display">Max: 80 000 €</span>
+                            <label for="filter-price" class="block text-sm font-medium mb-1">Prix Maximum</label>
+                            <input type="range" id="filter-price" min="1000" max="80000" value="80000" step="1000"
+                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-600 mt-1">
+                                <span>1 000 €</span>
+                                <span id="price-value-display">80 000 €</span>
                             </div>
                         </div>
 
                         <!-- Filtre Kilométrage (Curseur) -->
                         <div class="md:col-span-2 lg:col-span-2">
-                            <label for="filter-km" class="block text-sm font-medium mb-1">Kilométrage</label>
+                            <label for="filter-km" class="block text-sm font-medium mb-1">Kilométrage Maximum</label>
                             <input type="range" id="filter-km" min="0" max="200000" value="200000" step="5000"
-                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-600 mt-1">
                                 <span>0 km</span>
-                                <span id="km-value-display">Max: 200 000 km</span>
+                                <span id="km-value-display">200 000 km</span>
                             </div>
                         </div>
 
                         <!-- Bouton Alerte Nouveaux Arrivages -->
                         <div class="md:col-span-2 lg:col-span-4 mt-4">
-                            <button id="save-alert-btn" class="w-full md:w-auto px-6 py-2 border border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg font-semibold hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 transition-colors">
+                            <button id="save-alert-btn" class="w-full md:w-auto px-6 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
                                 <ion-icon name="notifications-outline" class="mr-2 -mb-0.5"></ion-icon>
                                 Créer une alerte pour ces filtres
                             </button>
@@ -443,14 +501,14 @@
                         <button id="view-grid-btn" class="p-2 rounded-lg bg-blue-600 text-white" aria-label="Vue grille">
                             <ion-icon name="grid-outline" class="text-xl"></ion-icon>
                         </button>
-                        <button id="view-list-btn" class="p-2 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600" aria-label="Vue liste">
+                        <button id="view-list-btn" class="p-2 rounded-lg bg-gray-900 text-white border border-gray-700" aria-label="Vue liste">
                             <ion-icon name="list-outline" class="text-xl"></ion-icon>
                         </button>
                     </div>
                     <!-- Menu de Tri -->
                     <div>
                         <label for="sort-by" class="text-sm font-medium mr-2">Trier par :</label>
-                        <select id="sort-by" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <select id="sort-by" class="px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <option value="default">Par défaut</option>
                             <option value="price-asc">Prix (Croissant)</option>
                             <option value="price-desc">Prix (Décroissant)</option>
@@ -465,43 +523,43 @@
                     <!-- Message de chargement Squelette -->
                     <div id="skeleton-loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         <!-- Squelette 1 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse">
-                            <div class="w-full h-48 bg-gray-300 dark:bg-gray-700"></div>
+                        <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse">
+                            <div class="w-full h-48 bg-gray-700"></div>
                             <div class="p-6">
-                                <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
-                                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
-                                <div class="h-5 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
-                                <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded-lg w-full"></div>
+                                <div class="h-4 bg-gray-700 rounded w-1/4 mb-4"></div>
+                                <div class="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
+                                <div class="h-5 bg-gray-700 rounded w-1/2 mb-6"></div>
+                                <div class="h-10 bg-gray-700 rounded-lg w-full"></div>
                             </div>
                         </div>
                         <!-- Squelette 2 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse">
-                            <div class="w-full h-48 bg-gray-300 dark:bg-gray-700"></div>
+                        <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse">
+                            <div class="w-full h-48 bg-gray-700"></div>
                             <div class="p-6">
-                                <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
-                                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
-                                <div class="h-5 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
-                                <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded-lg w-full"></div>
+                                <div class="h-4 bg-gray-700 rounded w-1/4 mb-4"></div>
+                                <div class="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
+                                <div class="h-5 bg-gray-700 rounded w-1/2 mb-6"></div>
+                                <div class="h-10 bg-gray-700 rounded-lg w-full"></div>
                             </div>
                         </div>
                         <!-- Squelette 3 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse hidden sm:block">
-                            <div class="w-full h-48 bg-gray-300 dark:bg-gray-700"></div>
+                        <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse hidden sm:block">
+                            <div class="w-full h-48 bg-gray-700"></div>
                             <div class="p-6">
-                                <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
-                                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
-                                <div class="h-5 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
-                                <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded-lg w-full"></div>
+                                <div class="h-4 bg-gray-700 rounded w-1/4 mb-4"></div>
+                                <div class="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
+                                <div class="h-5 bg-gray-700 rounded w-1/2 mb-6"></div>
+                                <div class="h-10 bg-gray-700 rounded-lg w-full"></div>
                             </div>
                         </div>
                         <!-- Squelette 4 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse hidden lg:block">
-                            <div class="w-full h-48 bg-gray-300 dark:bg-gray-700"></div>
+                        <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden animate-skeleton-pulse hidden lg:block">
+                            <div class="w-full h-48 bg-gray-700"></div>
                             <div class="p-6">
-                                <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
-                                <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
-                                <div class="h-5 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
-                                <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded-lg w-full"></div>
+                                <div class="h-4 bg-gray-700 rounded w-1/4 mb-4"></div>
+                                <div class="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
+                                <div class="h-5 bg-gray-700 rounded w-1/2 mb-6"></div>
+                                <div class="h-10 bg-gray-300 rounded-lg w-full"></div>
                             </div>
                         </div>
                     </div>
@@ -515,14 +573,14 @@
                 </div>
 
                 <!-- Message "Aucun résultat" -->
-                <div id="no-results-message" class="hidden text-center text-gray-500 dark:text-gray-400 mt-12 text-xl">
+                <div id="no-results-message" class="hidden text-center text-gray-500 mt-12 text-xl">
                     <p>Aucun véhicule ne correspond à vos critères de recherche.</p>
                 </div>
             </div>
         </section>
         
         <!-- =========== SECTIONS CONTACT ET EMPLACEMENT (combinées) =========== -->
-        <section class="py-20 bg-white dark:bg-gray-800 transition-colors duration-300">
+        <section class="py-20 bg-black transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     
@@ -533,22 +591,22 @@
                             <div>
                                 <label for="contact-name" class="block text-sm font-medium mb-1">Nom</label>
                                 <input type="text" id="contact-name" name="name" required
-                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                       class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             </div>
                             <div>
                                 <label for="contact-email" class="block text-sm font-medium mb-1">Adresse e-mail</label>
                                 <input type="email" id="contact-email" name="email" required
-                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                       class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             </div>
                             <div>
                                 <label for="contact-subject" class="block text-sm font-medium mb-1">Objet du message</label>
                                 <input type="text" id="contact-subject" name="subject" required
-                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                       class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             </div>
                             <div>
                                 <label for="contact-message" class="block text-sm font-medium mb-1">Message</label>
                                 <textarea id="contact-message" name="message" rows="5" required
-                                          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                                          class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-900 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
                             </div>
                             <button type="submit" class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition-colors transition-transform transform hover:scale-105">
                                 Envoyer
@@ -570,8 +628,8 @@
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
-                        <p class="mt-6 text-lg text-gray-700 dark:text-gray-300">
-                            <strong>AutoFrance Paris</strong><br>
+                        <p class="mt-6 text-lg text-gray-700">
+                            <strong>ABC Exporte</strong><br>
                             123 Rue de Rivoli<br>
                             75001 Paris, France
                         </p>
@@ -582,24 +640,25 @@
         </section>
 
         <!-- NOUVEAU: Widget "Vus Récemment" -->
-        <section id="recent-history" class="py-12 bg-gray-200 dark:bg-gray-800 transition-colors duration-300">
+        <section id="recent-history" class="py-12 bg-gray-200 transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h3 class="text-xl font-bold text-center mb-6">Vos véhicules vus récemment</h3>
                 <div id="recent-history-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <!-- Les véhicules vus seront ajoutés ici par JS -->
-                    <p id="recent-history-placeholder" class="text-center text-gray-600 dark:text-gray-400 col-span-2 md:col-span-4">Vous n'avez pas encore consulté de véhicule.</p>
+                    <p id="recent-history-placeholder" class="text-center text-gray-600 col-span-2 md:col-span-4">Vous n'avez pas encore consulté de véhicule.</p>
                 </div>
             </div>
         </section>
 
     </main>
     <!-- =========== PIED DE PAGE (Mis à jour) =========== -->
-    <footer class="pt-16 pb-10 bg-gray-900 dark:bg-gray-950 text-gray-300 dark:text-gray-400 transition-colors duration-300">
+    <footer class="pt-16 pb-10 bg-gray-900 text-gray-300 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <!-- A propos -->
                 <div>
-                    <h4 class="text-lg font-bold text-white mb-4">AutoFrance</h4>
+                    <h4 class="text-lg font-bold text-white mb-4">ABC Exporte</h4>
+                    <p class="text-xs text-blue-300 mb-4">✈️ Spécialiste de l'exportation vers l'Algérie</p>
                     <p class="text-sm">Votre concessionnaire de confiance pour les véhicules français neufs et d'occasion. Qualité et service garantis.</p>
                 </div>
                 <!-- Liens Rapides -->
@@ -624,7 +683,7 @@
                 <div>
                     <h4 class="text-lg font-bold text-white mb-4">Restons Connectés</h4>
                     <p class="text-sm mb-2">123 Rue de Rivoli, 75001 Paris</p>
-                    <p class="text-sm mb-4">contact@autofrance.demo</p>
+                    <p class="text-sm mb-4">contact@abcexporte.demo</p>
                     <div class="flex space-x-4">
                         <a href="#" aria-label="Facebook" class="text-2xl hover:text-blue-400 transition-transform hover:scale-110"><ion-icon name="logo-facebook"></ion-icon></a>
                         <a href="#" aria-label="Instagram" class="text-2xl hover:text-blue-400 transition-transform hover:scale-110"><ion-icon name="logo-instagram"></ion-icon></a>
@@ -633,7 +692,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 pt-6 text-center text-sm">
-                <p>&copy; 2025 AutoFrance Démo. Tous droits réservés.</p>
+                <p>&copy; 2025 ABC Exporte. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
@@ -642,12 +701,12 @@
     <!-- =========== MODALE DÉTAILS VÉHICULE (Mise à jour) =========== -->
     <div id="vehicle-modal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
         <!-- Fond de la modale -->
-        <div class="modal-bg fixed inset-0 bg-black/60 dark:bg-black/80"></div>
+        <div class="modal-bg fixed inset-0 bg-black/60"></div>
         
         <!-- Contenu de la modale -->
-        <div class="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl overflow-y-auto transition-all duration-300">
+        <div class="relative w-full max-w-4xl max-h-[90vh] bg-gray-900 rounded-lg shadow-2xl overflow-y-auto transition-all duration-300">
             <!-- Bouton Fermer -->
-            <button aria-label="Fermer" class="modal-close-btn absolute top-4 right-4 p-2 text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-20">
+            <button aria-label="Fermer" class="modal-close-btn absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-800 rounded-full hover:bg-gray-200 transition-colors z-20">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
@@ -666,42 +725,34 @@
                                 <!-- Labels injectés par JS -->
                             </div>
                         </div>
-                        <span id="modal-price" class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2 md:mt-0 flex-shrink-0 md:ml-4">€XX XXX</span>
+                        <span id="modal-price" class="text-3xl font-bold text-blue-600 mt-2 md:mt-0 flex-shrink-0 md:ml-4">€XX XXX</span>
                     </div>
                     
                     <!-- Spécifications -->
                     <h3 class="text-xl font-semibold mt-6 mb-3">Spécifications</h3>
-                    <ul id="modal-specs" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-gray-700 dark:text-gray-300">
+                    <ul id="modal-specs" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-gray-700">
                         <!-- Les specs (format <li>) seront insérées par JS -->
                     </ul>
                     
                     <!-- Description -->
                     <h3 class="text-xl font-semibold mt-6 mb-3">Description</h3>
-                    <p id="modal-description" class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p id="modal-description" class="text-gray-700 leading-relaxed">
                         <!-- La description sera insérée par JS -->
                     </p>
                     
                     <!-- Historique (si occasion) -->
                     <div id="modal-history-container" class="hidden">
                         <h3 class="text-xl font-semibold mt-6 mb-3">Historique d'entretien</h3>
-                        <p id="modal-history" class="text-gray-700 dark:text-gray-300">
+                        <p id="modal-history" class="text-gray-700">
                             <!-- L'historique sera inséré par JS -->
                         </p>
                     </div>
 
                     <!-- Boutons d'action -->
-                    <div class="flex flex-wrap gap-4 mt-8 border-t dark:border-gray-700 pt-6">
+                    <div class="flex flex-wrap gap-4 mt-8 border-t border-gray-200 pt-6">
                         <button id="modal-order-btn" class="flex-1 md:flex-none px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold text-lg transition-colors">
                             <ion-icon name="paper-plane-outline" class="mr-2 -mb-0.5"></ion-icon>
                             Commander ce véhicule
-                        </button>
-                        <button id="modal-360-btn" class="flex-1 md:flex-none px-6 py-3 bg-gray-700 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-lg text-white font-semibold transition-colors">
-                            <ion-icon name="scan-outline" class="mr-2 -mb-0.5"></ion-icon>
-                            Vue 360° (Simulée)
-                        </button>
-                        <button id="modal-print-btn" class="flex-1 md:flex-none px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg font-semibold transition-colors">
-                            <ion-icon name="print-outline" class="mr-2 -mb-0.5"></ion-icon>
-                            Imprimer
                         </button>
                     </div>
                 </div>
@@ -713,12 +764,12 @@
     <!-- =========== MODALE FORMULAIRE DE COMMANDE =========== -->
     <div id="order-modal" class="modal fixed inset-0 z-[70] flex items-center justify-center p-4">
         <!-- Fond de la modale -->
-        <div class="modal-bg fixed inset-0 bg-black/70 dark:bg-black/90"></div>
+        <div class="modal-bg fixed inset-0 bg-black/70"></div>
         
         <!-- Contenu de la modale -->
-        <div class="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-lg shadow-2xl transition-all duration-300">
+        <div class="relative w-full max-w-lg bg-gray-900 rounded-lg shadow-2xl transition-all duration-300">
             <!-- Bouton Fermer -->
-            <button aria-label="Fermer" class="modal-close-btn absolute top-4 right-4 p-2 text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <button aria-label="Fermer" class="modal-close-btn absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-800 rounded-full hover:bg-gray-200 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
@@ -731,33 +782,33 @@
                         <div>
                             <label for="order-firstname" class="block text-sm font-medium mb-1">Prénom</label>
                             <input type="text" id="order-firstname" name="firstname" required
-                                   class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                   class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         </div>
                         <div>
                             <label for="order-lastname" class="block text-sm font-medium mb-1">Nom</label>
                             <input type="text" id="order-lastname" name="lastname" required
-                                   class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                   class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         </div>
                     </div>
                     <div>
                         <label for="order-email" class="block text-sm font-medium mb-1">Adresse e-mail</label>
                         <input type="email" id="order-email" name="email" required
-                               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                               class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
                         <label for="order-phone" class="block text-sm font-medium mb-1">Numéro de téléphone</label>
                         <input type="tel" id="order-phone" name="phone" required
-                               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                               class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                      <div>
                         <label for="order-password" class="block text-sm font-medium mb-1">Mot de passe (simulation)</label>
                         <input type="password" id="order-password" name="password" required
-                               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                               class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
                         <label for="order-notes" class="block text-sm font-medium mb-1">Notes/Commentaires</label>
                         <textarea id="order-notes" name="notes" rows="3"
-                                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                                  class="w-full px-4 py-2 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
                     </div>
                     <button type="submit" class="w-full px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition-colors mt-4">
                         Envoyer ma commande
@@ -772,37 +823,13 @@
         <p id="toast-message" class="font-semibold">Message de succès !</p>
     </div>
 
-    <!-- NOUVEAU: Bulle de Chat (Simulation) -->
-    <button id="chat-bubble-btn" class="fixed bottom-6 right-6 z-[80] w-16 h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-110" aria-label="Ouvrir le chat">
-        <ion-icon name="chatbubbles-outline" class="text-3xl"></ion-icon>
-    </button>
-    <div id="chat-window" class="modal fixed bottom-24 right-6 z-[80] w-full max-w-sm h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-xl flex flex-col">
-        <div class="p-4 bg-blue-600 text-white flex justify-between items-center rounded-t-lg">
-            <h3 class="font-bold text-lg">Une question ?</h3>
-            <button id="chat-close-btn" class="p-1" aria-label="Fermer le chat">
-                <ion-icon name="close-outline" class="text-2xl"></ion-icon>
-            </button>
-        </div>
-        <div class="flex-1 p-4 overflow-y-auto space-y-4">
-            <!-- Messages (Simulés) -->
-            <div class="flex">
-                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg max-w-[80%]">
-                    <p>Bonjour ! Comment puis-je vous aider aujourd'hui ?</p>
-                </div>
-            </div>
-        </div>
-        <div class="p-4 border-t dark:border-gray-700">
-            <form id="chat-form" class="flex space-x-2">
-                <input type="text" id="chat-input" placeholder="Tapez votre message..." class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg" aria-label="Envoyer">
-                    <ion-icon name="send-outline" class="text-xl"></ion-icon>
-                </button>
-            </form>
-        </div>
-    </div>
+    <!-- NOUVEAU: Bouton WhatsApp -->
+    <a href="https://wa.me/33123456789" target="_blank" rel="noopener noreferrer" id="whatsapp-bubble-btn" class="fixed bottom-6 right-6 z-[80] w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-110" aria-label="Contacter sur WhatsApp">
+        <ion-icon name="logo-whatsapp" class="text-3xl"></ion-icon>
+    </a>
 
     <!-- NOUVEAU: Bandeau Cookies (Simulation) -->
-    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-gray-900 dark:bg-gray-950 text-white p-6 shadow-2xl transform translate-y-full transition-transform duration-500 ease-out">
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-gray-900 text-white p-6 shadow-2xl transform translate-y-full transition-transform duration-500 ease-out">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm text-gray-300">
                 Nous utilisons des cookies (simulés) pour améliorer votre expérience. En continuant, vous acceptez notre <a href="#privacy" class="text-blue-400 hover:underline">politique de confidentialité</a>.
@@ -820,35 +847,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             // ===================================
-            // GESTION DU MODE SOMBRE/CLAIR
+            // GESTION DU MODE SOMBRE/CLAIR (SUPPRIMÉ)
             // ===================================
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIconMoon = document.getElementById('theme-icon-moon');
-            const themeIconSun = document.getElementById('theme-icon-sun');
-            const htmlEl = document.documentElement;
-
-            function setTheme(theme) {
-                if (theme === 'dark') {
-                    htmlEl.classList.add('dark');
-                    themeIconMoon.classList.add('hidden');
-                    themeIconSun.classList.remove('hidden');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    htmlEl.classList.remove('dark');
-                    themeIconMoon.classList.remove('hidden');
-                    themeIconSun.classList.add('hidden');
-                    localStorage.setItem('theme', 'light');
-                }
-            }
-
-            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            setTheme(savedTheme);
-
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
-                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-            });
-
             
             // ===================================
             // GESTION DU MENU MOBILE (NOUVEAU)
@@ -878,16 +878,68 @@
                     link.addEventListener('click', closeMobileMenu);
                 });
             }
+
+            // ===================================
+            // NOUVEAU: GESTION DROPDOWN RECHERCHE
+            // ===================================
+            const searchNavBtn = document.getElementById('search-nav-btn');
+            const searchDropdown = document.getElementById('search-dropdown');
+            const searchCategoryBtns = document.querySelectorAll('.search-category-btn');
+            
+            if (searchNavBtn && searchDropdown) {
+                searchNavBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Empêche la fermeture immédiate
+                    searchDropdown.classList.toggle('hidden');
+                });
+                
+                // Fermer si on clique n'importe où ailleurs
+                document.addEventListener('click', (e) => {
+                    if (!searchDropdown.classList.contains('hidden') && !searchDropdown.contains(e.target) && e.target !== searchNavBtn && !e.target.closest('#search-nav-btn')) {
+                        searchDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (searchCategoryBtns.length > 0 && searchDropdown) {
+                searchCategoryBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const category = btn.dataset.category;
+                        
+                        // 1. Mettre à jour le filtre principal
+                        const categoryFilterInput = document.getElementById('filter-category');
+                        if (categoryFilterInput) {
+                            categoryFilterInput.value = category;
+                        }
+                        
+                        // 2. Déclencher le filtrage (si la fonction existe)
+                        if (typeof filterVehicles === 'function') {
+                            filterVehicles();
+                        }
+                        
+                        // 3. Fermer le dropdown
+                        searchDropdown.classList.add('hidden');
+                        
+                        // 4. Faire défiler jusqu'aux véhicules
+                        const vehiculesSection = document.getElementById('vehicules');
+                        if (vehiculesSection) {
+                            // On attend un instant pour que le DOM se mette à jour
+                            setTimeout(() => {
+                                vehiculesSection.scrollIntoView({ behavior: 'smooth' });
+                            }, 100);
+                        }
+                    });
+                });
+            }
             
             // ===================================
             // EFFET MACHINE À ÉCRIRE
             // ===================================
             const typeTextSpan = document.getElementById('typewriter-text');
             const phrases = [
-                "Bienvenue chez AutoFrance",
-                "Découvrez nos véhicules français",
-                "Neuf et occasion pour tous les goûts",
-                "Votre prochaine aventure commence ici"
+                "Bienvenue chez ABC Exporte",
+                "Exportation de véhicules vers l'Algérie",
+                "Qualité garantie, prix compétitifs",
+                "Livraison directe en Algérie"
             ];
             let phraseIndex = 0;
             let charIndex = 0;
@@ -938,7 +990,7 @@
                     fuel: 'essence',
                     year: 2024,
                     km: 10,
-                    image: 'https://i.imgur.com/UjfjTOB.jpeg',
+                    image: 'https://i.imgur.com/D9P5Xpn.jpg',
                     specs: [
                         'Année: 2024',
                         'Motorisation: Essence 1.2L PureTech 130ch',
@@ -959,7 +1011,7 @@
                     fuel: 'hybride',
                     year: 2022,
                     km: 25000,
-                    image: 'https://i.imgur.com/oDFw2Fn.jpeg',
+                    image: 'https://i.imgur.com/fcMvvaP.jpg',
                     specs: [
                         'Année: 2022',
                         'Kilométrage: 25 000 km',
@@ -980,7 +1032,7 @@
                     fuel: 'diesel',
                     year: 2024,
                     km: 5,
-                    image: 'https://i.imgur.com/PpC9a3a.jpeg',
+                    image: 'https://i.imgur.com/mU5rvxB.jpg',
                     specs: [
                         'Année: 2024',
                         'Motorisation: Diesel 1.5L BlueHDi 110ch',
@@ -995,6 +1047,113 @@
                 }
             };
             
+            // ===================================
+            // GESTION DU CARROUSEL (NOUVEAU)
+            // ===================================
+            const carouselTrack = document.getElementById('carousel-track');
+            const carouselDotsContainer = document.getElementById('carousel-dots');
+            const carouselNext = document.getElementById('carousel-next');
+            const carouselPrev = document.getElementById('carousel-prev');
+            let carouselSlideIndex = 0;
+            let carouselInterval;
+            
+            // On prend les 3 véhicules de l'exemple pour le carrousel
+            const featuredVehicles = [allVehicleData['peugeot-308'], allVehicleData['renault-clio'], allVehicleData['citroen-c3']]; 
+
+            function buildCarousel() {
+                if (!carouselTrack) return;
+                carouselTrack.innerHTML = '';
+                carouselDotsContainer.innerHTML = '';
+
+                featuredVehicles.forEach((data, index) => {
+                    // Build Slide
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    const vehicleId = Object.keys(allVehicleData).find(key => allVehicleData[key].title === data.title);
+                    
+                    slide.innerHTML = `
+                        <img src="${data.image.replace('600x400', '1200x800')}" alt="${data.title}">
+                        <div class="carousel-caption">
+                            <h3 class="text-3xl font-bold mb-2">${data.title}</h3>
+                            <p class="text-lg mb-4 hidden sm:block">${data.description.substring(0, 80)}...</p>
+                            <a href="#vehicule=${vehicleId}" class="modal-link-btn px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-full text-white font-semibold">Voir les détails</a>
+                        </div>
+                    `;
+                    carouselTrack.appendChild(slide);
+
+                    // Build Dot
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot';
+                    dot.dataset.index = index;
+                    dot.ariaLabel = `Aller à l'image ${index + 1}`;
+                    carouselDotsContainer.appendChild(dot);
+                });
+
+                // Add event listeners for new modal links
+                document.querySelectorAll('.modal-link-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const vehicleId = new URL(e.currentTarget.href).hash.split('=')[1];
+                        openVehicleModal(vehicleId);
+                    });
+                });
+                
+                // Ré-attacher les écouteurs pour les points
+                 document.querySelectorAll('.carousel-dot').forEach(dot => {
+                    dot.addEventListener('click', () => setCarouselSlide(parseInt(dot.dataset.index)));
+                });
+
+                updateCarousel();
+                startCarouselInterval();
+            }
+
+            function updateCarousel() {
+                const slides = document.querySelectorAll('.carousel-slide');
+                const dots = document.querySelectorAll('.carousel-dot');
+                if (!slides.length || !dots.length) return;
+
+                if (carouselSlideIndex >= slides.length) carouselSlideIndex = 0;
+                if (carouselSlideIndex < 0) carouselSlideIndex = slides.length - 1;
+                
+                carouselTrack.style.transform = `translateX(-${carouselSlideIndex * 100}%)`;
+                
+                dots.forEach((dot, index) => {
+                    if (index === carouselSlideIndex) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                });
+            }
+
+            function moveCarousel(n) {
+                carouselSlideIndex += n;
+                updateCarousel();
+                resetCarouselInterval();
+            }
+
+            function setCarouselSlide(n) {
+                carouselSlideIndex = n;
+                updateCarousel();
+                resetCarouselInterval();
+            }
+
+            function startCarouselInterval() {
+                clearInterval(carouselInterval); // S'assurer qu'il n'y en a pas d'autre
+                carouselInterval = setInterval(() => {
+                    moveCarousel(1);
+                }, 5000); // Auto-scroll every 5 seconds
+            }
+
+            function resetCarouselInterval() {
+                clearInterval(carouselInterval);
+                startCarouselInterval();
+            }
+
+            if (carouselTrack) {
+                buildCarousel();
+                carouselNext.addEventListener('click', () => moveCarousel(1));
+                carouselPrev.addEventListener('click', () => moveCarousel(-1));
+            }
+
+
             // ===================================
             // GESTION DES MODALES
             // ===================================
@@ -1011,8 +1170,6 @@
             const modalHistoryContainer = document.getElementById('modal-history-container');
             const modalHistory = document.getElementById('modal-history');
             const modalOrderBtn = document.getElementById('modal-order-btn');
-            const modalPrintBtn = document.getElementById('modal-print-btn');
-            const modal360Btn = document.getElementById('modal-360-btn');
             const modalLabels = document.getElementById('modal-labels');
 
             // Éléments de la modale commande
@@ -1045,13 +1202,15 @@
 
                 // Mettre à jour l'affichage
                 recentHistoryGrid.innerHTML = ''; // Vider
-                recentHistoryPlaceholder.classList.add('hidden');
+                if (recentHistoryPlaceholder) {
+                    recentHistoryPlaceholder.classList.add('hidden');
+                }
 
                 recentlyViewed.forEach(item => {
                     const recentCard = `
-                        <a href="#vehicules" data-id="${item.id}" class="recent-item-link group block bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+                        <a href="#vehicules" data-id="${item.id}" class="recent-item-link group block bg-gray-900 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
                             <img src="${item.image}" alt="${item.title}" class="w-full h-24 object-cover">
-                            <h4 class="text-sm font-semibold p-2 text-center truncate group-hover:text-blue-600 dark:group-hover:text-blue-400">${item.title}</h4>
+                            <h4 class="text-sm font-semibold p-2 text-center truncate group-hover:text-blue-400">${item.title}</h4>
                         </a>
                     `;
                     recentHistoryGrid.insertAdjacentHTML('beforeend', recentCard);
@@ -1093,7 +1252,7 @@
                     if (data.labels) {
                         data.labels.forEach(label => {
                             const badge = `
-                                <span class="text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-0.5 rounded-full">
+                                <span class="text-xs font-medium bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">
                                     <ion-icon name="checkmark-circle-outline" class="-mb-0.5 mr-1"></ion-icon>${label}
                                 </span>
                             `;
@@ -1165,18 +1324,6 @@
                 }, 500);
             }
             
-            // NOUVEAU: Gérer le bouton Imprimer
-            modalPrintBtn.addEventListener('click', () => {
-                window.print();
-            });
-
-            // NOUVEAU: Gérer le bouton 360 (Simulation)
-            modal360Btn.addEventListener('click', () => {
-                // Remplacer par une alerte non-bloquante (toast)
-                showToast("Fonctionnalité 'Vue 360°' non implémentée (simulation).");
-            });
-
-            
             // ===================================
             // INJECTION ET FILTRES DES VÉHICULES
             // ===================================
@@ -1215,9 +1362,9 @@
                     // Définition des badges
                     let statusBadge = '';
                     if (data.status === 'neuf') {
-                        statusBadge = '<span class="inline-block bg-green-200 dark:bg-green-700 text-green-800 dark:text-green-100 text-xs px-3 py-1 rounded-full uppercase font-semibold">Neuf</span>';
+                        statusBadge = '<span class="inline-block bg-green-200 text-green-800 text-xs px-3 py-1 rounded-full uppercase font-semibold">Neuf</span>';
                     } else {
-                        statusBadge = '<span class="inline-block bg-yellow-200 dark:bg-yellow-700 text-yellow-800 dark:text-yellow-100 text-xs px-3 py-1 rounded-full uppercase font-semibold">Occasion</span>';
+                        statusBadge = '<span class="inline-block bg-yellow-200 text-yellow-800 text-xs px-3 py-1 rounded-full uppercase font-semibold">Occasion</span>';
                     }
                     
                     let overlayBadge = '';
@@ -1228,7 +1375,7 @@
                     }
 
                     const cardHTML = `
-                        <div class="vehicle-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl opacity-0 transform translate-y-5"
+                        <div class="vehicle-card bg-gray-900 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl opacity-0 transform translate-y-5"
                              data-id="${vehicleId}"
                              data-category="${data.category}" 
                              data-status="${data.status}" 
@@ -1242,24 +1389,19 @@
                             <div class="relative">
                                 <img src="${data.image}" alt="${data.title}" class="w-full h-48 object-cover" loading="lazy">
                                 ${overlayBadge}
-                                <!-- Bouton Favoris sur la carte -->
-                                <button class="favorite-btn absolute top-4 right-4 p-2 bg-white/70 dark:bg-gray-900/70 rounded-full text-red-500 hover:scale-110 transition-transform"
-                                        aria-label="Ajouter aux favoris" data-id="${vehicleId}">
-                                    <ion-icon name="heart-outline" class="text-2xl"></ion-icon>
-                                </button>
                             </div>
                             
                             <div class="p-6">
                                 ${statusBadge}
                                 <h3 class="text-2xl font-bold mt-3 mb-2">${data.title}</h3>
-                                <p class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">${data.price.toLocaleString('fr-FR')} €</p>
+                                <p class="text-xl font-semibold text-blue-600 mb-4">${data.price.toLocaleString('fr-FR')} €</p>
                                 <!-- Specs rapides pour la vue liste -->
-                                <div class="hidden-in-grid text-sm text-gray-700 dark:text-gray-300 mb-4 space-y-1">
+                                <div class="hidden-in-grid text-sm text-gray-700 mb-4 space-y-1">
                                     <p><strong>Année:</strong> ${data.year}</p>
                                     <p><strong>KM:</strong> ${data.km.toLocaleString('fr-FR')} km</p>
                                     <p><strong>Carburant:</strong> ${data.fuel.charAt(0).toUpperCase() + data.fuel.slice(1)}</p>
                                 </div>
-                                <button class="details-btn w-full px-4 py-2 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors"
+                                <button class="details-btn w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                                         data-id="${vehicleId}">
                                     Détails
                                 </button>
@@ -1288,15 +1430,21 @@
             const fuelFilter = document.getElementById('filter-fuel');
             const sortSelect = document.getElementById('sort-by');
 
-            // NOUVEAU: Mise à jour des sliders
-            if(priceFilter) {
+            // MODIFIÉ: Mise à jour des sliders
+            if(priceFilter && priceDisplay) {
+                // Afficher la valeur initiale
+                priceDisplay.textContent = `${parseInt(priceFilter.value).toLocaleString('fr-FR')} €`;
+                
                 priceFilter.addEventListener('input', () => {
-                    priceDisplay.textContent = `Max: ${parseInt(priceFilter.value).toLocaleString('fr-FR')} €`;
+                    priceDisplay.textContent = `${parseInt(priceFilter.value).toLocaleString('fr-FR')} €`; // MODIFIÉ: Affiche la valeur
                 });
             }
-            if(kmFilter) {
+            if(kmFilter && kmDisplay) {
+                // Afficher la valeur initiale
+                kmDisplay.textContent = `${parseInt(kmFilter.value).toLocaleString('fr-FR')} km`;
+
                 kmFilter.addEventListener('input', () => {
-                    kmDisplay.textContent = `Max: ${parseInt(kmFilter.value).toLocaleString('fr-FR')} km`;
+                    kmDisplay.textContent = `${parseInt(kmFilter.value).toLocaleString('fr-FR')} km`; // MODIFIÉ: Affiche la valeur
                 });
             }
 
@@ -1356,7 +1504,7 @@
                         if (resultsFound) {
                             noResultsMessage.classList.add('hidden');
                         } else {
-                            noResultsMessage.classList.remove('hidden');
+                            noResultsMessage.classList.add('hidden');
                         }
                     }
                 }, delay + 100); // Attendre que le dernier item soit potentiellement affiché
@@ -1378,54 +1526,21 @@
                 viewGridBtn.addEventListener('click', () => {
                     vehicleContainer.classList.remove('view-list');
                     viewGridBtn.classList.add('bg-blue-600', 'text-white');
-                    viewGridBtn.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200', 'border', 'border-gray-300', 'dark:border-gray-600');
-                    viewListBtn.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200', 'border', 'border-gray-300', 'dark:border-gray-600');
+                    viewGridBtn.classList.remove('bg-gray-900', 'text-white', 'border', 'border-gray-700');
+                    viewListBtn.classList.add('bg-gray-900', 'text-white', 'border', 'border-gray-700');
                     viewListBtn.classList.remove('bg-blue-600', 'text-white');
                 });
                 
                 viewListBtn.addEventListener('click', () => {
                     vehicleContainer.classList.add('view-list');
                     viewListBtn.classList.add('bg-blue-600', 'text-white');
-                    viewListBtn.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200', 'border', 'border-gray-300', 'dark:border-gray-600');
-                    viewGridBtn.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200', 'border', 'border-gray-300', 'dark:border-gray-600');
+                    viewListBtn.classList.remove('bg-gray-900', 'text-white', 'border', 'border-gray-700');
+                    viewGridBtn.classList.add('bg-gray-900', 'text-white', 'border', 'border-gray-700');
                     viewGridBtn.classList.remove('bg-blue-600', 'text-white');
                 });
             }
             
-            // NOUVEAU: Gestion des favoris
-            let favorites = [];
-            const favoriteNavBtn = document.getElementById('favorite-nav-btn');
-            const favoriteCount = document.getElementById('favorite-count');
-
-            function toggleFavorite(e) {
-                e.stopPropagation(); // Empêche l'ouverture de la modale
-                const btn = e.currentTarget;
-                const icon = btn.querySelector('ion-icon');
-                const vehicleId = btn.dataset.id;
-                
-                if (favorites.includes(vehicleId)) {
-                    // Retirer
-                    favorites = favorites.filter(id => id !== vehicleId);
-                    icon.setAttribute('name', 'heart-outline');
-                    showToast(`${allVehicleData[vehicleId].title} retiré des favoris.`);
-                } else {
-                    // Ajouter
-                    favorites.push(vehicleId);
-                    icon.setAttribute('name', 'heart');
-                    showToast(`${allVehicleData[vehicleId].title} ajouté aux favoris !`);
-                    
-                    // NOUVEAU: Animation sur l'icône de nav
-                    if (favoriteNavBtn) {
-                        favoriteNavBtn.classList.add('animate-bounce-once');
-                        setTimeout(() => {
-                            favoriteNavBtn.classList.remove('animate-bounce-once');
-                        }, 500);
-                    }
-                }
-                
-                // Mettre à jour le compteur
-                if (favoriteCount) favoriteCount.textContent = favorites.length;
-            }
+            // NOUVEAU: Gestion des favoris (SUPPRIMÉ)
             
             // Fonction pour (ré)attacher les écouteurs aux cartes
             function addCardListeners() {
@@ -1435,14 +1550,10 @@
                         openVehicleModal(button.dataset.id);
                     });
                 });
-                
-                // Ajouter aux favoris
-                document.querySelectorAll('.favorite-btn').forEach(button => {
-                    button.addEventListener('click', toggleFavorite);
-                });
             }
+
             
-            // NOUVEAU: Chargement initial
+            // NOUVEAU: Chargement initial des véhicules (RE-AJOUTÉ)
             if (skeletonLoader && vehicleGrid) {
                 setTimeout(() => {
                     skeletonLoader.style.display = 'none';
@@ -1453,7 +1564,7 @@
                 // S'il n'y a pas de loader, générer directement
                 generateVehicleCards();
             }
-            
+
             
             // ===================================
             // GESTION DES FORMULAIRES (SIMULATION)
@@ -1504,51 +1615,8 @@
 
             
             // ===================================
-            // NOUVEAU: GESTION DU CHAT (SIMULATION)
+            // NOUVEAU: GESTION DU CHAT (SUPPRIMÉ)
             // ===================================
-            const chatBubbleBtn = document.getElementById('chat-bubble-btn');
-            const chatWindow = document.getElementById('chat-window');
-            const chatCloseBtn = document.getElementById('chat-close-btn');
-            const chatForm = document.getElementById('chat-form');
-            
-            if (chatBubbleBtn && chatWindow && chatCloseBtn) {
-                chatBubbleBtn.addEventListener('click', () => chatWindow.classList.add('open'));
-                chatCloseBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
-            }
-            
-            if (chatForm) {
-                chatForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const input = document.getElementById('chat-input');
-                    const message = input.value;
-                    if (message.trim() === '') return;
-
-                    const chatHistory = chatWindow.querySelector('.overflow-y-auto');
-                    
-                    // Message utilisateur
-                    chatHistory.innerHTML += `
-                        <div class="flex justify-end">
-                            <div class="bg-blue-600 text-white p-3 rounded-lg max-w-[80%]">
-                                <p>${message}</p>
-                            </div>
-                        </div>
-                    `;
-                    input.value = '';
-                    chatHistory.scrollTop = chatHistory.scrollHeight;
-                    
-                    // Réponse simulée
-                    setTimeout(() => {
-                        chatHistory.innerHTML += `
-                            <div class="flex">
-                                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg max-w-[80%]">
-                                    <p>Merci pour votre message. Un conseiller va vous répondre (simulation).</p>
-                                </div>
-                            </div>
-                        `;
-                        chatHistory.scrollTop = chatHistory.scrollHeight;
-                    }, 1000);
-                });
-            }
             
             
             // ===================================
@@ -1622,4 +1690,3 @@
 
 </body>
 </html>
-
