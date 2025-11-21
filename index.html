@@ -393,13 +393,11 @@
     <!-- =========== EN-TÊTE =========== -->
     <header class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-lg shadow-lg z-50 border-b border-white/5 transition-all duration-300">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- LOGO MODIFIÉ -->
             <div class="flex items-center gap-3 hover:scale-105 transition-transform duration-300 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-600/30">A</div>
-                <div>
-                    <span class="text-xl font-bold block tracking-wide leading-none">ABC Exporte</span>
-                    <span class="text-[10px] uppercase tracking-widest text-blue-400 block font-semibold">Export France-Algérie</span>
-                </div>
+                <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-12 w-auto object-contain">
             </div>
+
             <div class="hidden md:flex space-x-8 items-center">
                 <a href="#accueil" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Accueil<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
                 <a href="javascript:openConditionsModal()" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Éligibilité<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
@@ -420,7 +418,9 @@
     <!-- Menu Mobile -->
     <div id="mobile-menu" class="fixed top-0 left-0 w-full h-screen bg-[#020617] z-[60] p-8 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden border-r border-gray-800">
         <button id="close-menu-btn" class="absolute top-6 right-6 p-2 hover:rotate-90 transition-transform"><ion-icon name="close-outline" class="text-3xl text-gray-400"></ion-icon></button>
-        <div class="mb-12 border-b border-gray-800 pb-6"><span class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 block">ABC Exporte</span></div>
+        <div class="mb-12 border-b border-gray-800 pb-6">
+            <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-12 w-auto object-contain">
+        </div>
         <nav class="flex flex-col space-y-6">
             <a href="#accueil" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="home-outline" class="text-blue-500"></ion-icon> Accueil</a>
             <a href="javascript:openConditionsModal()" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="information-circle-outline" class="text-blue-500"></ion-icon> Conditions</a>
@@ -620,9 +620,8 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
                 <!-- Brand -->
                 <div class="lg:col-span-1">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">A</div>
-                        <h3 class="text-2xl font-bold text-white">ABC Exporte</h3>
+                    <div class="mb-6">
+                        <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-16 w-auto object-contain">
                     </div>
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">
                         Expert en exportation de véhicules neufs et d'occasion de la France vers l'Algérie. Nous facilitons toutes vos démarches depuis 2010.
@@ -1036,4 +1035,3 @@
     </script>
 </body>
 </html>
-
