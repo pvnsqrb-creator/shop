@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC Exporte - Exportation de Véhicules vers l'Algérie</title>
     
-    <!-- Importation de Tailwind CSS -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Importation des icônes (Ionicons) -->
+    <!-- Icons (Ionicons) -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     
-    <!-- Configuration de Tailwind -->
+    <!-- Configuration Tailwind & Fonts -->
     <script>
         tailwind.config = {
             theme: {
@@ -45,10 +45,6 @@
                             '0%, 100%': { transform: 'rotate(-3deg)' },
                             '50%': { transform: 'rotate(3deg)' },
                         },
-                        'fade-in': {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
                         'zoom-in': {
                             '0%': { transform: 'scale(0.95)', opacity: '0' },
                             '100%': { transform: 'scale(1)', opacity: '1' },
@@ -60,7 +56,6 @@
                         'slide-down': 'slide-down 0.4s ease-out forwards',
                         'float': 'float 6s ease-in-out infinite',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
-                        'fade-in': 'fade-in 0.5s ease-out forwards',
                         'zoom-in': 'zoom-in 0.3s ease-out forwards',
                     }
                 },
@@ -69,77 +64,68 @@
     </script>
     
     <style>
-        /* Styles de base */
-        body { overflow-x: hidden; }
+        /* --- Styles de base --- */
+        body { overflow-x: hidden; background-color: #020617; color: white; }
         
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
-
-        /* Curseur machine à écrire */
+        
+        /* Cursor */
         .typewriter-cursor { border-right: 0.15em solid #3B82F6; animation: blink-caret .75s step-end infinite; }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: inherit; } }
 
-        /* Modales */
+        /* Animations & Components */
         .modal { visibility: hidden; opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(0.95); backdrop-filter: blur(8px); }
         .modal.open { visibility: visible; opacity: 1; transform: scale(1); }
         
-        /* Animations Reveal */
         .reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* Glassmorphism */
-        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 
-        /* Search Overlay */
         #search-overlay { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1); }
         #search-overlay.open { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 
-        /* Conditions Full Screen Modal */
         #conditions-modal { clip-path: circle(0% at 50% 50%); transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1); }
         #conditions-modal.open { clip-path: circle(150% at 50% 50%); }
 
-        /* Currency Widget */
-        #currency-widget { transform: translateX(-100%); transition: transform 0.3s ease-out; }
-        #currency-widget.open { transform: translateX(0); }
-
-        /* Scroll Bar */
         #scroll-progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #3B82F6, #8B5CF6); z-index: 100; transition: width 0.1s linear; }
         
-        /* Carrousel */
         .carousel-container { position: relative; overflow: hidden; border-radius: 1rem; }
         .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         .carousel-slide { flex: 0 0 100%; position: relative; min-width: 100%; }
         .carousel-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%); padding: 4rem 2rem 2rem; color: white; }
         
-        /* 3D Tilt Effect */
         .tilt-card { transform-style: preserve-3d; transform: perspective(1000px); }
         .tilt-content { transition: transform 0.1s ease-out; }
 
-        /* Timeline */
         .timeline-step::after { content: ''; position: absolute; top: 2rem; left: 50%; width: 100%; height: 2px; background: #1f2937; z-index: -1; }
         .timeline-step:last-child::after { display: none; }
         @media (max-width: 768px) { .timeline-step::after { display: none; } }
         
-        /* Accordion */
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
         .faq-item.active .faq-content { max-height: 500px; }
         .faq-item.active .faq-icon { transform: rotate(180deg); }
 
-        /* Steps Animation */
         .step-container { display: none; animation: fade-in-up 0.5s ease forwards; }
         .step-container.active { display: block; }
+        
+        /* Logo Grid Styles in Search */
+        .brand-grid-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; border-radius: 1rem; transition: all 0.3s; background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(75, 85, 99, 0.4); }
+        .brand-grid-btn:hover { border-color: #3b82f6; background: rgba(30, 58, 138, 0.2); transform: translateY(-5px); }
+        .brand-logo-img { height: 50px; width: auto; object-fit: contain; margin-bottom: 0.75rem; filter: grayscale(100%) brightness(200%); transition: all 0.3s; }
+        .brand-grid-btn:hover .brand-logo-img { filter: grayscale(0%) brightness(100%); transform: scale(1.1); }
 
-        /* Condition Cards */
+        /* Condition Cards & List Styles */
         .condition-choice-card { transition: all 0.3s ease; }
         .condition-choice-card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.3); }
         .condition-detail-view { display: none; animation: zoom-in 0.4s ease forwards; }
         .condition-detail-view.active { display: block; }
-
-        /* List Styling in Conditions */
+        
         .condition-list li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.95rem; color: #d1d5db; }
+        
         .condition-list li ion-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 0.15rem; }
         .condition-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
     </style>
@@ -148,68 +134,60 @@
 
     <div id="scroll-progress-bar"></div>
 
-    <!-- =========== CURRENCY CONVERTER WIDGET =========== -->
-    <div id="currency-widget-toggle" class="fixed bottom-24 left-0 z-[90] bg-blue-600 text-white p-3 rounded-r-xl cursor-pointer shadow-lg hover:bg-blue-500 transition-all flex items-center gap-2 group">
-        <ion-icon name="cash-outline" class="text-2xl"></ion-icon>
-        <span class="font-bold text-sm hidden group-hover:inline-block">Convertisseur DZD</span>
-    </div>
-
-    <div id="currency-widget" class="fixed bottom-24 left-0 z-[90] bg-gray-900 border border-gray-700 rounded-r-xl p-6 shadow-2xl w-80">
-        <button id="close-currency-btn" class="absolute top-2 right-2 text-gray-400 hover:text-white"><ion-icon name="close-outline" class="text-xl"></ion-icon></button>
-        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2"><ion-icon name="calculator-outline" class="text-blue-500"></ion-icon> Convertisseur</h3>
-        <div class="space-y-4">
-            <div>
-                <label class="text-xs text-gray-500 font-bold uppercase block mb-1">Montant en Euros (€)</label>
-                <div class="relative">
-                    <input type="number" id="converter-eur" value="1000" class="w-full bg-black/30 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-blue-500 outline-none">
-                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">€</span>
-                </div>
-            </div>
-            <div class="flex justify-center"><ion-icon name="arrow-down-outline" class="text-gray-500"></ion-icon></div>
-            <div>
-                <label class="text-xs text-gray-500 font-bold uppercase block mb-1">Montant en Dinars (DZD)</label>
-                <div class="relative">
-                    <input type="text" id="converter-dzd" readonly class="w-full bg-blue-900/20 border border-blue-500/50 rounded-lg px-3 py-2 text-blue-400 font-bold">
-                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-500 text-xs">1€ = 275 DZD</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- =========== SEARCH OVERLAY =========== -->
     <div id="search-overlay" class="fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-center p-4">
         <button id="close-search-btn" class="absolute top-8 right-8 text-gray-400 hover:text-white transition-colors">
             <ion-icon name="close-outline" class="text-5xl"></ion-icon>
         </button>
         
-        <div class="w-full max-w-4xl text-center relative">
+        <div class="w-full max-w-5xl text-center relative">
             <div class="flex justify-center gap-2 mb-8">
                 <div id="dot-1" class="w-3 h-3 rounded-full bg-blue-600"></div>
                 <div id="dot-2" class="w-3 h-3 rounded-full bg-gray-700"></div>
                 <div id="dot-3" class="w-3 h-3 rounded-full bg-gray-700"></div>
             </div>
 
+            <!-- STEP 1: BRANDS WITH LOGOS -->
             <div id="step-brand" class="step-container active">
-                <h2 class="text-4xl font-bold mb-10">Choisissez une <span class="text-blue-500">marque</span></h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="Renault"><span class="text-2xl font-bold group-hover:text-blue-400">RENAULT</span></button>
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="Peugeot"><span class="text-2xl font-bold group-hover:text-blue-400">PEUGEOT</span></button>
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="Citroën"><span class="text-2xl font-bold group-hover:text-blue-400">CITROËN</span></button>
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="DS"><span class="text-2xl font-bold group-hover:text-blue-400">DS</span></button>
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="Alpine"><span class="text-2xl font-bold group-hover:text-blue-400">ALPINE</span></button>
-                    <button class="brand-btn p-8 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-2xl hover:bg-blue-900/20 transition-all group" data-brand="Toutes"><span class="text-xl font-medium text-gray-400 group-hover:text-white">Toutes les marques</span></button>
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white">Choisissez une <span class="text-blue-500">marque</span></h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                    <button class="brand-grid-btn group" data-brand="Renault">
+                        <img src="https://imgur.com/GrJ32cM.png" alt="Renault" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">RENAULT</span>
+                    </button>
+                    <button class="brand-grid-btn group" data-brand="Peugeot">
+                        <img src="https://imgur.com/EzFTD82.png" alt="Peugeot" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">PEUGEOT</span>
+                    </button>
+                    <button class="brand-grid-btn group" data-brand="Citroën">
+                        <img src="https://imgur.com/RbrBono.png" alt="Citroën" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">CITROËN</span>
+                    </button>
+                    <button class="brand-grid-btn group" data-brand="Skoda">
+                        <img src="https://imgur.com/4rSR68A.png" alt="Skoda" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">SKODA</span>
+                    </button>
+                    <button class="brand-grid-btn group" data-brand="Dacia">
+                        <img src="https://imgur.com/0s26q3O.png" alt="Dacia" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">DACIA</span>
+                    </button>
+                    <button class="brand-grid-btn group" data-brand="Seat">
+                        <img src="https://imgur.com/JQjLxpP.png" alt="Seat" class="brand-logo-img">
+                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">SEAT</span>
+                    </button>
                 </div>
+                <button class="mt-8 text-gray-500 hover:text-white underline text-sm" data-brand="Toutes">Voir toutes les marques</button>
             </div>
 
             <div id="step-model" class="step-container">
-                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-brand" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-4xl font-bold">Choisissez un <span class="text-blue-500">modèle</span></h2></div>
-                <div id="models-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
+                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-brand" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-3xl md:text-4xl font-bold text-white">Choisissez un <span class="text-blue-500">modèle</span></h2></div>
+                <div id="models-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"></div>
             </div>
 
             <div id="step-price" class="step-container">
-                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-model" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-4xl font-bold">Votre budget <span class="text-blue-500">maximum</span></h2></div>
-                <div class="max-w-lg mx-auto bg-gray-900 p-10 rounded-3xl border border-gray-800">
-                    <div class="text-center mb-8"><span id="wizard-price-display" class="text-5xl font-bold text-blue-500">80 000 €</span><p class="text-gray-500 mt-2">Hors frais de douane</p></div>
+                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-model" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-3xl md:text-4xl font-bold text-white">Votre budget <span class="text-blue-500">maximum</span></h2></div>
+                <div class="max-w-lg mx-auto bg-gray-900 p-8 rounded-3xl border border-gray-800">
+                    <div class="text-center mb-8"><span id="wizard-price-display" class="text-4xl md:text-5xl font-bold text-blue-500">80 000 €</span><p class="text-gray-500 mt-2">Hors frais de douane</p></div>
                     <input type="range" id="wizard-price-input" min="5000" max="100000" step="1000" value="80000" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 mb-10">
                     <button id="wizard-submit-btn" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2"><ion-icon name="search"></ion-icon> Voir les offres</button>
                 </div>
@@ -217,8 +195,8 @@
         </div>
     </div>
 
-    <!-- =========== CONDITIONS GUIDE FULL SCREEN =========== -->
-    <div id="conditions-modal" class="fixed inset-0 z-[100] bg-[#020617] text-white overflow-y-auto flex flex-col">
+    <!-- =========== CONDITIONS FULL SCREEN =========== -->
+    <div id="conditions-modal" class="fixed inset-0 z-[100] bg-[#020617] text-white overflow-y-auto flex flex-col hidden">
         <!-- Header Modal -->
         <div class="p-6 flex justify-between items-center border-b border-gray-800 sticky top-0 bg-[#020617]/90 backdrop-blur-md z-20">
             <div class="flex items-center gap-2">
@@ -232,7 +210,7 @@
 
         <!-- STEP 1: CHOICE -->
         <div id="condition-step-choice" class="flex-grow flex flex-col items-center justify-center p-6 condition-detail-view active">
-            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center">Quel type de véhicule <br>souhaitez-vous <span class="text-blue-600">importer</span> ?</h2>
+            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center text-white">Quel type de véhicule <br>souhaitez-vous <span class="text-blue-600">importer</span> ?</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
                 <!-- Card Neuf -->
@@ -241,7 +219,7 @@
                     <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-blue-600/30 group-hover:scale-110 transition-transform">
                         <ion-icon name="star"></ion-icon>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4">Véhicule Neuf</h3>
+                    <h3 class="text-3xl font-bold mb-4 text-white">Véhicule Neuf</h3>
                     <p class="text-gray-400 text-lg mb-8">Pour CCR, Licence Moudjahidine ou régime standard (Passeport).</p>
                     <div class="flex items-center gap-2 text-blue-400 font-bold">
                         <span>Voir les conditions</span>
@@ -255,7 +233,7 @@
                     <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-green-600/30 group-hover:scale-110 transition-transform">
                         <ion-icon name="time"></ion-icon>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4">Véhicule Occasion</h3>
+                    <h3 class="text-3xl font-bold mb-4 text-white">Véhicule Occasion</h3>
                     <p class="text-gray-400 text-lg mb-8">Véhicules de moins de 3 ans pour les résidents.</p>
                     <div class="flex items-center gap-2 text-green-400 font-bold">
                         <span>Voir les conditions</span>
@@ -274,7 +252,7 @@
             
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-2xl"><ion-icon name="star"></ion-icon></div>
-                <h2 class="text-3xl font-bold">Conditions Véhicule Neuf</h2>
+                <h2 class="text-3xl font-bold text-white">Conditions Véhicule Neuf</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -346,7 +324,7 @@
             
             <div class="flex items-center gap-4 mb-8">
                 <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-2xl"><ion-icon name="time"></ion-icon></div>
-                <h2 class="text-3xl font-bold">Conditions Véhicule Occasion (-3 ans)</h2>
+                <h2 class="text-3xl font-bold text-white">Conditions Véhicule Occasion (-3 ans)</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -393,22 +371,22 @@
     <!-- =========== EN-TÊTE =========== -->
     <header class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-lg shadow-lg z-50 border-b border-white/5 transition-all duration-300">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- LOGO MODIFIÉ -->
+            <!-- LOGO -->
             <div class="flex items-center gap-3 hover:scale-105 transition-transform duration-300 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-12 w-auto object-contain">
+                <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-10 md:h-12 w-auto object-contain">
             </div>
 
-            <div class="hidden md:flex space-x-8 items-center">
+            <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
                 <a href="#accueil" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Accueil<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
                 <a href="javascript:openConditionsModal()" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Éligibilité<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="#featured-carousel" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Nouveautés<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="#vehicules" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Catalogue<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
                 <a href="#process" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Démarche<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="#vehicules" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Véhicules<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
                 <a href="#contact" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
             </div>
+            
             <div class="flex items-center space-x-3">
-                <button class="hidden md:flex items-center gap-1 px-2 py-1 rounded text-xs font-bold text-gray-400 hover:text-white transition-colors border border-transparent hover:border-gray-700"><ion-icon name="globe-outline"></ion-icon><span>FR</span></button>
                 <button id="open-search-btn" class="p-2.5 rounded-full bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white transition-all hover:rotate-12 active:scale-95"><ion-icon name="search-outline" class="text-lg"></ion-icon></button>
-                <button onclick="document.getElementById('contact').scrollIntoView()" class="p-2.5 rounded-full bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white transition-all active:scale-95"><ion-icon name="location-outline" class="text-lg"></ion-icon></button>
                 <a href="tel:+33123456789" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all text-sm font-bold shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 active:translate-y-0"><ion-icon name="call" class="text-lg animate-wiggle"></ion-icon><span>Appeler</span></a>
                 <button id="burger-btn" class="md:hidden p-2 text-gray-300 hover:text-white"><ion-icon name="menu-outline" class="text-3xl"></ion-icon></button>
             </div>
@@ -430,15 +408,15 @@
         </nav>
     </div>
 
-    <!-- =========== HERO =========== -->
     <main id="main-content">
+        <!-- =========== HERO =========== -->
         <section id="accueil" class="relative min-h-screen w-full flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden">
             <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110 will-change-transform" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=2070'); z-index: -2;"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#020617] z-[-1]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#020617] z-[-1] transition-colors duration-500"></div>
             <div class="relative z-10 container mx-auto px-4 text-center">
                 <div class="animate-fade-in-up">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest mb-6 backdrop-blur-md"><span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>LEADER DE L'EXPORTATION</div>
-                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tight text-white drop-shadow-2xl"><span id="typewriter-text" class="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-gray-400"></span><span class="typewriter-cursor"></span></h1>
+                    <h1 class="text-4xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tight text-white drop-shadow-2xl"><span id="typewriter-text" class="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-gray-400"></span><span class="typewriter-cursor"></span></h1>
                     <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">Votre véhicule français de rêve, livré directement dans les ports d'Algérie : <span class="text-white font-semibold">Oran, Alger, Skikda, Mostaganem</span>.</p>
                 </div>
                 <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.2s;">
@@ -446,28 +424,63 @@
                     <button id="hero-open-search" class="px-8 py-4 bg-gray-800/50 hover:bg-gray-800 border border-gray-700 text-white rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 backdrop-blur-md"><ion-icon name="search"></ion-icon> Recherche par Marque</button>
                 </div>
             </div>
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-gray-500"><ion-icon name="chevron-down-outline" class="text-3xl"></ion-icon></div>
         </section>
 
-        <!-- =========== NEW SECTION: CONDITIONS TEASER =========== -->
-        <section id="conditions-launcher" class="py-16 bg-[#020617] border-b border-gray-900 relative overflow-hidden">
-            <div class="absolute inset-0 bg-blue-600/5"></div>
+        <!-- =========== CARROUSEL =========== -->
+        <section id="featured-carousel" class="py-24 bg-[#020617] text-white relative overflow-hidden border-b border-gray-800">
             <div class="container mx-auto px-4 relative z-10">
-                <div class="bg-gray-900/80 backdrop-blur-xl border border-gray-700 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
-                    <div>
-                        <h2 class="text-3xl font-bold text-white mb-2">Êtes-vous éligible ?</h2>
-                        <p class="text-gray-400 text-lg">Découvrez en 2 clics si vous pouvez importer votre véhicule.</p>
-                    </div>
-                    <button onclick="openConditionsModal()" class="group px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all flex items-center gap-3 shadow-xl">
-                        <span>Commencer le test</span>
-                        <div class="w-8 h-8 bg-black rounded-full text-white flex items-center justify-center group-hover:rotate-45 transition-transform"><ion-icon name="arrow-forward"></ion-icon></div>
-                    </button>
+                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4">Nouveautés <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Exclusives</span></h2><p class="text-gray-400">Les modèles les plus demandés du moment.</p></div>
+                <div id="vehicle-carousel" class="carousel-container shadow-2xl shadow-blue-900/10 border border-gray-800 reveal-on-scroll bg-gray-900/30">
+                    <div id="carousel-track" class="carousel-track"></div>
+                    <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-back" class="text-xl"></ion-icon></button>
+                    <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-forward" class="text-xl"></ion-icon></button>
+                    <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
                 </div>
             </div>
         </section>
 
-        <!-- =========== TIMELINE =========== -->
-        <section id="process" class="py-20 bg-[#03081e] relative overflow-hidden">
+        <!-- =========== CATALOGUE =========== -->
+        <section id="vehicules" class="py-24 bg-[#03081e] relative">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-on-scroll">
+                    <div><h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">Notre Catalogue</h2><p class="text-gray-400 text-lg">Sélectionnez votre véhicule parmi notre stock certifié.</p></div>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <aside class="w-full lg:w-1/4 reveal-on-scroll">
+                        <div class="bg-gray-900/60 backdrop-blur-md border border-gray-800 p-6 rounded-2xl sticky top-28 shadow-xl">
+                            <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold flex items-center gap-2"><ion-icon name="options" class="text-blue-500"></ion-icon> Filtres</h3><button id="reset-filters" class="text-xs text-blue-400 hover:text-white transition-colors">Réinitialiser</button></div>
+                            <div class="space-y-8">
+                                <div><label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Recherche</label><div class="relative"><input type="search" id="search-bar" placeholder="Ex: Peugeot 3008..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors pl-10"><ion-icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></ion-icon></div></div>
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Marque</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button class="filter-chip active px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-medium transition-all border border-transparent" data-val="toutes">Toutes</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="renault">Renault</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="peugeot">Peugeot</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="citroën">Citroën</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="dacia">Dacia</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="seat">Seat</button>
+                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="skoda">Skoda</button>
+                                    </div>
+                                    <input type="hidden" id="filter-category" value="toutes">
+                                </div>
+                                <div><div class="flex justify-between mb-3"><label class="text-xs font-bold text-gray-500 uppercase">Budget Max</label><span id="price-value-display" class="text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">80 000 €</span></div><input type="range" id="filter-price" min="5000" max="80000" step="1000" value="80000" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"></div>
+                            </div>
+                        </div>
+                    </aside>
+                    <div class="w-full lg:w-3/4">
+                        <div id="vehicle-container">
+                            <div id="skeleton-loader" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div></div>
+                            <div id="vehicle-grid" class="hidden grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 perspective-1000"></div>
+                        </div>
+                        <div id="no-results-message" class="hidden flex flex-col items-center justify-center py-20 text-center bg-gray-900/30 rounded-2xl border border-gray-800 border-dashed"><div class="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mb-6"><ion-icon name="search" class="text-4xl text-gray-500"></ion-icon></div><h3 class="text-xl font-bold text-white mb-2">Aucun véhicule trouvé</h3><p class="text-gray-400 max-w-xs mx-auto">Essayez d'ajuster vos filtres.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== COMMENT ÇA MARCHE =========== -->
+        <section id="process" class="py-20 bg-[#020617] relative overflow-hidden border-t border-gray-900">
             <div class="container mx-auto px-4 relative z-10">
                 <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Comment ça <span class="text-blue-600">marche</span> ?</h2><p class="text-gray-400 max-w-xl mx-auto">Votre voiture en Algérie en 4 étapes simples.</p></div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
@@ -489,106 +502,11 @@
             </div>
         </section>
 
-        <!-- =========== CARROUSEL (FIXED) =========== -->
-        <section id="featured-carousel" class="py-24 bg-[#020617] text-white relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent opacity-20"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-4xl md:text-5xl font-bold mb-4">Nouveautés <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Exclusives</span></h2><p class="text-gray-400">Les modèles les plus demandés du moment.</p></div>
-                <div id="vehicle-carousel" class="carousel-container shadow-2xl shadow-blue-900/10 border border-gray-800 reveal-on-scroll bg-gray-900/30">
-                    <div id="carousel-track" class="carousel-track"></div>
-                    <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-back" class="text-xl"></ion-icon></button>
-                    <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-forward" class="text-xl"></ion-icon></button>
-                    <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- =========== CATALOGUE =========== -->
-        <section id="vehicules" class="py-24 bg-[#03081e] relative">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-on-scroll">
-                    <div><h2 class="text-4xl font-bold mb-3 text-white">Notre Catalogue</h2><p class="text-gray-400 text-lg">Sélectionnez votre véhicule parmi notre stock certifié.</p></div>
-                    <div class="flex gap-1 mt-6 md:mt-0 p-1.5 bg-gray-900 rounded-xl border border-gray-800">
-                        <button id="view-grid-btn" class="p-2.5 rounded-lg bg-blue-600 text-white shadow-lg transition-all hover:scale-105"><ion-icon name="grid-outline" class="text-xl"></ion-icon></button>
-                        <button id="view-list-btn" class="p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all"><ion-icon name="list-outline" class="text-xl"></ion-icon></button>
-                    </div>
-                </div>
-                <div class="flex flex-col lg:flex-row gap-10">
-                    <aside class="w-full lg:w-1/4 reveal-on-scroll">
-                        <div class="bg-gray-900/60 backdrop-blur-md border border-gray-800 p-6 rounded-2xl sticky top-28 shadow-xl">
-                            <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold flex items-center gap-2"><ion-icon name="options" class="text-blue-500"></ion-icon> Filtres</h3><button id="reset-filters" class="text-xs text-blue-400 hover:text-white transition-colors">Réinitialiser</button></div>
-                            <div class="space-y-8">
-                                <div><label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Recherche</label><div class="relative"><input type="search" id="search-bar" placeholder="Ex: Peugeot 3008..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors pl-10"><ion-icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></ion-icon></div></div>
-                                <div>
-                                    <label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Catégorie</label>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <button class="filter-chip active px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-medium transition-all border border-transparent" data-val="toutes">Tout</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="suv">SUV</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="berline">Berline</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="citadine">Citadine</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="luxe">Luxe</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="utilitaire">Utilitaire</button>
-                                    </div>
-                                    <input type="hidden" id="filter-category" value="toutes">
-                                </div>
-                                <div><div class="flex justify-between mb-3"><label class="text-xs font-bold text-gray-500 uppercase">Budget Max</label><span id="price-value-display" class="text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">80 000 €</span></div><input type="range" id="filter-price" min="10000" max="100000" step="1000" value="80000" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"></div>
-                                <div><label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Trier par</label><div class="relative"><select id="sort-by" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 outline-none appearance-none"><option value="default">Pertinence</option><option value="price-asc">Prix croissant</option><option value="price-desc">Prix décroissant</option></select><ion-icon name="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"></ion-icon></div></div>
-                            </div>
-                        </div>
-                    </aside>
-                    <div class="w-full lg:w-3/4">
-                        <div id="vehicle-container">
-                            <div id="skeleton-loader" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div></div>
-                            <div id="vehicle-grid" class="hidden grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 perspective-1000"></div>
-                        </div>
-                        <div id="no-results-message" class="hidden flex flex-col items-center justify-center py-20 text-center bg-gray-900/30 rounded-2xl border border-gray-800 border-dashed"><div class="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mb-6"><ion-icon name="search" class="text-4xl text-gray-500"></ion-icon></div><h3 class="text-xl font-bold text-white mb-2">Aucun véhicule trouvé</h3><p class="text-gray-400 max-w-xs mx-auto">Essayez d'ajuster vos filtres.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =========== SERVICES =========== -->
-        <section id="pourquoi-nous" class="py-24 bg-[#020617]">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold text-white mb-6">L'Export <span class="text-blue-600">Simplifié</span></h2><p class="text-gray-400 max-w-2xl mx-auto text-lg">Nous gérons l'intégralité du processus.</p></div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="group p-8 rounded-3xl bg-gray-900/40 border border-gray-800 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 hover:bg-gray-900/80 reveal-on-scroll"><div class="w-16 h-16 bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-500 text-3xl mb-6 group-hover:scale-110 transition-transform duration-500"><ion-icon name="shield-checkmark"></ion-icon></div><h3 class="text-2xl font-bold text-white mb-4">100% Conforme</h3><p class="text-gray-400 leading-relaxed">Expertise sur la Licence Moudjahid.</p></div>
-                    <div class="group p-8 rounded-3xl bg-gray-900/40 border border-gray-800 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2 hover:bg-gray-900/80 reveal-on-scroll" style="transition-delay: 0.1s;"><div class="w-16 h-16 bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-500 text-3xl mb-6 group-hover:scale-110 transition-transform duration-500"><ion-icon name="boat"></ion-icon></div><h3 class="text-2xl font-bold text-white mb-4">Logistique Rapide</h3><p class="text-gray-400 leading-relaxed">Départs hebdomadaires.</p></div>
-                    <div class="group p-8 rounded-3xl bg-gray-900/40 border border-gray-800 hover:border-green-500/50 transition-all duration-500 hover:-translate-y-2 hover:bg-gray-900/80 reveal-on-scroll" style="transition-delay: 0.2s;"><div class="w-16 h-16 bg-green-900/20 rounded-2xl flex items-center justify-center text-green-500 text-3xl mb-6 group-hover:scale-110 transition-transform duration-500"><ion-icon name="wallet"></ion-icon></div><h3 class="text-2xl font-bold text-white mb-4">Prix Transparent</h3><p class="text-gray-400 leading-relaxed">Pas de surprise.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =========== TÉMOIGNAGES =========== -->
-        <section id="testimonials" class="py-24 bg-[#03081e] relative">
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ils nous font <span class="text-blue-500">confiance</span></h2><p class="text-gray-400">Des centaines de clients satisfaits.</p></div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800 reveal-on-scroll"><div class="flex text-yellow-500 mb-4 text-lg"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></div><p class="text-gray-300 italic mb-6">"Très professionnel. J'ai reçu ma 3008 à Alger en 3 semaines."</p><div class="flex items-center gap-3"><div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold">K</div><div><h4 class="text-sm font-bold text-white">Karim B.</h4><p class="text-xs text-gray-500">Alger, Algérie</p></div></div></div>
-                    <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800 reveal-on-scroll" style="transition-delay: 0.1s;"><div class="flex text-yellow-500 mb-4 text-lg"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></div><p class="text-gray-300 italic mb-6">"Service impeccable. L'équipe à Vénissieux est top."</p><div class="flex items-center gap-3"><div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold">S</div><div><h4 class="text-sm font-bold text-white">Sofiane M.</h4><p class="text-xs text-gray-500">Oran, Algérie</p></div></div></div>
-                    <div class="bg-gray-900/40 p-8 rounded-2xl border border-gray-800 reveal-on-scroll" style="transition-delay: 0.2s;"><div class="flex text-yellow-500 mb-4 text-lg"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-half"></ion-icon></div><p class="text-gray-300 italic mb-6">"J'ai acheté une Clio 5. Voiture conforme."</p><div class="flex items-center gap-3"><div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center font-bold">A</div><div><h4 class="text-sm font-bold text-white">Amine T.</h4><p class="text-xs text-gray-500">Sétif, Algérie</p></div></div></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =========== FAQ =========== -->
-        <section id="faq" class="py-24 bg-[#020617] border-t border-gray-900">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Questions <span class="text-blue-500">Fréquentes</span></h2><p class="text-gray-400">Tout savoir sur l'importation.</p></div>
-                <div class="space-y-4 reveal-on-scroll">
-                    <div class="faq-item bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden"><button class="faq-toggle w-full flex items-center justify-between p-6 text-left focus:outline-none"><span class="font-bold text-lg text-white">Quels sont les délais de livraison ?</span><ion-icon name="chevron-down-outline" class="faq-icon text-blue-500 text-xl transition-transform duration-300"></ion-icon></button><div class="faq-content bg-gray-900/30 px-6 text-gray-400"><div class="pb-6">15 à 21 jours en moyenne.</div></div></div>
-                    <div class="faq-item bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden"><button class="faq-toggle w-full flex items-center justify-between p-6 text-left focus:outline-none"><span class="font-bold text-lg text-white">Acceptez-vous la Licence Moudjahid ?</span><ion-icon name="chevron-down-outline" class="faq-icon text-blue-500 text-xl transition-transform duration-300"></ion-icon></button><div class="faq-content bg-gray-900/30 px-6 text-gray-400"><div class="pb-6">Oui, nous sommes experts.</div></div></div>
-                    <div class="faq-item bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden"><button class="faq-toggle w-full flex items-center justify-between p-6 text-left focus:outline-none"><span class="font-bold text-lg text-white">Paiement ?</span><ion-icon name="chevron-down-outline" class="faq-icon text-blue-500 text-xl transition-transform duration-300"></ion-icon></button><div class="faq-content bg-gray-900/30 px-6 text-gray-400"><div class="pb-6">Virement en Euros. Contactez-nous pour le Dinar.</div></div></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- =========== CONTACT =========== -->
+        <!-- =========== CONTACT (UPDATED MOBILE MAP) =========== -->
         <section id="contact" class="py-24 bg-[#010410] relative overflow-hidden">
-            <div class="absolute top-1/2 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
             <div class="container mx-auto px-4 relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto">
+                    <!-- Formulaire -->
                     <div class="glass-panel rounded-3xl p-8 md:p-10 reveal-on-scroll">
                         <h2 class="text-4xl font-bold text-white mb-2">Contactez-nous</h2>
                         <p class="text-gray-400 mb-8">Devis en 1h.</p>
@@ -599,14 +517,26 @@
                             <button type="submit" class="group w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/30 flex items-center justify-center gap-3 transform hover:-translate-y-1"><span>Envoyer</span><ion-icon name="paper-plane" class="group-hover:translate-x-1 transition-transform"></ion-icon></button>
                         </form>
                     </div>
-                    <div class="flex flex-col gap-8 reveal-on-scroll h-full">
+                    
+                    <!-- Infos et Map -->
+                    <div class="flex flex-col gap-8 reveal-on-scroll h-full mt-8 lg:mt-0">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:bg-gray-800/60 transition-colors group"><div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><ion-icon name="call" class="text-xl"></ion-icon></div><div><h4 class="font-bold text-white text-sm">Téléphone</h4><p class="text-gray-400 text-sm font-mono">+33 1 23 45 67 89</p></div></div>
                             <div class="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:bg-gray-800/60 transition-colors group"><div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><ion-icon name="mail" class="text-xl"></ion-icon></div><div><h4 class="font-bold text-white text-sm">Email</h4><p class="text-gray-400 text-sm">contact@abcexporte.fr</p></div></div>
                         </div>
+                        
+                        <!-- MAP CONTAINER WITH MOBILE OVERLAY -->
                         <div class="flex-grow w-full h-[400px] bg-gray-800 rounded-3xl overflow-hidden shadow-2xl border border-gray-700 relative group">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2786.383462217029!2d4.8645613!3d45.7081944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4ea516c601041%3A0x408ab2ae4bb21f0!2s1%20Anc%20Rte%20d'Heyrieux%2C%2069200%20V%C3%A9nissieux%2C%20France!5e0!3m2!1sfr!2sfr" width="100%" height="100%" style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" allowfullscreen="" loading="lazy"></iframe>
-                            <div class="absolute bottom-4 left-4 bg-white text-black px-4 py-2 rounded-xl shadow-xl text-sm font-bold flex items-center gap-2 transform transition-transform group-hover:scale-105"><div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div><span>01 Ancienne Route d'Heyrieux</span></div>
+                            <!-- Desktop Iframe (Standard) -->
+                            <iframe class="w-full h-full grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2786.383462217029!2d4.8645613!3d45.7081944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4ea516c601041%3A0x408ab2ae4bb21f0!2s1%20Anc%20Rte%20d'Heyrieux%2C%2069200%20V%C3%A9nissieux%2C%20France!5e0!3m2!1sfr!2sfr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            
+                            <!-- Mobile Overlay (Tap to open App) -->
+                            <a href="https://www.google.com/maps/search/?api=1&query=45.7081944,4.8645613" target="_blank" class="absolute inset-0 z-10 flex items-center justify-center bg-black/60 opacity-100 lg:opacity-0 lg:pointer-events-none hover:bg-black/40 transition-all">
+                                <div class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 transform hover:scale-105 transition-transform">
+                                    <ion-icon name="map"></ion-icon>
+                                    <span>Ouvrir dans Google Maps</span>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -614,81 +544,10 @@
         </section>
     </main>
 
-    <!-- =========== FOOTER DÉVELOPPÉ =========== -->
-    <footer class="bg-[#010208] border-t border-gray-900 pt-20 pb-24 md:pb-10">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
-                <!-- Brand -->
-                <div class="lg:col-span-1">
-                    <div class="mb-6">
-                        <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-16 w-auto object-contain">
-                    </div>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-6">
-                        Expert en exportation de véhicules neufs et d'occasion de la France vers l'Algérie. Nous facilitons toutes vos démarches depuis 2010.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all"><ion-icon name="logo-facebook"></ion-icon></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white transition-all"><ion-icon name="logo-instagram"></ion-icon></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-blue-400 hover:text-white transition-all"><ion-icon name="logo-linkedin"></ion-icon></a>
-                    </div>
-                </div>
-
-                <!-- Links -->
-                <div>
-                    <h4 class="text-white font-bold mb-6 text-lg">Navigation</h4>
-                    <ul class="space-y-4 text-gray-500 text-sm">
-                        <li><a href="#accueil" class="hover:text-blue-500 transition-colors flex items-center gap-2"><ion-icon name="chevron-forward" class="text-blue-900"></ion-icon> Accueil</a></li>
-                        <li><a href="#vehicules" class="hover:text-blue-500 transition-colors flex items-center gap-2"><ion-icon name="chevron-forward" class="text-blue-900"></ion-icon> Catalogue</a></li>
-                        <li><a href="#process" class="hover:text-blue-500 transition-colors flex items-center gap-2"><ion-icon name="chevron-forward" class="text-blue-900"></ion-icon> Comment ça marche</a></li>
-                        <li><a href="#faq" class="hover:text-blue-500 transition-colors flex items-center gap-2"><ion-icon name="chevron-forward" class="text-blue-900"></ion-icon> FAQ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Services -->
-                <div>
-                    <h4 class="text-white font-bold mb-6 text-lg">Nos Services</h4>
-                    <ul class="space-y-4 text-gray-500 text-sm">
-                        <li class="flex items-center gap-2"><ion-icon name="shield-checkmark-outline" class="text-blue-500"></ion-icon> Dédouanement</li>
-                        <li class="flex items-center gap-2"><ion-icon name="boat-outline" class="text-blue-500"></ion-icon> Fret Maritime</li>
-                        <li class="flex items-center gap-2"><ion-icon name="car-sport-outline" class="text-blue-500"></ion-icon> Achat sur commande</li>
-                        <li class="flex items-center gap-2"><ion-icon name="document-text-outline" class="text-blue-500"></ion-icon> Dossier CCR</li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div>
-                    <h4 class="text-white font-bold mb-6 text-lg">Restez informé</h4>
-                    <p class="text-gray-500 text-sm mb-4">Recevez nos dernières offres par email.</p>
-                    <form onsubmit="event.preventDefault();" class="flex flex-col gap-3">
-                        <input type="email" placeholder="Votre email" class="bg-gray-900 border border-gray-800 text-white px-4 py-3 rounded-lg focus:border-blue-500 outline-none text-sm">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold text-sm transition-colors">S'abonner</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-600 text-xs">&copy; 2025 ABC Exporte. Tous droits réservés.</p>
-                <div class="flex gap-4">
-                    <span class="px-2 py-1 bg-gray-900 rounded border border-gray-800 text-gray-500 text-xs font-mono">VISA</span>
-                    <span class="px-2 py-1 bg-gray-900 rounded border border-gray-800 text-gray-500 text-xs font-mono">MASTERCARD</span>
-                    <span class="px-2 py-1 bg-gray-900 rounded border border-gray-800 text-gray-500 text-xs font-mono">VIREMENT</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- =========== WHATSAPP BUTTON =========== -->
-    <a href="https://wa.me/33123456789" target="_blank" class="fixed bottom-6 right-6 z-[90] group">
-        <div class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-2xl shadow-green-500/30 hover:scale-110 transition-transform duration-300 animate-float">
-            <ion-icon name="logo-whatsapp" class="text-4xl"></ion-icon>
-        </div>
-    </a>
-
     <!-- =========== MODALE VÉHICULE (DÉTAILS) =========== -->
     <div id="vehicle-modal" class="modal fixed inset-0 z-[110] flex items-center justify-center p-4 overflow-y-auto">
         <div class="modal-bg fixed inset-0 bg-black/90 backdrop-blur-md"></div>
         <div class="relative w-full max-w-6xl bg-[#0f172a] rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row animate-slide-down border border-gray-800">
-            
             <!-- Image Side -->
             <div class="w-full lg:w-3/5 h-64 lg:h-auto relative bg-gray-900 group overflow-hidden">
                 <img id="modal-image" src="" alt="Véhicule" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
@@ -697,115 +556,152 @@
                     <span id="modal-status-badge" class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-600 text-white shadow-lg backdrop-blur-md"></span>
                 </div>
             </div>
-
             <!-- Content Side -->
-            <div class="w-full lg:w-2/5 p-8 lg:p-10 flex flex-col relative">
+            <div class="w-full lg:w-2/5 p-8 lg:p-10 flex flex-col relative bg-gray-900">
                 <button class="modal-close-btn absolute top-6 right-6 p-2 bg-gray-800/50 hover:bg-gray-700 rounded-full text-white transition-colors z-10 backdrop-blur-sm">
                     <ion-icon name="close" class="text-xl"></ion-icon>
                 </button>
-
                 <div class="mb-auto">
                     <h2 id="modal-title" class="text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight"></h2>
                     <div class="mb-8">
                         <div class="text-3xl font-bold text-blue-500" id="modal-price"></div>
                         <div class="text-lg font-semibold text-gray-400 mt-1" id="modal-price-dzd"></div>
                     </div>
-
                     <div class="grid grid-cols-2 gap-4 mb-8">
                         <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Année</span><span class="text-white font-semibold text-lg" id="modal-year"></span></div>
                         <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">KM</span><span class="text-white font-semibold text-lg" id="modal-km"></span></div>
                         <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Carburant</span><span class="text-white font-semibold text-lg" id="modal-fuel"></span></div>
                         <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Boîte</span><span class="text-white font-semibold text-lg" id="modal-gearbox"></span></div>
                     </div>
-
-                    <h3 class="text-sm font-bold text-gray-400 uppercase mb-3">Description</h3>
                     <p id="modal-description" class="text-gray-300 leading-relaxed text-sm bg-gray-800/30 p-4 rounded-xl border border-gray-800"></p>
                 </div>
-
                 <div class="mt-8 pt-6 border-t border-gray-800">
-                    <button id="modal-order-btn" class="w-full py-4 bg-white hover:bg-gray-200 text-black font-bold rounded-xl transition-all flex justify-center items-center gap-3 transform hover:-translate-y-1 shadow-lg shadow-white/10">
-                        <ion-icon name="card" class="text-xl"></ion-icon>
-                        <span>Réserver ce véhicule</span>
+                    <button class="w-full py-4 bg-white hover:bg-gray-200 text-black font-bold rounded-xl transition-all flex justify-center items-center gap-3 transform hover:-translate-y-1 shadow-lg shadow-white/10">
+                        <ion-icon name="logo-whatsapp" class="text-xl"></ion-icon>
+                        <span>Réserver sur WhatsApp</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- =========== MODALE DE COMMANDE (NOUVEAU) =========== -->
-    <div id="order-modal" class="modal fixed inset-0 z-[120] flex items-center justify-center p-4 overflow-y-auto">
-        <div class="modal-bg fixed inset-0 bg-black/90 backdrop-blur-md"></div>
-        <div class="relative w-full max-w-lg bg-gray-900 rounded-3xl shadow-2xl border border-gray-700 p-8 animate-slide-down">
-            <button class="order-close-btn absolute top-6 right-6 p-2 text-gray-400 hover:text-white"><ion-icon name="close" class="text-2xl"></ion-icon></button>
-            
-            <h2 class="text-2xl font-bold text-white mb-2">Finaliser la réservation</h2>
-            <p class="text-gray-400 text-sm mb-6">Véhicule : <span id="order-vehicle-name" class="text-blue-400 font-semibold"></span></p>
-            
-            <form id="order-form" class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-gray-500 font-bold uppercase mb-1">Nom</label>
-                        <input type="text" required class="w-full bg-black/30 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 font-bold uppercase mb-1">Prénom</label>
-                        <input type="text" required class="w-full bg-black/30 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 font-bold uppercase mb-1">Téléphone (WhatsApp)</label>
-                    <input type="tel" required class="w-full bg-black/30 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none" placeholder="+213 ...">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-500 font-bold uppercase mb-1">Ville / Wilaya</label>
-                    <input type="text" required class="w-full bg-black/30 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none">
-                </div>
-                <div class="pt-4">
-                    <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2">
-                        <ion-icon name="checkmark-circle"></ion-icon>
-                        Confirmer la demande
-                    </button>
-                </div>
-                <p class="text-xs text-center text-gray-500 mt-4">Aucun paiement n'est requis pour cette étape.</p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 left-8 z-[130] bg-gray-900/90 backdrop-blur-md border border-gray-700 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 transform translate-y-32 opacity-0 transition-all duration-500">
-        <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-black">
-            <ion-icon name="checkmark" class="text-xl"></ion-icon>
-        </div>
-        <div>
-            <h4 class="font-bold text-sm">Succès</h4>
-            <p class="text-gray-400 text-xs" id="toast-message">Opération réussie</p>
-        </div>
-    </div>
-
     <!-- =========== JAVASCRIPT =========== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
             const EXCHANGE_RATE = 275;
+            
+            const mobileMenu = document.getElementById('mobile-menu');
+            const burgerBtn = document.getElementById('burger-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
 
-            // --- DONNÉES ---
+            // Mobile Menu Logic
+            burgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('-translate-x-full');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+            });
+            document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
+            });
+
+            // --- NOUVELLE DATA ---
             const allVehicleData = {
-                'renault-austral': { id: 'renault-austral', brand: 'Renault', model: 'Austral', title: 'Renault Austral Esprit Alpine', price: 34500, category: 'suv', fuel: 'hybride', year: 2024, km: 1500, image: 'https://i.imgur.com/MPwjaPy.jpg', desc: "Le nouveau SUV tech de Renault. Finition Esprit Alpine haut de gamme.", status: 'neuf', gearbox: 'Automatique' },
-                'peugeot-408': { id: 'peugeot-408', brand: 'Peugeot', model: '408', title: 'Peugeot 408 GT', price: 38900, category: 'berline', fuel: 'essence', year: 2024, km: 50, image: 'https://i.imgur.com/aRAYWy3.jpg', desc: "Une silhouette fastback inattendue. La nouvelle 408 se distingue.", status: 'neuf', gearbox: 'EAT8' },
-                'ds-7': { id: 'ds-7', brand: 'DS', model: 'DS 7', title: 'DS 7 Crossback Opéra', price: 45200, category: 'luxe', fuel: 'diesel', year: 2023, km: 12000, image: 'https://i.imgur.com/CY1lR3S.jpg', desc: "Le raffinement à la française. Intérieur cuir Nappa Noir.", status: 'occasion', gearbox: 'Automatique' },
-                'citroen-c5x': { id: 'citroen-c5x', brand: 'Citroën', model: 'C5 X', title: 'Citroën C5 X Shine', price: 31500, category: 'berline', fuel: 'hybride', year: 2024, km: 10, image: 'https://i.imgur.com/SeuR9Ry.jpg', desc: "L'audace du confort. La C5 X combine l'élégance d'une berline.", status: 'neuf', gearbox: 'ë-EAT8' },
-                'peugeot-208': { id: 'peugeot-208', brand: 'Peugeot', model: '208', title: 'Peugeot 208 GT', price: 24900, category: 'citadine', fuel: 'electrique', year: 2025, km: 0, image: 'https://i.imgur.com/Yl94Uj5.jpg', desc: "La citadine réinventée.", status: 'neuf', gearbox: 'Auto' },
-                'alpine-a110': { id: 'alpine-a110', brand: 'Alpine', model: 'A110', title: 'Alpine A110 S', price: 72000, category: 'luxe', fuel: 'essence', year: 2023, km: 5000, image: 'https://i.imgur.com/B8RsVcd.jpg', desc: "L'agilité pure.", status: 'occasion', gearbox: 'DCT7' }
+                // RENAULT
+                'clio-alpine': { id: 'clio-alpine', brand: 'Renault', model: 'Clio', title: 'Renault Clio 5 Esprit Alpine', price: 23500, category: 'citadine', fuel: 'Hybride', year: 2024, km: 10, image: 'https://imgur.com/nU3x08V.jpg', desc: "La citadine sportive par excellence. Finition Esprit Alpine ultra équipée.", status: 'Neuf', gearbox: 'Auto' },
+                'clio-5': { id: 'clio-5', brand: 'Renault', model: 'Clio', title: 'Renault Clio 5 Zen', price: 16900, category: 'citadine', fuel: 'Essence', year: 2022, km: 35000, image: 'https://imgur.com/dmdkEWC.jpg', desc: "Fiable et économique. Parfait pour la ville.", status: 'Occasion', gearbox: 'Manuelle' },
+                
+                // PEUGEOT
+                'peugeot-308': { id: 'peugeot-308', brand: 'Peugeot', model: '308', title: 'Peugeot 308 GT', price: 31900, category: 'berline', fuel: 'Hybride', year: 2024, km: 50, image: 'https://imgur.com/C08PTk1.jpg', desc: "Le nouveau visage de Peugeot. Design tranchant.", status: 'Neuf', gearbox: 'EAT8' },
+                'peugeot-208': { id: 'peugeot-208', brand: 'Peugeot', model: '208', title: 'Peugeot 208 Allure', price: 21500, category: 'citadine', fuel: 'Essence', year: 2024, km: 10, image: 'https://imgur.com/5xob7zR.jpg', desc: "La voiture de l'année. Look irrésistible.", status: 'Neuf', gearbox: 'Auto' },
+                
+                // CITROEN
+                'c5-aircross': { id: 'c5-aircross', brand: 'Citroën', model: 'C5 AirCross', title: 'Citroën C5 AirCross Shine', price: 34500, category: 'suv', fuel: 'Diesel', year: 2024, km: 20, image: 'https://imgur.com/CV8eLDi.jpg', desc: "Le confort absolu avec les suspensions hydrauliques.", status: 'Neuf', gearbox: 'EAT8' },
+                'c3-aircross': { id: 'c3-aircross', brand: 'Citroën', model: 'C3 AirCross', title: 'Citroën C3 AirCross Rip Curl', price: 18900, category: 'suv', fuel: 'Essence', year: 2023, km: 25000, image: 'https://imgur.com/E5VAHf2.jpg', desc: "SUV compact et modulable.", status: 'Occasion', gearbox: 'Manuelle' },
+                
+                // DACIA
+                'logan': { id: 'logan', brand: 'Dacia', model: 'Logan', title: 'Dacia Logan Prestige', price: 14500, category: 'berline', fuel: 'Essence', year: 2024, km: 0, image: 'https://imgur.com/fLXzGZF.jpg', desc: "La berline familiale imbattable.", status: 'Neuf', gearbox: 'Manuelle' },
+                'sandero': { id: 'sandero', brand: 'Dacia', model: 'Sandero', title: 'Dacia Sandero Stepway', price: 15900, category: 'citadine', fuel: 'Essence', year: 2024, km: 10, image: 'https://imgur.com/J6RSxeB.jpg', desc: "Le look baroudeur préféré des familles.", status: 'Neuf', gearbox: 'CVT' },
+                
+                // SEAT
+                'ibiza': { id: 'ibiza', brand: 'Seat', model: 'Ibiza', title: 'Seat Ibiza FR', price: 17500, category: 'citadine', fuel: 'Essence', year: 2022, km: 42000, image: 'https://imgur.com/segUTVX.jpg', desc: "Sportive et dynamique. Finition FR.", status: 'Occasion', gearbox: 'DSG' },
+                'arona': { id: 'arona', brand: 'Seat', model: 'Arona', title: 'Seat Arona Xperience', price: 19500, category: 'suv', fuel: 'Essence', year: 2023, km: 15000, image: 'https://imgur.com/5ly7AYI.jpg', desc: "Le petit SUV urbain polyvalent.", status: 'Occasion', gearbox: 'Auto' },
+                
+                // SKODA
+                'fabia': { id: 'fabia', brand: 'Skoda', model: 'Fabia', title: 'Skoda Fabia Monte Carlo', price: 16800, category: 'citadine', fuel: 'Essence', year: 2023, km: 28000, image: 'https://imgur.com/WzKhJby.jpg', desc: "Espace et technologie. Simply Clever.", status: 'Occasion', gearbox: 'DSG' }
             };
 
-            // --- LOGIQUE MODALE CONDITIONS (NEW) ---
+            // --- WIZARD LOGIC ---
+            let wizardState = { brand: null, model: null, maxPrice: 80000 };
+            const steps = { 1: document.getElementById('step-brand'), 2: document.getElementById('step-model'), 3: document.getElementById('step-price') };
+            const dots = { 1: document.getElementById('dot-1'), 2: document.getElementById('dot-2'), 3: document.getElementById('dot-3') };
+            
+            function goToStep(stepNum) {
+                Object.values(steps).forEach(el => el.classList.remove('active'));
+                Object.values(dots).forEach((el, idx) => {
+                    if (idx + 1 <= stepNum) el.classList.add('bg-blue-600'), el.classList.remove('bg-gray-700');
+                    else el.classList.add('bg-gray-700'), el.classList.remove('bg-blue-600');
+                });
+                steps[stepNum].classList.add('active');
+            }
+
+            document.querySelectorAll('.brand-grid-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const brand = btn.dataset.brand;
+                    wizardState.brand = brand;
+                    const models = new Set();
+                    Object.values(allVehicleData).forEach(v => { if(v.brand === brand) models.add(v.model); });
+                    
+                    const grid = document.getElementById('models-grid');
+                    grid.innerHTML = '';
+                    if(models.size > 0) {
+                        grid.innerHTML += `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="Tous"><span class="text-lg font-bold text-white">Tous les modèles</span></button>`;
+                        models.forEach(model => { grid.innerHTML += `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="${model}"><span class="text-lg font-bold text-white">${model}</span></button>`; });
+                        document.querySelectorAll('.model-btn').forEach(mBtn => { mBtn.addEventListener('click', () => { wizardState.model = mBtn.dataset.model; goToStep(3); }); });
+                        goToStep(2);
+                    } else {
+                         // Fallback if no models for brand (e.g. user clicked brand with no data yet)
+                         goToStep(3);
+                    }
+                });
+            });
+            
+            document.querySelector('button[data-brand="Toutes"]').addEventListener('click', () => { wizardState.brand = 'Toutes'; goToStep(3); });
+            document.getElementById('back-to-brand').addEventListener('click', () => goToStep(1));
+            document.getElementById('back-to-model').addEventListener('click', () => goToStep(2));
+            
+            const wizardPriceInput = document.getElementById('wizard-price-input');
+            wizardPriceInput.addEventListener('input', (e) => { const val = parseInt(e.target.value); wizardState.maxPrice = val; document.getElementById('wizard-price-display').innerText = val.toLocaleString('fr-FR') + ' €'; });
+
+            document.getElementById('wizard-submit-btn').addEventListener('click', () => {
+                document.getElementById('filter-price').value = wizardState.maxPrice;
+                document.getElementById('price-value-display').textContent = wizardState.maxPrice.toLocaleString('fr-FR') + ' €';
+                const searchBar = document.getElementById('search-bar');
+                if (wizardState.model && wizardState.model !== 'Tous') searchBar.value = wizardState.model;
+                else if (wizardState.brand && wizardState.brand !== 'Toutes') searchBar.value = wizardState.brand;
+                else searchBar.value = '';
+                document.getElementById('search-overlay').classList.remove('open');
+                document.getElementById('vehicules').scrollIntoView();
+                renderVehicles();
+                setTimeout(() => goToStep(1), 500);
+            });
+
+            // --- SEARCH OVERLAY ---
+            const overlay = document.getElementById('search-overlay');
+            const openBtns = [document.getElementById('open-search-btn'), document.getElementById('hero-open-search')];
+            openBtns.forEach(b => b && b.addEventListener('click', () => overlay.classList.add('open')));
+            document.getElementById('close-search-btn').addEventListener('click', () => overlay.classList.remove('open'));
+
+            // --- CONDITIONS GUIDE LOGIC (RESTORED) ---
             window.openConditionsModal = function() {
                 document.getElementById('conditions-modal').classList.add('open');
+                document.getElementById('conditions-modal').classList.remove('hidden');
                 resetConditions();
             };
 
             document.getElementById('close-conditions-btn').addEventListener('click', () => {
                 document.getElementById('conditions-modal').classList.remove('open');
+                setTimeout(() => document.getElementById('conditions-modal').classList.add('hidden'), 500); // Wait for transition
             });
 
             window.showConditionDetails = function(type) {
@@ -834,76 +730,6 @@
                 setTimeout(() => choice.classList.add('active'), 50);
             };
 
-
-            // --- WIZARD LOGIC ---
-            let wizardState = { brand: null, model: null, maxPrice: 80000 };
-            const steps = { 1: document.getElementById('step-brand'), 2: document.getElementById('step-model'), 3: document.getElementById('step-price') };
-            const dots = { 1: document.getElementById('dot-1'), 2: document.getElementById('dot-2'), 3: document.getElementById('dot-3') };
-            
-            function goToStep(stepNum) {
-                Object.values(steps).forEach(el => el.classList.remove('active'));
-                Object.values(dots).forEach((el, idx) => {
-                    if (idx + 1 <= stepNum) el.classList.add('bg-blue-600'), el.classList.remove('bg-gray-700');
-                    else el.classList.add('bg-gray-700'), el.classList.remove('bg-blue-600');
-                });
-                steps[stepNum].classList.add('active');
-            }
-
-            document.querySelectorAll('.brand-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const brand = btn.dataset.brand;
-                    wizardState.brand = brand;
-                    if(brand === 'Toutes') { goToStep(3); } else {
-                        const models = new Set();
-                        Object.values(allVehicleData).forEach(v => { if(v.brand === brand) models.add(v.model); });
-                        const grid = document.getElementById('models-grid');
-                        grid.innerHTML = `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="Tous"><span class="text-lg font-bold text-white">Tous les modèles</span></button>`;
-                        models.forEach(model => { grid.innerHTML += `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="${model}"><span class="text-lg font-bold text-white">${model}</span></button>`; });
-                        document.querySelectorAll('.model-btn').forEach(mBtn => { mBtn.addEventListener('click', () => { wizardState.model = mBtn.dataset.model; goToStep(3); }); });
-                        goToStep(2);
-                    }
-                });
-            });
-
-            document.getElementById('back-to-brand').addEventListener('click', () => goToStep(1));
-            document.getElementById('back-to-model').addEventListener('click', () => { if(wizardState.brand === 'Toutes') goToStep(1); else goToStep(2); });
-
-            const wizardPriceInput = document.getElementById('wizard-price-input');
-            wizardPriceInput.addEventListener('input', (e) => { const val = parseInt(e.target.value); wizardState.maxPrice = val; document.getElementById('wizard-price-display').innerText = val.toLocaleString('fr-FR') + ' €'; });
-
-            document.getElementById('wizard-submit-btn').addEventListener('click', () => {
-                document.getElementById('filter-price').value = wizardState.maxPrice;
-                document.getElementById('price-value-display').textContent = wizardState.maxPrice.toLocaleString('fr-FR') + ' €';
-                const searchBar = document.getElementById('search-bar');
-                if (wizardState.model && wizardState.model !== 'Tous') searchBar.value = wizardState.model;
-                else if (wizardState.brand && wizardState.brand !== 'Toutes') searchBar.value = wizardState.brand;
-                else searchBar.value = '';
-                document.getElementById('search-overlay').classList.remove('open');
-                document.getElementById('vehicules').scrollIntoView();
-                renderVehicles();
-                setTimeout(() => goToStep(1), 500);
-            });
-
-            // --- CURRENCY WIDGET ---
-            const widgetToggle = document.getElementById('currency-widget-toggle');
-            const widgetPanel = document.getElementById('currency-widget');
-            const eurInput = document.getElementById('converter-eur');
-            const dzdOutput = document.getElementById('converter-dzd');
-            function updateConversion() { const eur = parseFloat(eurInput.value) || 0; dzdOutput.value = (eur * EXCHANGE_RATE).toLocaleString('fr-FR') + ' DZD'; }
-            widgetToggle.addEventListener('click', () => { widgetPanel.classList.toggle('open'); widgetToggle.classList.toggle('-translate-x-full'); });
-            document.getElementById('close-currency-btn').addEventListener('click', () => { widgetPanel.classList.remove('open'); widgetToggle.classList.remove('-translate-x-full'); });
-            eurInput.addEventListener('input', updateConversion);
-            updateConversion();
-
-            // --- SEARCH OVERLAY ---
-            const overlay = document.getElementById('search-overlay');
-            const openBtns = [document.getElementById('open-search-btn'), document.getElementById('hero-open-search')];
-            openBtns.forEach(b => b && b.addEventListener('click', () => overlay.classList.add('open')));
-            document.getElementById('close-search-btn').addEventListener('click', () => overlay.classList.remove('open'));
-
-            // --- ACCORDION ---
-            document.querySelectorAll('.faq-toggle').forEach(btn => { btn.addEventListener('click', () => { const item = btn.parentElement; item.classList.toggle('active'); }); });
-
             // --- RENDER VEHICLES ---
             const grid = document.getElementById('vehicle-grid');
             const filterPrice = document.getElementById('filter-price');
@@ -918,12 +744,33 @@
                 const search = searchBar.value.toLowerCase();
                 
                 Object.values(allVehicleData).forEach((v, idx) => {
-                    if((currentCategory === 'toutes' || v.category === currentCategory) && v.price <= maxP && v.title.toLowerCase().includes(search)) {
+                    const brandMatch = currentCategory === 'toutes' || v.brand.toLowerCase() === currentCategory.toLowerCase();
+                    if(brandMatch && v.price <= maxP && (v.title.toLowerCase().includes(search) || v.brand.toLowerCase().includes(search))) {
                         count++;
                         const card = document.createElement('div');
                         card.className = 'tilt-card group bg-gray-900/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800 hover:border-blue-600/50 transition-all duration-500 hover:shadow-2xl reveal-on-scroll flex flex-col';
                         card.style.transitionDelay = idx * 50 + 'ms';
-                        card.innerHTML = `<div class="tilt-content h-full flex flex-col"><div class="relative h-64 overflow-hidden"><img src="${v.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"><div class="absolute top-4 left-4 bg-black/60 px-3 py-1 rounded-full border border-gray-700"><span class="text-xs font-bold text-white uppercase">${v.status}</span></div></div><div class="p-6 flex-grow flex flex-col relative"><div class="absolute -top-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold">${v.price.toLocaleString('fr-FR')} €</div><h3 class="text-lg font-bold text-white mb-1 line-clamp-1">${v.title}</h3><p class="text-xs text-gray-500 mb-4 uppercase font-bold tracking-widest">${v.brand} ${v.model}</p><div class="grid grid-cols-3 gap-2 text-xs text-gray-400 mb-6 pt-4 border-t border-gray-800"><div class="flex flex-col items-center gap-1"><ion-icon name="calendar" class="text-blue-500 text-lg"></ion-icon> <span>${v.year}</span></div><div class="flex flex-col items-center gap-1"><ion-icon name="speedometer" class="text-blue-500 text-lg"></ion-icon> <span>${v.km}k</span></div><div class="flex flex-col items-center gap-1"><ion-icon name="color-fill" class="text-blue-500 text-lg"></ion-icon> <span>${v.fuel}</span></div></div><button onclick="openModal('${v.id}')" class="mt-auto w-full py-3 rounded-xl bg-gray-800 hover:bg-blue-600 text-white font-bold text-sm transition-all border border-gray-700 hover:border-blue-500 flex items-center justify-center gap-2"><span>Voir les détails</span><ion-icon name="arrow-forward"></ion-icon></button></div></div>`;
+                        const statusColor = v.status === 'Neuf' ? 'bg-blue-600' : 'bg-green-600';
+                        card.innerHTML = `
+                            <div class="tilt-content h-full flex flex-col">
+                                <div class="relative h-64 overflow-hidden">
+                                    <img src="${v.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute top-4 left-4 ${statusColor} px-3 py-1 rounded-full shadow-lg">
+                                        <span class="text-xs font-bold text-white uppercase">${v.status}</span>
+                                    </div>
+                                </div>
+                                <div class="p-6 flex-grow flex flex-col relative bg-gray-900/40">
+                                    <div class="absolute -top-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border border-blue-500/50">${v.price.toLocaleString('fr-FR')} €</div>
+                                    <h3 class="text-lg font-bold text-white mb-1 line-clamp-1">${v.title}</h3>
+                                    <p class="text-xs text-gray-500 mb-4 uppercase font-bold tracking-widest">${v.brand} ${v.model}</p>
+                                    <div class="grid grid-cols-3 gap-2 text-xs text-gray-400 mb-6 pt-4 border-t border-gray-800/50">
+                                        <div class="flex flex-col items-center gap-1"><ion-icon name="calendar" class="text-blue-500 text-lg"></ion-icon> <span>${v.year}</span></div>
+                                        <div class="flex flex-col items-center gap-1"><ion-icon name="speedometer" class="text-blue-500 text-lg"></ion-icon> <span>${v.km}km</span></div>
+                                        <div class="flex flex-col items-center gap-1"><ion-icon name="color-fill" class="text-blue-500 text-lg"></ion-icon> <span>${v.fuel}</span></div>
+                                    </div>
+                                    <button onclick="openModal('${v.id}')" class="mt-auto w-full py-3 rounded-xl bg-gray-800 hover:bg-blue-600 text-white font-bold text-sm transition-all border border-gray-700 hover:border-blue-500 flex items-center justify-center gap-2"><span>Voir les détails</span><ion-icon name="arrow-forward"></ion-icon></button>
+                                </div>
+                            </div>`;
                         card.addEventListener('mousemove', handleTilt); card.addEventListener('mouseleave', resetTilt);
                         grid.appendChild(card);
                     }
@@ -946,7 +793,7 @@
             categoryInputs.forEach(btn => { btn.addEventListener('click', () => { categoryInputs.forEach(b => { b.classList.remove('bg-blue-600', 'text-white'); b.classList.add('bg-gray-800', 'text-gray-400'); }); btn.classList.add('bg-blue-600', 'text-white'); btn.classList.remove('bg-gray-800', 'text-gray-400'); currentCategory = btn.dataset.val; renderVehicles(); }); });
             document.getElementById('reset-filters').addEventListener('click', () => { searchBar.value = ''; filterPrice.value = 80000; document.getElementById('price-value-display').innerText = '80 000 €'; categoryInputs[0].click(); });
 
-            // --- MODAL & ORDER LOGIC ---
+            // --- MODAL LOGIC ---
             window.openModal = function(id) {
                 const v = allVehicleData[id];
                 document.getElementById('modal-image').src = v.image;
@@ -960,42 +807,20 @@
                 document.getElementById('modal-description').innerText = v.desc;
                 document.getElementById('modal-status-badge').innerText = v.status;
                 document.getElementById('vehicle-modal').classList.add('open');
-                
-                // Setup order button
-                const orderBtn = document.getElementById('modal-order-btn');
-                orderBtn.onclick = () => {
-                    document.getElementById('vehicle-modal').classList.remove('open');
-                    document.getElementById('order-vehicle-name').innerText = v.title;
-                    document.getElementById('order-modal').classList.add('open');
-                };
             }
-            
             document.querySelectorAll('.modal-close-btn').forEach(b => b.addEventListener('click', () => document.getElementById('vehicle-modal').classList.remove('open')));
-            document.querySelector('.order-close-btn').addEventListener('click', () => document.getElementById('order-modal').classList.remove('open'));
-            
-            // Handle Order Submit
-            document.getElementById('order-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                document.getElementById('order-modal').classList.remove('open');
-                // Show toast
-                const toast = document.getElementById('toast');
-                toast.classList.remove('translate-y-32', 'opacity-0');
-                setTimeout(() => toast.classList.add('translate-y-32', 'opacity-0'), 3000);
-            });
 
-            // --- PARALLAX & CAROUSEL FIX ---
-            window.addEventListener('scroll', () => { const scrolled = window.scrollY; const heroBg = document.getElementById('hero-bg'); if(heroBg) heroBg.style.transform = `translateY(${scrolled * 0.4}px) scale(1.1)`; });
-
+            // --- CAROUSEL (NOUVEAUTÉS) ---
             const track = document.getElementById('carousel-track');
             const dotsContainer = document.getElementById('carousel-dots');
-            const featuredKeys = ['peugeot-408', 'ds-7', 'renault-austral'];
+            const featuredKeys = ['peugeot-308', 'clio-alpine', 'c5-aircross']; 
             let slideIndex = 0;
             
             if(track) {
                 featuredKeys.forEach((key, idx) => {
                     const v = allVehicleData[key];
                     const slide = document.createElement('div'); slide.className = 'carousel-slide';
-                    slide.innerHTML = `<img src="${v.image}" class="w-full h-[600px] object-cover"><div class="carousel-caption"><div class="container mx-auto px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase mb-2 inline-block">En Vedette</span><h3 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">${v.title}</h3><button onclick="openModal('${v.id}')" class="mt-4 px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all hover:scale-105 shadow-lg">Découvrir le modèle</button></div></div>`;
+                    slide.innerHTML = `<img src="${v.image}" class="w-full h-[600px] object-cover"><div class="carousel-caption"><div class="container mx-auto px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase mb-2 inline-block">Nouveauté</span><h3 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">${v.title}</h3><button onclick="openModal('${v.id}')" class="mt-4 px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all hover:scale-105 shadow-lg">Découvrir le modèle</button></div></div>`;
                     track.appendChild(slide);
                     const dot = document.createElement('button'); dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx===0?'bg-blue-500 w-8':'bg-gray-500 hover:bg-gray-300'}`; dot.onclick=()=>goToSlide(idx); dotsContainer.appendChild(dot);
                 });
@@ -1010,7 +835,7 @@
                 setInterval(()=>goToSlide(slideIndex+1), 6000);
             }
 
-            // --- TYPEWRITER FIX (MODIFIED PHRASES) ---
+            // --- TYPEWRITER ---
             const typeTextSpan = document.getElementById('typewriter-text');
             const phrases = ["Exportation vers l'Algérie", "Réception aux ports", "Alger - Oran - Skikda - Mostaganem"];
             let pIdx=0, cIdx=0, isDel=false;
