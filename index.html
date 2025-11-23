@@ -96,7 +96,11 @@
         .carousel-container { position: relative; overflow: hidden; border-radius: 1rem; }
         .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
         .carousel-slide { flex: 0 0 100%; position: relative; min-width: 100%; }
-        .carousel-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%); padding: 4rem 2rem 2rem; color: white; }
+        /* Adjusted Caption for Mobile */
+        .carousel-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%); padding: 2rem 1.5rem 2rem; color: white; }
+        @media (min-width: 768px) {
+            .carousel-caption { padding: 4rem 2rem 2rem; }
+        }
         
         .tilt-card { transform-style: preserve-3d; transform: perspective(1000px); }
         .tilt-content { transition: transform 0.1s ease-out; }
@@ -113,9 +117,13 @@
         .step-container.active { display: block; }
         
         /* Logo Grid Styles in Search */
-        .brand-grid-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; border-radius: 1rem; transition: all 0.3s; background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(75, 85, 99, 0.4); }
+        .brand-grid-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; border-radius: 1rem; transition: all 0.3s; background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(75, 85, 99, 0.4); }
         .brand-grid-btn:hover { border-color: #3b82f6; background: rgba(30, 58, 138, 0.2); transform: translateY(-5px); }
-        .brand-logo-img { height: 50px; width: auto; object-fit: contain; margin-bottom: 0.75rem; filter: grayscale(100%) brightness(200%); transition: all 0.3s; }
+        .brand-logo-img { height: 40px; width: auto; object-fit: contain; margin-bottom: 0.5rem; filter: grayscale(100%) brightness(200%); transition: all 0.3s; }
+        @media (min-width: 768px) {
+            .brand-grid-btn { padding: 1.5rem; }
+            .brand-logo-img { height: 50px; margin-bottom: 0.75rem; }
+        }
         .brand-grid-btn:hover .brand-logo-img { filter: grayscale(0%) brightness(100%); transform: scale(1.1); }
 
         /* Condition Cards & List Styles */
@@ -134,22 +142,18 @@
 
     <div id="scroll-progress-bar"></div>
 
-    <!-- =========== SEARCH OVERLAY =========== -->
+    <!-- =========== SEARCH OVERLAY (SIMPLIFIED) =========== -->
     <div id="search-overlay" class="fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-center p-4">
         <button id="close-search-btn" class="absolute top-8 right-8 text-gray-400 hover:text-white transition-colors">
             <ion-icon name="close-outline" class="text-5xl"></ion-icon>
         </button>
         
         <div class="w-full max-w-5xl text-center relative">
-            <div class="flex justify-center gap-2 mb-8">
-                <div id="dot-1" class="w-3 h-3 rounded-full bg-blue-600"></div>
-                <div id="dot-2" class="w-3 h-3 rounded-full bg-gray-700"></div>
-                <div id="dot-3" class="w-3 h-3 rounded-full bg-gray-700"></div>
-            </div>
-
-            <!-- STEP 1: BRANDS WITH LOGOS -->
+            
+            <!-- STEP 1: BRANDS WITH LOGOS ONLY -->
             <div id="step-brand" class="step-container active">
-                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-white">Choisissez une <span class="text-blue-500">marque</span></h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Choisissez une <span class="text-blue-500">marque</span></h2>
+                <p class="text-gray-400 mb-10">Accédez directement aux véhicules disponibles</p>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                     <button class="brand-grid-btn group" data-brand="Renault">
                         <img src="https://imgur.com/GrJ32cM.png" alt="Renault" class="brand-logo-img">
@@ -176,21 +180,7 @@
                         <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">SEAT</span>
                     </button>
                 </div>
-                <button class="mt-8 text-gray-500 hover:text-white underline text-sm" data-brand="Toutes">Voir toutes les marques</button>
-            </div>
-
-            <div id="step-model" class="step-container">
-                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-brand" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-3xl md:text-4xl font-bold text-white">Choisissez un <span class="text-blue-500">modèle</span></h2></div>
-                <div id="models-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"></div>
-            </div>
-
-            <div id="step-price" class="step-container">
-                <div class="flex items-center justify-center gap-4 mb-10"><button id="back-to-model" class="text-gray-500 hover:text-white"><ion-icon name="arrow-back" class="text-2xl"></ion-icon></button><h2 class="text-3xl md:text-4xl font-bold text-white">Votre budget <span class="text-blue-500">maximum</span></h2></div>
-                <div class="max-w-lg mx-auto bg-gray-900 p-8 rounded-3xl border border-gray-800">
-                    <div class="text-center mb-8"><span id="wizard-price-display" class="text-4xl md:text-5xl font-bold text-blue-500">80 000 €</span><p class="text-gray-500 mt-2">Hors frais de douane</p></div>
-                    <input type="range" id="wizard-price-input" min="5000" max="100000" step="1000" value="80000" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 mb-10">
-                    <button id="wizard-submit-btn" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2"><ion-icon name="search"></ion-icon> Voir les offres</button>
-                </div>
+                <button class="mt-8 px-6 py-3 rounded-full border border-gray-700 text-gray-300 hover:text-white hover:border-blue-500 hover:bg-gray-800 transition-all text-sm font-bold" data-brand="Toutes">Voir tout le stock</button>
             </div>
         </div>
     </div>
@@ -214,13 +204,13 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
                 <!-- Card Neuf -->
-                <button onclick="showConditionDetails('neuf')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-10 text-left group relative overflow-hidden">
+                <button onclick="showConditionDetails('neuf')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-10 text-left group relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-blue-600/20"></div>
                     <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-blue-600/30 group-hover:scale-110 transition-transform">
                         <ion-icon name="star"></ion-icon>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4 text-white">Véhicule Neuf</h3>
-                    <p class="text-gray-400 text-lg mb-8">Pour CCR, Licence Moudjahidine ou régime standard (Passeport).</p>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white">Véhicule Neuf</h3>
+                    <p class="text-gray-400 text-base md:text-lg mb-8">Pour CCR, Licence Moudjahidine ou régime standard (Passeport).</p>
                     <div class="flex items-center gap-2 text-blue-400 font-bold">
                         <span>Voir les conditions</span>
                         <ion-icon name="arrow-forward" class="group-hover:translate-x-2 transition-transform"></ion-icon>
@@ -228,13 +218,13 @@
                 </button>
 
                 <!-- Card Occasion -->
-                <button onclick="showConditionDetails('occasion')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-10 text-left group relative overflow-hidden">
+                <button onclick="showConditionDetails('occasion')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-10 text-left group relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-green-600/20"></div>
                     <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-green-600/30 group-hover:scale-110 transition-transform">
                         <ion-icon name="time"></ion-icon>
                     </div>
-                    <h3 class="text-3xl font-bold mb-4 text-white">Véhicule Occasion</h3>
-                    <p class="text-gray-400 text-lg mb-8">Véhicules de moins de 3 ans pour les résidents.</p>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white">Véhicule Occasion</h3>
+                    <p class="text-gray-400 text-base md:text-lg mb-8">Véhicules de moins de 3 ans pour les résidents.</p>
                     <div class="flex items-center gap-2 text-green-400 font-bold">
                         <span>Voir les conditions</span>
                         <ion-icon name="arrow-forward" class="group-hover:translate-x-2 transition-transform"></ion-icon>
@@ -427,13 +417,13 @@
         </section>
 
         <!-- =========== CARROUSEL =========== -->
-        <section id="featured-carousel" class="py-24 bg-[#020617] text-white relative overflow-hidden border-b border-gray-800">
+        <section id="featured-carousel" class="py-12 md:py-24 bg-[#020617] text-white relative overflow-hidden border-b border-gray-800">
             <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4">Nouveautés <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Exclusives</span></h2><p class="text-gray-400">Les modèles les plus demandés du moment.</p></div>
+                <div class="text-center mb-8 md:mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4">Nouveautés <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Exclusives</span></h2><p class="text-gray-400">Les modèles les plus demandés du moment.</p></div>
                 <div id="vehicle-carousel" class="carousel-container shadow-2xl shadow-blue-900/10 border border-gray-800 reveal-on-scroll bg-gray-900/30">
                     <div id="carousel-track" class="carousel-track"></div>
-                    <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-back" class="text-xl"></ion-icon></button>
-                    <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-forward" class="text-xl"></ion-icon></button>
+                    <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-back" class="text-lg md:text-xl"></ion-icon></button>
+                    <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-forward" class="text-lg md:text-xl"></ion-icon></button>
                     <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
                 </div>
             </div>
@@ -502,7 +492,7 @@
             </div>
         </section>
 
-        <!-- =========== CONTACT (UPDATED MOBILE MAP) =========== -->
+        <!-- =========== CONTACT =========== -->
         <section id="contact" class="py-24 bg-[#010410] relative overflow-hidden">
             <div class="container mx-auto px-4 relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto">
@@ -631,68 +621,47 @@
                 'fabia': { id: 'fabia', brand: 'Skoda', model: 'Fabia', title: 'Skoda Fabia Monte Carlo', price: 16800, category: 'citadine', fuel: 'Essence', year: 2023, km: 28000, image: 'https://imgur.com/WzKhJby.jpg', desc: "Espace et technologie. Simply Clever.", status: 'Occasion', gearbox: 'DSG' }
             };
 
-            // --- WIZARD LOGIC ---
-            let wizardState = { brand: null, model: null, maxPrice: 80000 };
-            const steps = { 1: document.getElementById('step-brand'), 2: document.getElementById('step-model'), 3: document.getElementById('step-price') };
-            const dots = { 1: document.getElementById('dot-1'), 2: document.getElementById('dot-2'), 3: document.getElementById('dot-3') };
+            // --- SIMPLIFIED SEARCH LOGIC ---
             
-            function goToStep(stepNum) {
-                Object.values(steps).forEach(el => el.classList.remove('active'));
-                Object.values(dots).forEach((el, idx) => {
-                    if (idx + 1 <= stepNum) el.classList.add('bg-blue-600'), el.classList.remove('bg-gray-700');
-                    else el.classList.add('bg-gray-700'), el.classList.remove('bg-blue-600');
-                });
-                steps[stepNum].classList.add('active');
-            }
-
+            // Handle Brand Click -> Go directly to results
             document.querySelectorAll('.brand-grid-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const brand = btn.dataset.brand;
-                    wizardState.brand = brand;
-                    const models = new Set();
-                    Object.values(allVehicleData).forEach(v => { if(v.brand === brand) models.add(v.model); });
-                    
-                    const grid = document.getElementById('models-grid');
-                    grid.innerHTML = '';
-                    if(models.size > 0) {
-                        grid.innerHTML += `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="Tous"><span class="text-lg font-bold text-white">Tous les modèles</span></button>`;
-                        models.forEach(model => { grid.innerHTML += `<button class="model-btn p-6 bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl transition-all" data-model="${model}"><span class="text-lg font-bold text-white">${model}</span></button>`; });
-                        document.querySelectorAll('.model-btn').forEach(mBtn => { mBtn.addEventListener('click', () => { wizardState.model = mBtn.dataset.model; goToStep(3); }); });
-                        goToStep(2);
-                    } else {
-                         // Fallback if no models for brand (e.g. user clicked brand with no data yet)
-                         goToStep(3);
-                    }
+                    performSearch(brand);
                 });
             });
             
-            document.querySelector('button[data-brand="Toutes"]').addEventListener('click', () => { wizardState.brand = 'Toutes'; goToStep(3); });
-            document.getElementById('back-to-brand').addEventListener('click', () => goToStep(1));
-            document.getElementById('back-to-model').addEventListener('click', () => goToStep(2));
-            
-            const wizardPriceInput = document.getElementById('wizard-price-input');
-            wizardPriceInput.addEventListener('input', (e) => { const val = parseInt(e.target.value); wizardState.maxPrice = val; document.getElementById('wizard-price-display').innerText = val.toLocaleString('fr-FR') + ' €'; });
-
-            document.getElementById('wizard-submit-btn').addEventListener('click', () => {
-                document.getElementById('filter-price').value = wizardState.maxPrice;
-                document.getElementById('price-value-display').textContent = wizardState.maxPrice.toLocaleString('fr-FR') + ' €';
-                const searchBar = document.getElementById('search-bar');
-                if (wizardState.model && wizardState.model !== 'Tous') searchBar.value = wizardState.model;
-                else if (wizardState.brand && wizardState.brand !== 'Toutes') searchBar.value = wizardState.brand;
-                else searchBar.value = '';
-                document.getElementById('search-overlay').classList.remove('open');
-                document.getElementById('vehicules').scrollIntoView();
-                renderVehicles();
-                setTimeout(() => goToStep(1), 500);
+            document.querySelector('button[data-brand="Toutes"]').addEventListener('click', () => { 
+                performSearch('Toutes');
             });
 
-            // --- SEARCH OVERLAY ---
+            function performSearch(brand) {
+                const searchBar = document.getElementById('search-bar');
+                
+                // Set the search bar/filter state
+                if(brand === 'Toutes') {
+                    searchBar.value = '';
+                } else {
+                    searchBar.value = brand;
+                }
+
+                // Close overlay
+                document.getElementById('search-overlay').classList.remove('open');
+                
+                // Smooth scroll to vehicles section
+                document.getElementById('vehicules').scrollIntoView({ behavior: 'smooth' });
+                
+                // Render with new filter
+                renderVehicles();
+            }
+
+            // --- SEARCH OVERLAY TOGGLE ---
             const overlay = document.getElementById('search-overlay');
             const openBtns = [document.getElementById('open-search-btn'), document.getElementById('hero-open-search')];
             openBtns.forEach(b => b && b.addEventListener('click', () => overlay.classList.add('open')));
             document.getElementById('close-search-btn').addEventListener('click', () => overlay.classList.remove('open'));
 
-            // --- CONDITIONS GUIDE LOGIC (RESTORED) ---
+            // --- CONDITIONS GUIDE LOGIC ---
             window.openConditionsModal = function() {
                 document.getElementById('conditions-modal').classList.add('open');
                 document.getElementById('conditions-modal').classList.remove('hidden');
@@ -780,6 +749,8 @@
             }
 
             function handleTilt(e) {
+                // Disabled on mobile for performance
+                if(window.innerWidth < 768) return;
                 const card = e.currentTarget; const content = card.querySelector('.tilt-content'); const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left; const y = e.clientY - rect.top;
                 const centerX = rect.width / 2; const centerY = rect.height / 2;
@@ -810,7 +781,7 @@
             }
             document.querySelectorAll('.modal-close-btn').forEach(b => b.addEventListener('click', () => document.getElementById('vehicle-modal').classList.remove('open')));
 
-            // --- CAROUSEL (NOUVEAUTÉS) ---
+            // --- CAROUSEL (NOUVEAUTÉS) - UPDATED HEIGHTS ---
             const track = document.getElementById('carousel-track');
             const dotsContainer = document.getElementById('carousel-dots');
             const featuredKeys = ['peugeot-308', 'clio-alpine', 'c5-aircross']; 
@@ -820,7 +791,8 @@
                 featuredKeys.forEach((key, idx) => {
                     const v = allVehicleData[key];
                     const slide = document.createElement('div'); slide.className = 'carousel-slide';
-                    slide.innerHTML = `<img src="${v.image}" class="w-full h-[600px] object-cover"><div class="carousel-caption"><div class="container mx-auto px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase mb-2 inline-block">Nouveauté</span><h3 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">${v.title}</h3><button onclick="openModal('${v.id}')" class="mt-4 px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all hover:scale-105 shadow-lg">Découvrir le modèle</button></div></div>`;
+                    // UPDATED: h-64 on mobile, h-[600px] on desktop (md:)
+                    slide.innerHTML = `<img src="${v.image}" class="w-full h-64 md:h-[600px] object-cover"><div class="carousel-caption"><div class="container mx-auto px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase mb-2 inline-block">Nouveauté</span><h3 class="text-2xl md:text-6xl font-bold mb-4 drop-shadow-lg">${v.title}</h3><button onclick="openModal('${v.id}')" class="mt-2 md:mt-4 px-6 md:px-8 py-2 md:py-3 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all hover:scale-105 shadow-lg text-sm md:text-base">Découvrir</button></div></div>`;
                     track.appendChild(slide);
                     const dot = document.createElement('button'); dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx===0?'bg-blue-500 w-8':'bg-gray-500 hover:bg-gray-300'}`; dot.onclick=()=>goToSlide(idx); dotsContainer.appendChild(dot);
                 });
