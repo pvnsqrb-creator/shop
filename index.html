@@ -1,834 +1,928 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Exporte - Exportation de Véhicules vers l'Algérie</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Icons (Ionicons) -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
-    <!-- Configuration Tailwind & Fonts -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-blue': '#0055FF',
-                        'brand-dark': '#0F172A',
-                    },
-                    keyframes: {
-                        'pulse-slow': {
-                            '0%, 100%': { transform: 'scale(1)' },
-                            '50%': { transform: 'scale(1.05)' },
-                        },
-                        'fade-in-up': {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        'slide-down': {
-                            '0%': { transform: 'translateY(-100%)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        'wiggle': {
-                            '0%, 100%': { transform: 'rotate(-3deg)' },
-                            '50%': { transform: 'rotate(3deg)' },
-                        },
-                        'zoom-in': {
-                            '0%': { transform: 'scale(0.95)', opacity: '0' },
-                            '100%': { transform: 'scale(1)', opacity: '1' },
-                        }
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse-slow 3s infinite ease-in-out',
-                        'fade-in-up': 'fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'slide-down': 'slide-down 0.4s ease-out forwards',
-                        'float': 'float 6s ease-in-out infinite',
-                        'wiggle': 'wiggle 1s ease-in-out infinite',
-                        'zoom-in': 'zoom-in 0.3s ease-out forwards',
-                    }
-                },
-            },
-        }
-    </script>
-    
+    <title>Le 17ème de Melissa</title>
     <style>
-        /* --- Styles de base --- */
-        body { overflow-x: hidden; background-color: #020617; color: white; }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
-        
-        /* Cursor */
-        .typewriter-cursor { border-right: 0.15em solid #3B82F6; animation: blink-caret .75s step-end infinite; }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: inherit; } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
-        /* Animations & Components */
-        .modal { visibility: hidden; opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(0.95); backdrop-filter: blur(8px); }
-        .modal.open { visibility: visible; opacity: 1; transform: scale(1); }
-        
-        .reveal-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-
-        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-
-        #search-overlay { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1); }
-        #search-overlay.open { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-
-        #conditions-modal { clip-path: circle(0% at 50% 50%); transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.175, 1); }
-        #conditions-modal.open { clip-path: circle(150% at 50% 50%); }
-
-        #scroll-progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #3B82F6, #8B5CF6); z-index: 100; transition: width 0.1s linear; }
-        
-        .carousel-container { position: relative; overflow: hidden; border-radius: 1rem; }
-        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-        .carousel-slide { flex: 0 0 100%; position: relative; min-width: 100%; }
-        /* Adjusted Caption for Mobile */
-        .carousel-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%); padding: 2rem 1.5rem 2rem; color: white; }
-        @media (min-width: 768px) {
-            .carousel-caption { padding: 4rem 2rem 2rem; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body { 
+            background-color: #87CEEB; 
+            overflow: hidden; 
+            font-family: 'Inter', sans-serif; 
+            color: #333;
         }
-        
-        .tilt-card { transform-style: preserve-3d; transform: perspective(1000px); }
-        .tilt-content { transition: transform 0.1s ease-out; }
-
-        .timeline-step::after { content: ''; position: absolute; top: 2rem; left: 50%; width: 100%; height: 2px; background: #1f2937; z-index: -1; }
-        .timeline-step:last-child::after { display: none; }
-        @media (max-width: 768px) { .timeline-step::after { display: none; } }
-        
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .faq-item.active .faq-content { max-height: 500px; }
-        .faq-item.active .faq-icon { transform: rotate(180deg); }
-
-        .step-container { display: none; animation: fade-in-up 0.5s ease forwards; }
-        .step-container.active { display: block; }
-        
-        /* Logo Grid Styles in Search */
-        .brand-grid-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; border-radius: 1rem; transition: all 0.3s; background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(75, 85, 99, 0.4); }
-        .brand-grid-btn:hover { border-color: #3b82f6; background: rgba(30, 58, 138, 0.2); transform: translateY(-5px); }
-        .brand-logo-img { height: 40px; width: auto; object-fit: contain; margin-bottom: 0.5rem; filter: grayscale(100%) brightness(200%); transition: all 0.3s; }
-        @media (min-width: 768px) {
-            .brand-grid-btn { padding: 1.5rem; }
-            .brand-logo-img { height: 50px; margin-bottom: 0.75rem; }
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
         }
-        .brand-grid-btn:hover .brand-logo-img { filter: grayscale(0%) brightness(100%); transform: scale(1.1); }
 
-        /* Condition Cards & List Styles */
-        .condition-choice-card { transition: all 0.3s ease; }
-        .condition-choice-card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.3); }
-        .condition-detail-view { display: none; animation: zoom-in 0.4s ease forwards; }
-        .condition-detail-view.active { display: block; }
-        
-        .condition-list li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.95rem; color: #d1d5db; }
-        
-        .condition-list li ion-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 0.15rem; }
-        .condition-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        /* Modern UI Overlays */
+        #ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        #objective-tracker {
+            position: absolute;
+            top: 20px; right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #444;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            opacity: 0; /* Hidden during intro */
+        }
+        .tracker-complete {
+            color: #2e7d32 !important;
+            border-color: #4CAF50 !important;
+            background: rgba(230, 255, 230, 0.95) !important;
+        }
+
+        #dialogue-box {
+            width: 85%;
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 30px 40px;
+            font-size: 22px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            backdrop-filter: blur(15px);
+            transform: translateY(20px);
+            animation: slideUp 0.3s forwards;
+        }
+
+        @keyframes slideUp { to { transform: translateY(0); } }
+
+        #dialogue-speaker {
+            color: #FF69B4;
+            font-weight: 800;
+            margin-bottom: 12px;
+            font-size: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #dialogue-text {
+            line-height: 1.6;
+            min-height: 70px;
+            color: #333;
+            font-weight: 600;
+            white-space: pre-wrap; /* FIX FOR SPACES */
+        }
+
+        #dialogue-prompt {
+            align-self: flex-end;
+            font-size: 14px;
+            font-weight: 800;
+            margin-top: 20px;
+            color: #aaa;
+            background: rgba(0,0,0,0.05);
+            padding: 6px 14px;
+            border-radius: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* The Letter UI */
+        #letter-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh;
+            background: #FFFAF0;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            display: none;
+            overflow-y: auto;
+            pointer-events: auto; 
+        }
+
+        #letter-container::-webkit-scrollbar { width: 8px; }
+        #letter-container::-webkit-scrollbar-track { background: transparent; }
+        #letter-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+
+        .letter-text {
+            color: #3e3832;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            line-height: 1.9;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+        .letter-header {
+            font-size: 32px;
+            font-weight: 600;
+            color: #d16b6b;
+            text-align: center;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .letter-footer {
+            margin-top: 50px;
+            text-align: right;
+            font-weight: 600;
+            font-style: italic;
+            font-size: 22px;
+            color: #d16b6b;
+        }
+
+        #fade-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 1;
+            transition: opacity 2s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        #start-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #E0F7FA;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        #start-screen h1 { font-size: 64px; margin-bottom: 15px; color: #FF69B4; font-weight: 800; text-shadow: 0 4px 15px rgba(255,105,180,0.2); text-align: center;}
+        #start-screen p { font-size: 20px; color: #555; margin-bottom: 50px; font-weight: 600; }
+        #start-btn {
+            background: #FF69B4; color: white; border: none; border-radius: 40px;
+            font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; 
+            padding: 18px 60px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(255,105,180,0.4);
+        }
+        #start-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(255,105,180,0.6); }
+
     </style>
 </head>
-<body class="bg-[#020617] text-white font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body>
 
-    <div id="scroll-progress-bar"></div>
+    <div id="start-screen">
+        <h1>Le 17ème de Melissa</h1>
+        <p>Explore le jardin et trouve tes amis. (Audio Recommandé)</p>
+        <button id="start-btn">COMMENCER</button>
+    </div>
 
-    <!-- =========== SEARCH OVERLAY (SIMPLIFIED) =========== -->
-    <div id="search-overlay" class="fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-center p-4">
-        <button id="close-search-btn" class="absolute top-8 right-8 text-gray-400 hover:text-white transition-colors">
-            <ion-icon name="close-outline" class="text-5xl"></ion-icon>
-        </button>
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="ui-layer">
+        <div id="objective-tracker">Amis trouvés : 0 / 8</div>
+        <div id="dialogue-box">
+            <div id="dialogue-speaker">Nom</div>
+            <div id="dialogue-text">...</div>
+            <div id="dialogue-prompt">Appuyez sur ESPACE</div>
+        </div>
+    </div>
+
+    <div id="letter-container">
+        <div class="letter-header">Joyeux 17ème Anniversaire, Melissa !</div>
+        <div class="letter-text">J'ai du mal à croire que tu as déjà 17 ans aujourd'hui. Le temps passe si vite, mais je suis tellement reconnaissant d'être là pour te voir devenir la personne extraordinaire que tu es.</div>
+        <div class="letter-text">Nous avons préparé tout cela en secret pour toi, car tu mérites amplement d'être célébrée. Tu es toujours là pour les autres, tu apportes toujours de la lumière et de la gentillesse partout où tu vas. Aujourd'hui, cette journée t'appartient entièrement.</div>
+        <div class="letter-text">J'espère que cette nouvelle année t'apportera énormément de joie, de réussite et de magnifiques souvenirs. J'espère que tu poursuivras tes rêves sans la moindre peur, en sachant que nous serons toujours là pour t'encourager à chaque étape.</div>
+        <div class="letter-text">N'oublie jamais à quel point tu es aimée. Tu as un cœur en or, Melissa. Merci d'être toi-même, et merci de faire partie de nos vies.</div>
+        <div class="letter-text">Faisons de cette 17ème année la meilleure de toutes. On t'aime infiniment.</div>
+        <div class="letter-footer">Avec tout mon amour,<br>Abderrahmen</div>
+    </div>
+
+    <div id="fade-overlay"></div>
+
+<script>
+/**
+ * LE 17ÈME DE MELISSA
+ * Moteur Physique, Cutscenes et Typographie corrigée.
+ */
+
+const SCALE = 1.0; 
+const MAP_W = 3500; 
+const MAP_H = 2500;
+const HOUSE_X = MAP_W / 2;
+const HOUSE_Y = 300;
+
+const state = {
+    started: false,
+    cutscene: false,
+    paused: false,
+    map: 'garden', 
+    lightsOn: false,
+    keys: {},
+    time: 0,
+    talkedTo: new Set(),
+    doorUnlocked: false
+};
+
+// --- AUDIO ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const audio = {
+    bgm: null,
+    playUpliftingChords() {
+        if(this.bgm) return;
+        const notes = [261.63, 329.63, 392.00, 523.25]; 
+        let i = 0;
+        this.bgm = setInterval(() => {
+            if(!state.started) return;
+            let osc = audioCtx.createOscillator(); 
+            let gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = notes[i % notes.length] * (state.map === 'house' ? 1.5 : 1); 
+            
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.5);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+            
+            osc.start(); osc.stop(audioCtx.currentTime + 3);
+            i++;
+        }, 1500);
+    },
+    playPop() {
+        let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        gain.gain.value = 0.05;
+        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+    }
+};
+
+// --- DONNÉES DES PERSONNAGES ---
+const charactersData = {
+    melissa: { name: 'Melissa', skin: '#ffe0bd', hair: '#FFB6C1', body: '#ff9999' }, 
+    imen: { name: 'Imen', skin: '#f1c27d', hair: '#9370DB', body: '#E6E6FA' },
+    duru: { name: 'Duru', skin: '#ffe0bd', hair: '#00BFFF', body: '#ADD8E6' },
+    kawther: { name: 'Kawther', skin: '#e8c39e', hair: '#D2B48C', body: '#FFF8DC' },
+    rayane: { name: 'Rayane', skin: '#d4a373', hair: '#2F4F4F', body: '#8FBC8F' },
+    meriam: { name: 'Meriam', skin: '#ffe0bd', hair: '#40E0D0', body: '#E0FFFF' },
+    noor: { name: 'Noor', skin: '#c68e58', hair: '#8B4513', body: '#F5DEB3' },
+    mehdi: { name: 'Mehdi', skin: '#ffe0bd', hair: '#A9A9A9', body: '#D3D3D3' },
+    yanis: { name: 'Yanis', skin: '#f1c27d', hair: '#8A2BE2', body: '#DDA0DD' },
+    abderrahmen: { name: 'Abderrahmen', skin: '#d4a373', hair: '#1A1A1A', body: '#778899' }
+};
+
+// --- COLLISIONS ---
+const obstacles = []; 
+
+function checkCollision(x, y, radius, ignoreEntity = null) {
+    if (state.map === 'garden') {
+        if(x - radius < 0 || x + radius > MAP_W || y - radius < 0 || y + radius > MAP_H) return true;
+    } else {
+        if(x - radius < -400 || x + radius > 400 || y - radius < -300 || y + radius > 300) return true;
+    }
+    for (let obs of obstacles) {
+        if (obs.map !== state.map) continue;
+        if (obs.type === 'circle') {
+            let dist = Math.hypot(x - obs.x, y - obs.y);
+            if (dist < radius + obs.r) return true;
+        } else if (obs.type === 'rect') {
+            let testX = x; let testY = y;
+            if (x < obs.x) testX = obs.x; else if (x > obs.x + obs.w) testX = obs.x + obs.w;
+            if (y < obs.y) testY = obs.y; else if (y > obs.y + obs.h) testY = obs.y + obs.h;
+            let dist = Math.hypot(x - testX, y - testY);
+            if (dist < radius) return true;
+        }
+    }
+    let currentNpcs = state.map === 'garden' ? npcs : interiorNpcs;
+    for (let npc of currentNpcs) {
+        if (npc === ignoreEntity) continue;
+        let dist = Math.hypot(x - npc.x, y - npc.y);
+        if (dist < radius + npc.radius) return true;
+    }
+    return false;
+}
+
+// --- ENTITÉS ---
+class Entity {
+    constructor(x, y, type) {
+        this.x = x; this.y = y;
+        this.type = type;
+        this.data = charactersData[type];
+        this.radius = 16; 
+        this.vx = 0; this.vy = 0;
+        this.isMoving = false;
+        this.dir = 0; 
+        this.walkTimer = 0;
+        this.hasGift = false; 
+    }
+
+    update(dt) {
+        if (this.vx !== 0 || this.vy !== 0) {
+            this.isMoving = true;
+            this.walkTimer += dt * 0.015;
+            if(Math.abs(this.vx) > Math.abs(this.vy)) this.dir = this.vx > 0 ? 2 : 3;
+            else this.dir = this.vy > 0 ? 0 : 1;
+        } else {
+            this.isMoving = false;
+            this.walkTimer = 0;
+        }
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.beginPath();
+        ctx.ellipse(0, 25, 16, 6, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        let stretchY = this.isMoving ? 1 + Math.abs(Math.sin(this.walkTimer))*0.05 : 1 + Math.sin(state.time * 0.003) * 0.02;
+        let bobY = this.isMoving ? -Math.abs(Math.sin(this.walkTimer))*4 : 0;
         
-        <div class="w-full max-w-5xl text-center relative">
+        ctx.translate(0, bobY);
+        ctx.scale(1, stretchY);
+
+        ctx.fillStyle = this.data.body;
+        ctx.beginPath(); ctx.roundRect(-14, -5, 28, 30, 10); ctx.fill();
+
+        ctx.fillStyle = this.data.skin;
+        ctx.beginPath(); ctx.arc(0, -15, 14, 0, Math.PI*2); ctx.fill();
+
+        ctx.fillStyle = this.data.hair;
+        ctx.beginPath(); ctx.arc(0, -17, 15, Math.PI * 0.8, Math.PI * 2.2); ctx.fill();
+        
+        if (this.dir === 0) {
+            ctx.fillStyle = '#333';
+            ctx.beginPath(); ctx.arc(-5, -12, 2.5, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.arc(5, -12, 2.5, 0, Math.PI*2); ctx.fill();
+        }
+
+        if (this.hasGift && state.lightsOn && this.dir === 0) {
+            ctx.fillStyle = this.data.hair; 
+            ctx.fillRect(-8, 5, 16, 16);
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+            ctx.strokeRect(-8, 5, 16, 16);
+            ctx.beginPath(); ctx.moveTo(-8, 13); ctx.lineTo(8, 13); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, 5); ctx.lineTo(0, 21); ctx.stroke();
+        }
+
+        ctx.restore();
+
+        if (this.type !== 'melissa') {
+            ctx.font = '700 13px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'white';
+            ctx.fillText(this.data.name, this.x, this.y - 42);
+            ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+            ctx.strokeText(this.data.name, this.x, this.y - 42);
+            ctx.fillText(this.data.name, this.x, this.y - 42);
+        }
+    }
+}
+
+class Player extends Entity {
+    constructor(x, y) { super(x, y, 'melissa'); this.speed = 0.35; this.showPhone = false; } 
+    
+    update(dt) {
+        if (state.cutscene || state.paused) {
+            this.vx = 0; this.vy = 0;
+            super.update(dt);
+            return;
+        }
+
+        let inputVx = 0; let inputVy = 0;
+        if (state.keys['ArrowUp'] || state.keys['w']) inputVy = -this.speed;
+        if (state.keys['ArrowDown'] || state.keys['s']) inputVy = this.speed;
+        if (state.keys['ArrowLeft'] || state.keys['a']) inputVx = -this.speed;
+        if (state.keys['ArrowRight'] || state.keys['d']) inputVx = this.speed;
+
+        if (inputVx !== 0 && inputVy !== 0) {
+            let norm = 1 / Math.sqrt(2);
+            inputVx *= norm; inputVy *= norm;
+        }
+
+        this.vx = inputVx; this.vy = inputVy;
+
+        if (inputVx !== 0) {
+            let nx = this.x + inputVx * dt;
+            if (!checkCollision(nx, this.y, this.radius, this)) this.x = nx;
+        }
+        if (inputVy !== 0) {
+            let ny = this.y + inputVy * dt;
+            if (!checkCollision(this.x, ny, this.radius, this)) this.y = ny;
+        }
+
+        super.update(dt);
+
+        if (state.map === 'house' && this.y < 150 && !state.cutsceneTrig) {
+            state.cutsceneTrig = true;
+            startCutscene();
+        }
+    }
+
+    draw(ctx) {
+        super.draw(ctx);
+        // Draw Phone Bubble during intro
+        if (this.showPhone) {
+            let bob = Math.sin(state.time * 0.005) * 3;
+            ctx.save();
+            ctx.translate(this.x, this.y - 60 + bob);
+            ctx.fillStyle = 'white';
+            ctx.beginPath(); ctx.roundRect(-25, -35, 50, 35, 8); ctx.fill();
+            ctx.beginPath(); ctx.moveTo(-5, -5); ctx.lineTo(5, -5); ctx.lineTo(0, 5); ctx.fill();
             
-            <!-- STEP 1: BRANDS WITH LOGOS ONLY -->
-            <div id="step-brand" class="step-container active">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Choisissez une <span class="text-blue-500">marque</span></h2>
-                <p class="text-gray-400 mb-10">Accédez directement aux véhicules disponibles</p>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                    <button class="brand-grid-btn group" data-brand="Renault">
-                        <img src="https://imgur.com/GrJ32cM.png" alt="Renault" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">RENAULT</span>
-                    </button>
-                    <button class="brand-grid-btn group" data-brand="Peugeot">
-                        <img src="https://imgur.com/EzFTD82.png" alt="Peugeot" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">PEUGEOT</span>
-                    </button>
-                    <button class="brand-grid-btn group" data-brand="Citroën">
-                        <img src="https://imgur.com/RbrBono.png" alt="Citroën" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">CITROËN</span>
-                    </button>
-                    <button class="brand-grid-btn group" data-brand="Skoda">
-                        <img src="https://imgur.com/4rSR68A.png" alt="Skoda" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">SKODA</span>
-                    </button>
-                    <button class="brand-grid-btn group" data-brand="Dacia">
-                        <img src="https://imgur.com/0s26q3O.png" alt="Dacia" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">DACIA</span>
-                    </button>
-                    <button class="brand-grid-btn group" data-brand="Seat">
-                        <img src="https://imgur.com/JQjLxpP.png" alt="Seat" class="brand-logo-img">
-                        <span class="text-base md:text-lg font-bold text-gray-300 group-hover:text-blue-400">SEAT</span>
-                    </button>
-                </div>
-                <button class="mt-8 px-6 py-3 rounded-full border border-gray-700 text-gray-300 hover:text-white hover:border-blue-500 hover:bg-gray-800 transition-all text-sm font-bold" data-brand="Toutes">Voir tout le stock</button>
-            </div>
-        </div>
-    </div>
+            // Little phone icon
+            ctx.fillStyle = '#444'; ctx.fillRect(-8, -28, 16, 22);
+            ctx.fillStyle = '#87CEEB'; ctx.fillRect(-6, -26, 12, 16);
+            ctx.fillStyle = '#fff'; ctx.fillRect(-2, -8, 4, 1);
+            ctx.restore();
+        }
+    }
+}
 
-    <!-- =========== CONDITIONS FULL SCREEN =========== -->
-    <div id="conditions-modal" class="fixed inset-0 z-[100] bg-[#020617] text-white overflow-y-auto flex flex-col hidden">
-        <!-- Header Modal -->
-        <div class="p-6 flex justify-between items-center border-b border-gray-800 sticky top-0 bg-[#020617]/90 backdrop-blur-md z-20">
-            <div class="flex items-center gap-2">
-                <ion-icon name="information-circle" class="text-blue-500 text-2xl"></ion-icon>
-                <span class="font-bold text-lg">Guide d'Éligibilité</span>
-            </div>
-            <button id="close-conditions-btn" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-                <ion-icon name="close" class="text-xl"></ion-icon>
-            </button>
-        </div>
+const player = new Player(MAP_W/2, MAP_H - 200);
 
-        <!-- STEP 1: CHOICE -->
-        <div id="condition-step-choice" class="flex-grow flex flex-col items-center justify-center p-6 condition-detail-view active">
-            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center text-white">Quel type de véhicule <br>souhaitez-vous <span class="text-blue-600">importer</span> ?</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
-                <!-- Card Neuf -->
-                <button onclick="showConditionDetails('neuf')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-10 text-left group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-blue-600/20"></div>
-                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-blue-600/30 group-hover:scale-110 transition-transform">
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white">Véhicule Neuf</h3>
-                    <p class="text-gray-400 text-base md:text-lg mb-8">Pour CCR, Licence Moudjahidine ou régime standard (Passeport).</p>
-                    <div class="flex items-center gap-2 text-blue-400 font-bold">
-                        <span>Voir les conditions</span>
-                        <ion-icon name="arrow-forward" class="group-hover:translate-x-2 transition-transform"></ion-icon>
-                    </div>
-                </button>
+const npcs = [
+    new Entity(500, 1800, 'imen'),
+    new Entity(3000, 1900, 'duru'),
+    new Entity(800, 800, 'kawther'),
+    new Entity(2800, 900, 'rayane'),
+    new Entity(400, 300, 'meriam'),
+    new Entity(3200, 400, 'noor'),
+    new Entity(MAP_W/2 - 600, 1400, 'mehdi'),
+    new Entity(MAP_W/2 + 600, 1500, 'yanis'),
+];
 
-                <!-- Card Occasion -->
-                <button onclick="showConditionDetails('occasion')" class="condition-choice-card bg-gray-900 border border-gray-800 rounded-3xl p-6 md:p-10 text-left group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-green-600/20"></div>
-                    <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-lg shadow-green-600/30 group-hover:scale-110 transition-transform">
-                        <ion-icon name="time"></ion-icon>
-                    </div>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white">Véhicule Occasion</h3>
-                    <p class="text-gray-400 text-base md:text-lg mb-8">Véhicules de moins de 3 ans pour les résidents.</p>
-                    <div class="flex items-center gap-2 text-green-400 font-bold">
-                        <span>Voir les conditions</span>
-                        <ion-icon name="arrow-forward" class="group-hover:translate-x-2 transition-transform"></ion-icon>
-                    </div>
-                </button>
-            </div>
-        </div>
+const interiorNpcs = [
+    new Entity(-250, -100, 'imen'), new Entity(250, -100, 'duru'),
+    new Entity(-300, 50, 'kawther'), new Entity(300, 50, 'rayane'),
+    new Entity(-200, 150, 'meriam'), new Entity(200, 150, 'noor'),
+    new Entity(-100, -150, 'mehdi'), new Entity(100, -150, 'yanis'),
+    new Entity(0, -100, 'abderrahmen') // Placed close to the center
+];
+interiorNpcs.forEach(n => { n.map = 'house'; n.dir = 0; n.hasGift = true; });
 
-        <!-- STEP 2: NEUF DETAILS -->
-        <div id="condition-step-neuf" class="flex-grow p-4 md:p-10 condition-detail-view max-w-7xl mx-auto w-full">
-            <button onclick="resetConditions()" class="mb-8 flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                <ion-icon name="arrow-back" class="text-xl"></ion-icon>
-                <span class="font-bold">Retour au choix</span>
-            </button>
-            
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-2xl"><ion-icon name="star"></ion-icon></div>
-                <h2 class="text-3xl font-bold text-white">Conditions Véhicule Neuf</h2>
-            </div>
+// NEW DIALOGUES (FRENCH, NO MENTION OF HOUSE)
+const dialogueLines = {
+    'imen': "Coucou Melissa ! Profite bien de cette magnifique journée, il fait super beau.",
+    'duru': "Tu as vu comment les fleurs ont éclos aujourd'hui ? Elles sont magnifiques.",
+    'kawther': "17 ans, c'est un bel âge. Prends ton temps pour savourer chaque instant.",
+    'rayane': "N'oublie jamais à quel point tu es spéciale pour nous tous. Promène-toi bien !",
+    'meriam': "Je me promenais juste par ici... C'est si paisible. Joyeux anniversaire au fait !",
+    'noor': "Garde toujours ce magnifique sourire qui illumine nos journées.",
+    'mehdi': "Aujourd'hui, c'est ta journée. Fais exactement ce qui te rend heureuse.",
+    'yanis': "On a tous beaucoup de chance de t'avoir dans nos vies. Prends l'air, tu le mérites !"
+};
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Dossier CCR -->
-                <div class="bg-gray-900/50 border border-gray-800 rounded-3xl p-6">
-                    <div class="condition-card-header">
-                        <ion-icon name="document-text" class="text-blue-500 text-2xl"></ion-icon>
-                        <h3 class="text-xl font-bold text-blue-400">Carte CCR</h3>
-                    </div>
-                    <ul class="condition-list">
-                        <li><ion-icon name="person" class="text-blue-500"></ion-icon><span>Ressortissant algérien immatriculé au consulat.</span></li>
-                        <li><ion-icon name="time" class="text-blue-500"></ion-icon><span>Séjour ininterrompu > 3 ans à l'étranger.</span></li>
-                        <li><ion-icon name="person-add" class="text-blue-500"></ion-icon><span>Âgé de plus de 19 ans.</span></li>
-                        <li><ion-icon name="alert-circle" class="text-blue-500"></ion-icon><span>Jamais bénéficié du CCR (ni le conjoint).</span></li>
-                        <li class="pt-2 border-t border-white/10 mt-2"><ion-icon name="car-sport" class="text-white"></ion-icon><span class="text-white font-semibold">Conditions Véhicule</span></li>
-                        <li><ion-icon name="checkmark" class="text-green-500"></ion-icon><span>Strictement Neuf (Jamais immatriculé).</span></li>
-                        <li><ion-icon name="flask" class="text-gray-400"></ion-icon><span>Essence ≤ 1 800 cm³ | Diesel ≤ 2 000 cm³.</span></li>
-                        <li><ion-icon name="cube" class="text-gray-400"></ion-icon><span>Utilitaire : Poids total charge ≤ 5,950 tonnes.</span></li>
-                        <li><ion-icon name="timer" class="text-gray-400"></ion-icon><span>Importation < 1 mois après achat/immatriculation export.</span></li>
-                        <li><ion-icon name="list" class="text-gray-400"></ion-icon><span>Doit figurer sur l'inventaire de déménagement.</span></li>
-                    </ul>
-                </div>
+let particles = [];
+class Particle {
+    constructor(x, y, color) {
+        this.x = x; this.y = y;
+        this.vx = (Math.random() - 0.5) * 8;
+        this.vy = (Math.random() - 1) * 8;
+        this.color = color;
+        this.life = 100;
+        this.size = Math.random() * 6 + 4;
+    }
+    update(dt) {
+        this.x += this.vx; this.y += this.vy;
+        this.vy += 0.2; 
+        this.life -= dt * 0.05;
+    }
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+    }
+}
 
-                <!-- Licence Moudjahid -->
-                <div class="bg-gray-900/50 border border-gray-800 rounded-3xl p-6">
-                    <div class="condition-card-header">
-                        <ion-icon name="ribbon" class="text-purple-500 text-2xl"></ion-icon>
-                        <h3 class="text-xl font-bold text-purple-400">Licence Moudjahidine</h3>
-                    </div>
-                    <ul class="condition-list">
-                        <li><ion-icon name="card" class="text-purple-500"></ion-icon><span>Licence en cours de validité.</span></li>
-                        <li><ion-icon name="medkit" class="text-purple-500"></ion-icon><span>Taux d’invalidité ≥ 60 % pour exonération totale.</span></li>
-                        <li><ion-icon name="refresh" class="text-purple-500"></ion-icon><span>Renouvelable tous les 5 ans.</span></li>
-                        <li class="pt-2 border-t border-white/10 mt-2"><ion-icon name="car-sport" class="text-white"></ion-icon><span class="text-white font-semibold">Conditions Véhicule</span></li>
-                        <li><ion-icon name="checkmark" class="text-green-500"></ion-icon><span>Véhicule Neuf.</span></li>
-                        <li><ion-icon name="flask" class="text-gray-400"></ion-icon><span>Essence ≤ 1 800 cm³ | Diesel ≤ 2 000 cm³.</span></li>
-                        <li><ion-icon name="cash" class="text-gray-400"></ion-icon><span>Achat impératif "en devises".</span></li>
-                        <li class="pt-2 border-t border-white/10 mt-2"><ion-icon name="folder-open" class="text-white"></ion-icon><span class="text-white font-semibold">Documents</span></li>
-                        <li><ion-icon name="document" class="text-gray-400"></ion-icon><span>Copie Licence & Pièce d'identité.</span></li>
-                        <li><ion-icon name="receipt" class="text-gray-400"></ion-icon><span>Facture achat, Certificat conformité.</span></li>
-                    </ul>
-                </div>
+class HeartParticle {
+    constructor(x, y) {
+        this.x = x; this.y = y;
+        this.vy = -1;
+        this.life = 100;
+    }
+    update(dt) {
+        this.y += this.vy;
+        this.life -= dt * 0.05;
+    }
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.globalAlpha = Math.max(0, this.life / 100);
+        ctx.fillStyle = '#ff3366';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-10, -10, -15, 10, 0, 20);
+        ctx.bezierCurveTo(15, 10, 10, -10, 0, 0);
+        ctx.fill();
+        ctx.restore();
+    }
+}
 
-                <!-- Passeport (Standard) -->
-                <div class="bg-gray-900/50 border border-gray-800 rounded-3xl p-6">
-                    <div class="condition-card-header">
-                        <ion-icon name="passport" class="text-yellow-500 text-2xl"></ion-icon>
-                        <h3 class="text-xl font-bold text-yellow-400">Régime Passeport</h3>
-                    </div>
-                    <ul class="condition-list">
-                        <li><ion-icon name="car" class="text-yellow-500"></ion-icon><span>Véhicule touristique Neuf (Jamais immatriculé).</span></li>
-                        <li><ion-icon name="timer" class="text-yellow-500"></ion-icon><span>Importation < 1 mois après achat.</span></li>
-                        <li class="pt-2 border-t border-white/10 mt-2"><ion-icon name="cash" class="text-white"></ion-icon><span class="text-white font-semibold">Taxes Applicables</span></li>
-                        <li><ion-icon name="calculator" class="text-gray-400"></ion-icon><span>Base Taxable = Prix Véhicule + Transport.</span></li>
-                        <li><ion-icon name="trending-up" class="text-gray-400"></ion-icon><span>Douane : ~15% (si ≤1.8L/2.0L) à ~30%.</span></li>
-                        <li><ion-icon name="pricetag" class="text-gray-400"></ion-icon><span>TVA : 19% appliquée à l'arrivée.</span></li>
-                        <li><ion-icon name="alert" class="text-red-400"></ion-icon><span>TIC : ~60% si cylindrée > 2 000 cm³.</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+// --- GENERATION DE LA CARTE ---
+const trees = [];
+for(let i=0; i<80; i++) {
+    let tx = Math.random() * MAP_W;
+    let ty = Math.random() * MAP_H;
+    if (Math.hypot(tx - HOUSE_X, ty - HOUSE_Y) > 400 && Math.abs(tx - MAP_W/2) > 200) {
+        trees.push({x: tx, y: ty});
+        obstacles.push({map: 'garden', type: 'circle', x: tx, y: ty + 20, r: 25}); 
+    }
+}
 
-        <!-- STEP 2: OCCASION DETAILS -->
-        <div id="condition-step-occasion" class="flex-grow p-4 md:p-10 condition-detail-view max-w-6xl mx-auto w-full">
-            <button onclick="resetConditions()" class="mb-8 flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                <ion-icon name="arrow-back" class="text-xl"></ion-icon>
-                <span class="font-bold">Retour au choix</span>
-            </button>
-            
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-2xl"><ion-icon name="time"></ion-icon></div>
-                <h2 class="text-3xl font-bold text-white">Conditions Véhicule Occasion (-3 ans)</h2>
-            </div>
+obstacles.push({map: 'garden', type: 'rect', x: HOUSE_X - 250, y: HOUSE_Y - 200, w: 500, h: 250});
+obstacles.push({map: 'house', type: 'rect', x: -450, y: -350, w: 900, h: 50}); 
+obstacles.push({map: 'house', type: 'rect', x: -450, y: -350, w: 50, h: 700}); 
+obstacles.push({map: 'house', type: 'rect', x: 400, y: -350, w: 50, h: 700});  
+obstacles.push({map: 'house', type: 'rect', x: -150, y: -80, w: 300, h: 100}); 
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Conditions Générales -->
-                <div class="bg-gray-900/50 border border-gray-800 rounded-3xl p-8">
-                    <div class="condition-card-header">
-                        <ion-icon name="settings" class="text-green-500 text-2xl"></ion-icon>
-                        <h3 class="text-xl font-bold text-green-400">Conditions & Limites</h3>
-                    </div>
-                    <ul class="condition-list">
-                        <li><ion-icon name="calendar-number" class="text-green-500"></ion-icon><span><strong>Moins de 3 ans</strong> (date de 1ère mise en circulation).</span></li>
-                        <li><ion-icon name="leaf" class="text-green-500"></ion-icon><span>Motorisation autorisée : Essence, Hybride, Électrique.</span></li>
-                        <li><ion-icon name="flask" class="text-green-500"></ion-icon><span>Cylindrée max : 1 800 cm³.</span></li>
-                        <li><ion-icon name="person" class="text-green-500"></ion-icon><span>Importateur : Résident en Algérie (pas seulement ressortissant).</span></li>
-                        <li><ion-icon name="repeat" class="text-green-500"></ion-icon><span>Fréquence : 1 véhicule tous les 3 ans.</span></li>
-                        <li><ion-icon name="hand-left" class="text-red-400"></ion-icon><span>Usage strictement personnel (pas commercial).</span></li>
-                        <li><ion-icon name="shield-checkmark" class="text-gray-400"></ion-icon><span>Conformité aux normes algériennes (sécurité, technique).</span></li>
-                        <li><ion-icon name="wallet" class="text-gray-400"></ion-icon><span>Paiement sur fonds propres (devises).</span></li>
-                    </ul>
-                </div>
+function drawEnvironment(ctx) {
+    if (state.map === 'garden') {
+        ctx.fillStyle = '#90EE90';
+        ctx.fillRect(0, 0, MAP_W, MAP_H);
 
-                <!-- Documents Requis -->
-                <div class="bg-gray-900/50 border border-gray-800 rounded-3xl p-8">
-                    <div class="condition-card-header">
-                        <ion-icon name="folder-open" class="text-yellow-500 text-2xl"></ion-icon>
-                        <h3 class="text-xl font-bold text-yellow-400">Documents Requis (France)</h3>
-                    </div>
-                    <ul class="condition-list">
-                        <li><ion-icon name="card" class="text-yellow-500"></ion-icon><span><strong>Carte grise</strong> barrée (au nom du titulaire ou avec procuration).</span></li>
-                        <li><ion-icon name="document-text" class="text-gray-400"></ion-icon><span><strong>Certificat de cession</strong> (Cerfa n°15776*01).</span></li>
-                        <li><ion-icon name="receipt" class="text-gray-400"></ion-icon><span><strong>Facture d'achat</strong> (si vendeur professionnel).</span></li>
-                        <li><ion-icon name="checkmark-done-circle" class="text-gray-400"></ion-icon><span><strong>Certificat de non-gage</strong> (situation administrative).</span></li>
-                        <li><ion-icon name="construct" class="text-gray-400"></ion-icon><span><strong>Contrôle technique</strong> français valide.</span></li>
-                        <li><ion-icon name="id-card" class="text-gray-400"></ion-icon><span>Copie pièce d'identité & Acte de naissance.</span></li>
-                        <li><ion-icon name="home" class="text-gray-400"></ion-icon><span>Carte ou certificat de résidence.</span></li>
-                        <li><ion-icon name="passport" class="text-gray-400"></ion-icon><span>Passeport algérien valide.</span></li>
-                        <li class="text-xs text-gray-500 mt-2 italic">* Le kilométrage et la date de mise en circulation doivent figurer sur les documents.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+        ctx.fillStyle = '#DEB887'; 
+        ctx.beginPath();
+        ctx.moveTo(MAP_W/2 - 60, MAP_H);
+        ctx.lineTo(MAP_W/2 - 60, HOUSE_Y + 100);
+        ctx.lineTo(HOUSE_X - 60, HOUSE_Y + 100);
+        ctx.lineTo(HOUSE_X + 60, HOUSE_Y + 100);
+        ctx.lineTo(MAP_W/2 + 60, MAP_H);
+        ctx.fill();
 
-    <!-- =========== EN-TÊTE =========== -->
-    <header class="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-lg shadow-lg z-50 border-b border-white/5 transition-all duration-300">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- LOGO -->
-            <div class="flex items-center gap-3 hover:scale-105 transition-transform duration-300 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-10 md:h-12 w-auto object-contain">
-            </div>
+        ctx.fillStyle = '#FF69B4';
+        for(let i=0; i<100; i++) {
+            let fx = (Math.sin(i*7)*0.5 + 0.5) * MAP_W;
+            let fy = (Math.cos(i*13)*0.5 + 0.5) * MAP_H;
+            ctx.beginPath(); ctx.arc(fx, fy, 4, 0, Math.PI*2); ctx.fill();
+        }
 
-            <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                <a href="#accueil" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Accueil<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="javascript:openConditionsModal()" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Éligibilité<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="#featured-carousel" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Nouveautés<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="#vehicules" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Catalogue<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="#process" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Démarche<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-                <a href="#contact" class="relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 group">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span></a>
-            </div>
-            
-            <div class="flex items-center space-x-3">
-                <button id="open-search-btn" class="p-2.5 rounded-full bg-gray-800/50 text-gray-300 hover:bg-blue-600 hover:text-white transition-all hover:rotate-12 active:scale-95"><ion-icon name="search-outline" class="text-lg"></ion-icon></button>
-                <a href="tel:+33123456789" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all text-sm font-bold shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 active:translate-y-0"><ion-icon name="call" class="text-lg animate-wiggle"></ion-icon><span>Appeler</span></a>
-                <button id="burger-btn" class="md:hidden p-2 text-gray-300 hover:text-white"><ion-icon name="menu-outline" class="text-3xl"></ion-icon></button>
-            </div>
-        </nav>
-    </header>
+        ctx.save();
+        ctx.translate(HOUSE_X, HOUSE_Y);
+        
+        ctx.fillStyle = 'rgba(0,0,0,0.15)'; 
+        ctx.beginPath(); ctx.ellipse(0, 60, 260, 50, 0, 0, Math.PI*2); ctx.fill();
 
-    <!-- Menu Mobile -->
-    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-screen bg-[#020617] z-[60] p-8 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden border-r border-gray-800">
-        <button id="close-menu-btn" class="absolute top-6 right-6 p-2 hover:rotate-90 transition-transform"><ion-icon name="close-outline" class="text-3xl text-gray-400"></ion-icon></button>
-        <div class="mb-12 border-b border-gray-800 pb-6">
-            <img src="https://i.imgur.com/c7a4wlO.png" alt="ABC Exporte" class="h-12 w-auto object-contain">
-        </div>
-        <nav class="flex flex-col space-y-6">
-            <a href="#accueil" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="home-outline" class="text-blue-500"></ion-icon> Accueil</a>
-            <a href="javascript:openConditionsModal()" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="information-circle-outline" class="text-blue-500"></ion-icon> Conditions</a>
-            <a href="#process" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="git-network-outline" class="text-blue-500"></ion-icon> Comment ça marche</a>
-            <a href="#vehicules" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="car-sport-outline" class="text-blue-500"></ion-icon> Véhicules</a>
-            <a href="#contact" class="mobile-menu-link text-2xl text-gray-400 hover:text-white flex items-center gap-4 transition-all hover:translate-x-2"><ion-icon name="map-outline" class="text-blue-500"></ion-icon> Contact</a>
-        </nav>
-    </div>
+        ctx.fillStyle = '#FFF5EE'; 
+        ctx.fillRect(-250, -150, 500, 200);
 
-    <main id="main-content">
-        <!-- =========== HERO =========== -->
-        <section id="accueil" class="relative min-h-screen w-full flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden">
-            <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-110 will-change-transform" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=2070'); z-index: -2;"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-[#020617] z-[-1] transition-colors duration-500"></div>
-            <div class="relative z-10 container mx-auto px-4 text-center">
-                <div class="animate-fade-in-up">
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest mb-6 backdrop-blur-md"><span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>LEADER DE L'EXPORTATION</div>
-                    <h1 class="text-4xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tight text-white drop-shadow-2xl"><span id="typewriter-text" class="bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-gray-400"></span><span class="typewriter-cursor"></span></h1>
-                    <p class="text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">Votre véhicule français de rêve, livré directement dans les ports d'Algérie : <span class="text-white font-semibold">Oran, Alger, Skikda, Mostaganem</span>.</p>
-                </div>
-                <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <button onclick="openConditionsModal()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-600/30 hover:scale-105 hover:shadow-blue-600/50 flex items-center gap-2"><ion-icon name="information-circle"></ion-icon> Voir Conditions</button>
-                    <button id="hero-open-search" class="px-8 py-4 bg-gray-800/50 hover:bg-gray-800 border border-gray-700 text-white rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2 backdrop-blur-md"><ion-icon name="search"></ion-icon> Recherche par Marque</button>
-                </div>
-            </div>
-        </section>
+        ctx.fillStyle = '#FA8072'; 
+        ctx.beginPath(); ctx.moveTo(-280, -150); ctx.lineTo(0, -280); ctx.lineTo(280, -150); ctx.fill();
 
-        <!-- =========== CARROUSEL =========== -->
-        <section id="featured-carousel" class="py-12 md:py-24 bg-[#020617] text-white relative overflow-hidden border-b border-gray-800">
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-8 md:mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4">Nouveautés <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Exclusives</span></h2><p class="text-gray-400">Les modèles les plus demandés du moment.</p></div>
-                <div id="vehicle-carousel" class="carousel-container shadow-2xl shadow-blue-900/10 border border-gray-800 reveal-on-scroll bg-gray-900/30">
-                    <div id="carousel-track" class="carousel-track"></div>
-                    <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-back" class="text-lg md:text-xl"></ion-icon></button>
-                    <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all flex items-center justify-center z-20"><ion-icon name="arrow-forward" class="text-lg md:text-xl"></ion-icon></button>
-                    <div id="carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
-                </div>
-            </div>
-        </section>
+        ctx.fillStyle = state.doorUnlocked ? '#98FB98' : '#8B4513';
+        ctx.fillRect(-35, -50, 70, 100);
+        if (state.doorUnlocked) {
+            ctx.shadowBlur = 30; ctx.shadowColor = '#98FB98';
+            ctx.fillStyle = '#fff'; ctx.fillRect(-30, -45, 60, 95); ctx.shadowBlur = 0;
+        }
 
-        <!-- =========== CATALOGUE =========== -->
-        <section id="vehicules" class="py-24 bg-[#03081e] relative">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-on-scroll">
-                    <div><h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">Notre Catalogue</h2><p class="text-gray-400 text-lg">Sélectionnez votre véhicule parmi notre stock certifié.</p></div>
-                </div>
-                <div class="flex flex-col lg:flex-row gap-10">
-                    <aside class="w-full lg:w-1/4 reveal-on-scroll">
-                        <div class="bg-gray-900/60 backdrop-blur-md border border-gray-800 p-6 rounded-2xl sticky top-28 shadow-xl">
-                            <div class="flex items-center justify-between mb-6"><h3 class="text-xl font-bold flex items-center gap-2"><ion-icon name="options" class="text-blue-500"></ion-icon> Filtres</h3><button id="reset-filters" class="text-xs text-blue-400 hover:text-white transition-colors">Réinitialiser</button></div>
-                            <div class="space-y-8">
-                                <div><label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Recherche</label><div class="relative"><input type="search" id="search-bar" placeholder="Ex: Peugeot 3008..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors pl-10"><ion-icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></ion-icon></div></div>
-                                <div>
-                                    <label class="text-xs font-bold text-gray-500 uppercase mb-3 block">Marque</label>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <button class="filter-chip active px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-medium transition-all border border-transparent" data-val="toutes">Toutes</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="renault">Renault</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="peugeot">Peugeot</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="citroën">Citroën</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="dacia">Dacia</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="seat">Seat</button>
-                                        <button class="filter-chip px-3 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white text-xs font-medium transition-all border border-gray-700" data-val="skoda">Skoda</button>
-                                    </div>
-                                    <input type="hidden" id="filter-category" value="toutes">
-                                </div>
-                                <div><div class="flex justify-between mb-3"><label class="text-xs font-bold text-gray-500 uppercase">Budget Max</label><span id="price-value-display" class="text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">80 000 €</span></div><input type="range" id="filter-price" min="5000" max="80000" step="1000" value="80000" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"></div>
-                            </div>
-                        </div>
-                    </aside>
-                    <div class="w-full lg:w-3/4">
-                        <div id="vehicle-container">
-                            <div id="skeleton-loader" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div><div class="bg-gray-900 rounded-2xl h-96 animate-pulse"></div></div>
-                            <div id="vehicle-grid" class="hidden grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 perspective-1000"></div>
-                        </div>
-                        <div id="no-results-message" class="hidden flex flex-col items-center justify-center py-20 text-center bg-gray-900/30 rounded-2xl border border-gray-800 border-dashed"><div class="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mb-6"><ion-icon name="search" class="text-4xl text-gray-500"></ion-icon></div><h3 class="text-xl font-bold text-white mb-2">Aucun véhicule trouvé</h3><p class="text-gray-400 max-w-xs mx-auto">Essayez d'ajuster vos filtres.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(-180, -70, 80, 80); ctx.fillRect(100, -70, 80, 80);
+        ctx.fillStyle = '#fff'; 
+        ctx.fillRect(-145, -70, 10, 80); ctx.fillRect(-180, -35, 80, 10);
+        ctx.fillRect(135, -70, 10, 80); ctx.fillRect(100, -35, 80, 10);
 
-        <!-- =========== COMMENT ÇA MARCHE =========== -->
-        <section id="process" class="py-20 bg-[#020617] relative overflow-hidden border-t border-gray-900">
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-16 reveal-on-scroll"><h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Comment ça <span class="text-blue-600">marche</span> ?</h2><p class="text-gray-400 max-w-xl mx-auto">Votre voiture en Algérie en 4 étapes simples.</p></div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-                    <div class="timeline-step relative flex flex-col items-center text-center group reveal-on-scroll">
-                        <div class="w-20 h-20 rounded-full bg-gray-900 border-2 border-blue-600 flex items-center justify-center text-3xl text-blue-500 mb-6 shadow-[0_0_20px_rgba(37,99,235,0.3)] z-10 relative group-hover:scale-110 transition-transform duration-300"><ion-icon name="search"></ion-icon><div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white">1</div></div><h3 class="text-xl font-bold text-white mb-2">Choix & Devis</h3><p class="text-gray-400 text-sm">Choisissez votre véhicule et recevez un devis.</p>
-                    </div>
-                    <div class="timeline-step relative flex flex-col items-center text-center group reveal-on-scroll" style="transition-delay: 0.1s;">
-                        <div class="w-20 h-20 rounded-full bg-gray-900 border-2 border-gray-700 group-hover:border-blue-600 flex items-center justify-center text-3xl text-gray-400 group-hover:text-blue-500 mb-6 z-10 relative group-hover:scale-110 transition-all duration-300"><ion-icon name="document-text"></ion-icon><div class="absolute -top-2 -right-2 w-8 h-8 bg-gray-700 group-hover:bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white transition-colors">2</div></div><h3 class="text-xl font-bold text-white mb-2">Dossier & Douane</h3><p class="text-gray-400 text-sm">Nous gérons les formalités administratives.</p>
-                    </div>
-                    <div class="timeline-step relative flex flex-col items-center text-center group reveal-on-scroll" style="transition-delay: 0.2s;">
-                        <div class="w-20 h-20 rounded-full bg-gray-900 border-2 border-gray-700 group-hover:border-blue-600 flex items-center justify-center text-3xl text-gray-400 group-hover:text-blue-500 mb-6 z-10 relative group-hover:scale-110 transition-all duration-300"><ion-icon name="boat"></ion-icon><div class="absolute -top-2 -right-2 w-8 h-8 bg-gray-700 group-hover:bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white transition-colors">3</div></div><h3 class="text-xl font-bold text-white mb-2">Transport Maritime</h3><p class="text-gray-400 text-sm">Embarquement depuis Marseille/Sète.</p>
-                    </div>
-                    <div class="timeline-step relative flex flex-col items-center text-center group reveal-on-scroll" style="transition-delay: 0.3s;">
-                        <div class="w-20 h-20 rounded-full bg-gray-900 border-2 border-gray-700 group-hover:border-blue-600 flex items-center justify-center text-3xl text-gray-400 group-hover:text-blue-500 mb-6 z-10 relative group-hover:scale-110 transition-all duration-300"><ion-icon name="business"></ion-icon><div class="absolute -top-2 -right-2 w-8 h-8 bg-gray-700 group-hover:bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white transition-colors">4</div></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Réception au Port</h3>
-                        <p class="text-gray-400 text-sm">Oran, Alger, Skikda, Mostaganem.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        ctx.restore();
 
-        <!-- =========== CONTACT =========== -->
-        <section id="contact" class="py-24 bg-[#010410] relative overflow-hidden">
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-7xl mx-auto">
-                    <!-- Formulaire -->
-                    <div class="glass-panel rounded-3xl p-8 md:p-10 reveal-on-scroll">
-                        <h2 class="text-4xl font-bold text-white mb-2">Contactez-nous</h2>
-                        <p class="text-gray-400 mb-8">Devis en 1h.</p>
-                        <form id="contact-form" class="space-y-6">
-                            <div class="grid grid-cols-2 gap-6"><div class="space-y-2"><label class="text-xs text-blue-400 font-bold ml-1 uppercase">Nom</label><input type="text" required class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"></div><div class="space-y-2"><label class="text-xs text-blue-400 font-bold ml-1 uppercase">Prénom</label><input type="text" required class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"></div></div>
-                            <div class="space-y-2"><label class="text-xs text-blue-400 font-bold ml-1 uppercase">Email</label><input type="email" required class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none"></div>
-                            <div class="space-y-2"><label class="text-xs text-blue-400 font-bold ml-1 uppercase">Message</label><textarea rows="4" required class="w-full bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none resize-none"></textarea></div>
-                            <button type="submit" class="group w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/30 flex items-center justify-center gap-3 transform hover:-translate-y-1"><span>Envoyer</span><ion-icon name="paper-plane" class="group-hover:translate-x-1 transition-transform"></ion-icon></button>
-                        </form>
-                    </div>
-                    
-                    <!-- Infos et Map -->
-                    <div class="flex flex-col gap-8 reveal-on-scroll h-full mt-8 lg:mt-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:bg-gray-800/60 transition-colors group"><div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><ion-icon name="call" class="text-xl"></ion-icon></div><div><h4 class="font-bold text-white text-sm">Téléphone</h4><p class="text-gray-400 text-sm font-mono">+33 1 23 45 67 89</p></div></div>
-                            <div class="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-gray-800 flex items-center gap-4 hover:bg-gray-800/60 transition-colors group"><div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><ion-icon name="mail" class="text-xl"></ion-icon></div><div><h4 class="font-bold text-white text-sm">Email</h4><p class="text-gray-400 text-sm">contact@abcexporte.fr</p></div></div>
-                        </div>
-                        
-                        <!-- MAP CONTAINER WITH MOBILE OVERLAY -->
-                        <div class="flex-grow w-full h-[400px] bg-gray-800 rounded-3xl overflow-hidden shadow-2xl border border-gray-700 relative group">
-                            <!-- Desktop Iframe (Standard) -->
-                            <iframe class="w-full h-full grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2786.383462217029!2d4.8645613!3d45.7081944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4ea516c601041%3A0x408ab2ae4bb21f0!2s1%20Anc%20Rte%20d'Heyrieux%2C%2069200%20V%C3%A9nissieux%2C%20France!5e0!3m2!1sfr!2sfr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                            
-                            <!-- Mobile Overlay (Tap to open App) -->
-                            <a href="https://www.google.com/maps/search/?api=1&query=45.7081944,4.8645613" target="_blank" class="absolute inset-0 z-10 flex items-center justify-center bg-black/60 opacity-100 lg:opacity-0 lg:pointer-events-none hover:bg-black/40 transition-all">
-                                <div class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 transform hover:scale-105 transition-transform">
-                                    <ion-icon name="map"></ion-icon>
-                                    <span>Ouvrir dans Google Maps</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- =========== MODALE VÉHICULE (DÉTAILS) =========== -->
-    <div id="vehicle-modal" class="modal fixed inset-0 z-[110] flex items-center justify-center p-4 overflow-y-auto">
-        <div class="modal-bg fixed inset-0 bg-black/90 backdrop-blur-md"></div>
-        <div class="relative w-full max-w-6xl bg-[#0f172a] rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row animate-slide-down border border-gray-800">
-            <!-- Image Side -->
-            <div class="w-full lg:w-3/5 h-64 lg:h-auto relative bg-gray-900 group overflow-hidden">
-                <img id="modal-image" src="" alt="Véhicule" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#0f172a]"></div>
-                <div class="absolute top-6 left-6">
-                    <span id="modal-status-badge" class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-600 text-white shadow-lg backdrop-blur-md"></span>
-                </div>
-            </div>
-            <!-- Content Side -->
-            <div class="w-full lg:w-2/5 p-8 lg:p-10 flex flex-col relative bg-gray-900">
-                <button class="modal-close-btn absolute top-6 right-6 p-2 bg-gray-800/50 hover:bg-gray-700 rounded-full text-white transition-colors z-10 backdrop-blur-sm">
-                    <ion-icon name="close" class="text-xl"></ion-icon>
-                </button>
-                <div class="mb-auto">
-                    <h2 id="modal-title" class="text-3xl lg:text-4xl font-bold text-white mb-2 leading-tight"></h2>
-                    <div class="mb-8">
-                        <div class="text-3xl font-bold text-blue-500" id="modal-price"></div>
-                        <div class="text-lg font-semibold text-gray-400 mt-1" id="modal-price-dzd"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Année</span><span class="text-white font-semibold text-lg" id="modal-year"></span></div>
-                        <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">KM</span><span class="text-white font-semibold text-lg" id="modal-km"></span></div>
-                        <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Carburant</span><span class="text-white font-semibold text-lg" id="modal-fuel"></span></div>
-                        <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700"><span class="block text-gray-500 text-xs uppercase font-bold mb-1">Boîte</span><span class="text-white font-semibold text-lg" id="modal-gearbox"></span></div>
-                    </div>
-                    <p id="modal-description" class="text-gray-300 leading-relaxed text-sm bg-gray-800/30 p-4 rounded-xl border border-gray-800"></p>
-                </div>
-                <div class="mt-8 pt-6 border-t border-gray-800">
-                    <button class="w-full py-4 bg-white hover:bg-gray-200 text-black font-bold rounded-xl transition-all flex justify-center items-center gap-3 transform hover:-translate-y-1 shadow-lg shadow-white/10">
-                        <ion-icon name="logo-whatsapp" class="text-xl"></ion-icon>
-                        <span>Réserver sur WhatsApp</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- =========== JAVASCRIPT =========== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const EXCHANGE_RATE = 275;
-            
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerBtn = document.getElementById('burger-btn');
-            const closeMenuBtn = document.getElementById('close-menu-btn');
-
-            // Mobile Menu Logic
-            burgerBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('-translate-x-full');
-            });
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('-translate-x-full');
-            });
-            document.querySelectorAll('.mobile-menu-link').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('-translate-x-full'));
-            });
-
-            // --- NOUVELLE DATA ---
-            const allVehicleData = {
-                // RENAULT
-                'clio-alpine': { id: 'clio-alpine', brand: 'Renault', model: 'Clio', title: 'Renault Clio 5 Esprit Alpine', price: 23500, category: 'citadine', fuel: 'Hybride', year: 2024, km: 10, image: 'https://imgur.com/nU3x08V.jpg', desc: "La citadine sportive par excellence. Finition Esprit Alpine ultra équipée.", status: 'Neuf', gearbox: 'Auto' },
-                'clio-5': { id: 'clio-5', brand: 'Renault', model: 'Clio', title: 'Renault Clio 5 Zen', price: 16900, category: 'citadine', fuel: 'Essence', year: 2022, km: 35000, image: 'https://imgur.com/dmdkEWC.jpg', desc: "Fiable et économique. Parfait pour la ville.", status: 'Occasion', gearbox: 'Manuelle' },
-                
-                // PEUGEOT
-                'peugeot-308': { id: 'peugeot-308', brand: 'Peugeot', model: '308', title: 'Peugeot 308 GT', price: 31900, category: 'berline', fuel: 'Hybride', year: 2024, km: 50, image: 'https://imgur.com/C08PTk1.jpg', desc: "Le nouveau visage de Peugeot. Design tranchant.", status: 'Neuf', gearbox: 'EAT8' },
-                'peugeot-208': { id: 'peugeot-208', brand: 'Peugeot', model: '208', title: 'Peugeot 208 Allure', price: 21500, category: 'citadine', fuel: 'Essence', year: 2024, km: 10, image: 'https://imgur.com/5xob7zR.jpg', desc: "La voiture de l'année. Look irrésistible.", status: 'Neuf', gearbox: 'Auto' },
-                
-                // CITROEN
-                'c5-aircross': { id: 'c5-aircross', brand: 'Citroën', model: 'C5 AirCross', title: 'Citroën C5 AirCross Shine', price: 34500, category: 'suv', fuel: 'Diesel', year: 2024, km: 20, image: 'https://imgur.com/CV8eLDi.jpg', desc: "Le confort absolu avec les suspensions hydrauliques.", status: 'Neuf', gearbox: 'EAT8' },
-                'c3-aircross': { id: 'c3-aircross', brand: 'Citroën', model: 'C3 AirCross', title: 'Citroën C3 AirCross Rip Curl', price: 18900, category: 'suv', fuel: 'Essence', year: 2023, km: 25000, image: 'https://imgur.com/E5VAHf2.jpg', desc: "SUV compact et modulable.", status: 'Occasion', gearbox: 'Manuelle' },
-                
-                // DACIA
-                'logan': { id: 'logan', brand: 'Dacia', model: 'Logan', title: 'Dacia Logan Prestige', price: 14500, category: 'berline', fuel: 'Essence', year: 2024, km: 0, image: 'https://imgur.com/fLXzGZF.jpg', desc: "La berline familiale imbattable.", status: 'Neuf', gearbox: 'Manuelle' },
-                'sandero': { id: 'sandero', brand: 'Dacia', model: 'Sandero', title: 'Dacia Sandero Stepway', price: 15900, category: 'citadine', fuel: 'Essence', year: 2024, km: 10, image: 'https://imgur.com/J6RSxeB.jpg', desc: "Le look baroudeur préféré des familles.", status: 'Neuf', gearbox: 'CVT' },
-                
-                // SEAT
-                'ibiza': { id: 'ibiza', brand: 'Seat', model: 'Ibiza', title: 'Seat Ibiza FR', price: 17500, category: 'citadine', fuel: 'Essence', year: 2022, km: 42000, image: 'https://imgur.com/segUTVX.jpg', desc: "Sportive et dynamique. Finition FR.", status: 'Occasion', gearbox: 'DSG' },
-                'arona': { id: 'arona', brand: 'Seat', model: 'Arona', title: 'Seat Arona Xperience', price: 19500, category: 'suv', fuel: 'Essence', year: 2023, km: 15000, image: 'https://imgur.com/5ly7AYI.jpg', desc: "Le petit SUV urbain polyvalent.", status: 'Occasion', gearbox: 'Auto' },
-                
-                // SKODA
-                'fabia': { id: 'fabia', brand: 'Skoda', model: 'Fabia', title: 'Skoda Fabia Monte Carlo', price: 16800, category: 'citadine', fuel: 'Essence', year: 2023, km: 28000, image: 'https://imgur.com/WzKhJby.jpg', desc: "Espace et technologie. Simply Clever.", status: 'Occasion', gearbox: 'DSG' }
-            };
-
-            // --- SIMPLIFIED SEARCH LOGIC ---
-            
-            // Handle Brand Click -> Go directly to results
-            document.querySelectorAll('.brand-grid-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const brand = btn.dataset.brand;
-                    performSearch(brand);
-                });
-            });
-            
-            document.querySelector('button[data-brand="Toutes"]').addEventListener('click', () => { 
-                performSearch('Toutes');
-            });
-
-            function performSearch(brand) {
-                const searchBar = document.getElementById('search-bar');
-                
-                // Set the search bar/filter state
-                if(brand === 'Toutes') {
-                    searchBar.value = '';
-                } else {
-                    searchBar.value = brand;
-                }
-
-                // Close overlay
-                document.getElementById('search-overlay').classList.remove('open');
-                
-                // Smooth scroll to vehicles section
-                document.getElementById('vehicules').scrollIntoView({ behavior: 'smooth' });
-                
-                // Render with new filter
-                renderVehicles();
-            }
-
-            // --- SEARCH OVERLAY TOGGLE ---
-            const overlay = document.getElementById('search-overlay');
-            const openBtns = [document.getElementById('open-search-btn'), document.getElementById('hero-open-search')];
-            openBtns.forEach(b => b && b.addEventListener('click', () => overlay.classList.add('open')));
-            document.getElementById('close-search-btn').addEventListener('click', () => overlay.classList.remove('open'));
-
-            // --- CONDITIONS GUIDE LOGIC ---
-            window.openConditionsModal = function() {
-                document.getElementById('conditions-modal').classList.add('open');
-                document.getElementById('conditions-modal').classList.remove('hidden');
-                resetConditions();
-            };
-
-            document.getElementById('close-conditions-btn').addEventListener('click', () => {
-                document.getElementById('conditions-modal').classList.remove('open');
-                setTimeout(() => document.getElementById('conditions-modal').classList.add('hidden'), 500); // Wait for transition
-            });
-
-            window.showConditionDetails = function(type) {
-                document.getElementById('condition-step-choice').classList.remove('active');
-                setTimeout(() => {
-                    document.getElementById('condition-step-choice').style.display = 'none';
-                    if(type === 'neuf') {
-                        document.getElementById('condition-step-neuf').style.display = 'block';
-                        setTimeout(() => document.getElementById('condition-step-neuf').classList.add('active'), 50);
-                    } else {
-                        document.getElementById('condition-step-occasion').style.display = 'block';
-                        setTimeout(() => document.getElementById('condition-step-occasion').classList.add('active'), 50);
-                    }
-                }, 300);
-            };
-
-            window.resetConditions = function() {
-                // Masquer détails
-                document.querySelectorAll('.condition-detail-view').forEach(el => {
-                    el.classList.remove('active');
-                    el.style.display = 'none';
-                });
-                // Afficher choix
-                const choice = document.getElementById('condition-step-choice');
-                choice.style.display = 'flex';
-                setTimeout(() => choice.classList.add('active'), 50);
-            };
-
-            // --- RENDER VEHICLES ---
-            const grid = document.getElementById('vehicle-grid');
-            const filterPrice = document.getElementById('filter-price');
-            const searchBar = document.getElementById('search-bar');
-            const categoryInputs = document.querySelectorAll('.filter-chip');
-            let currentCategory = 'toutes';
-
-            function renderVehicles() {
-                grid.innerHTML = '';
-                let count = 0;
-                const maxP = parseInt(filterPrice.value);
-                const search = searchBar.value.toLowerCase();
-                
-                Object.values(allVehicleData).forEach((v, idx) => {
-                    const brandMatch = currentCategory === 'toutes' || v.brand.toLowerCase() === currentCategory.toLowerCase();
-                    if(brandMatch && v.price <= maxP && (v.title.toLowerCase().includes(search) || v.brand.toLowerCase().includes(search))) {
-                        count++;
-                        const card = document.createElement('div');
-                        card.className = 'tilt-card group bg-gray-900/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800 hover:border-blue-600/50 transition-all duration-500 hover:shadow-2xl reveal-on-scroll flex flex-col';
-                        card.style.transitionDelay = idx * 50 + 'ms';
-                        const statusColor = v.status === 'Neuf' ? 'bg-blue-600' : 'bg-green-600';
-                        card.innerHTML = `
-                            <div class="tilt-content h-full flex flex-col">
-                                <div class="relative h-64 overflow-hidden">
-                                    <img src="${v.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                                    <div class="absolute top-4 left-4 ${statusColor} px-3 py-1 rounded-full shadow-lg">
-                                        <span class="text-xs font-bold text-white uppercase">${v.status}</span>
-                                    </div>
-                                </div>
-                                <div class="p-6 flex-grow flex flex-col relative bg-gray-900/40">
-                                    <div class="absolute -top-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold border border-blue-500/50">${v.price.toLocaleString('fr-FR')} €</div>
-                                    <h3 class="text-lg font-bold text-white mb-1 line-clamp-1">${v.title}</h3>
-                                    <p class="text-xs text-gray-500 mb-4 uppercase font-bold tracking-widest">${v.brand} ${v.model}</p>
-                                    <div class="grid grid-cols-3 gap-2 text-xs text-gray-400 mb-6 pt-4 border-t border-gray-800/50">
-                                        <div class="flex flex-col items-center gap-1"><ion-icon name="calendar" class="text-blue-500 text-lg"></ion-icon> <span>${v.year}</span></div>
-                                        <div class="flex flex-col items-center gap-1"><ion-icon name="speedometer" class="text-blue-500 text-lg"></ion-icon> <span>${v.km}km</span></div>
-                                        <div class="flex flex-col items-center gap-1"><ion-icon name="color-fill" class="text-blue-500 text-lg"></ion-icon> <span>${v.fuel}</span></div>
-                                    </div>
-                                    <button onclick="openModal('${v.id}')" class="mt-auto w-full py-3 rounded-xl bg-gray-800 hover:bg-blue-600 text-white font-bold text-sm transition-all border border-gray-700 hover:border-blue-500 flex items-center justify-center gap-2"><span>Voir les détails</span><ion-icon name="arrow-forward"></ion-icon></button>
-                                </div>
-                            </div>`;
-                        card.addEventListener('mousemove', handleTilt); card.addEventListener('mouseleave', resetTilt);
-                        grid.appendChild(card);
-                    }
-                });
-                document.getElementById('no-results-message').classList.toggle('hidden', count > 0);
-                observeReveal();
-            }
-
-            function handleTilt(e) {
-                // Disabled on mobile for performance
-                if(window.innerWidth < 768) return;
-                const card = e.currentTarget; const content = card.querySelector('.tilt-content'); const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                const centerX = rect.width / 2; const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5; const rotateY = ((x - centerX) / centerX) * 5;
-                content.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            }
-            function resetTilt(e) { const card = e.currentTarget; const content = card.querySelector('.tilt-content'); content.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`; }
-
-            searchBar.addEventListener('input', renderVehicles);
-            filterPrice.addEventListener('input', (e) => { document.getElementById('price-value-display').innerText = parseInt(e.target.value).toLocaleString('fr-FR') + ' €'; renderVehicles(); });
-            categoryInputs.forEach(btn => { btn.addEventListener('click', () => { categoryInputs.forEach(b => { b.classList.remove('bg-blue-600', 'text-white'); b.classList.add('bg-gray-800', 'text-gray-400'); }); btn.classList.add('bg-blue-600', 'text-white'); btn.classList.remove('bg-gray-800', 'text-gray-400'); currentCategory = btn.dataset.val; renderVehicles(); }); });
-            document.getElementById('reset-filters').addEventListener('click', () => { searchBar.value = ''; filterPrice.value = 80000; document.getElementById('price-value-display').innerText = '80 000 €'; categoryInputs[0].click(); });
-
-            // --- MODAL LOGIC ---
-            window.openModal = function(id) {
-                const v = allVehicleData[id];
-                document.getElementById('modal-image').src = v.image;
-                document.getElementById('modal-title').innerText = v.title;
-                document.getElementById('modal-price').innerText = v.price.toLocaleString('fr-FR') + ' €';
-                document.getElementById('modal-price-dzd').innerText = `( ≈ ${(v.price * EXCHANGE_RATE).toLocaleString('fr-FR')} DZD )`;
-                document.getElementById('modal-year').innerText = v.year;
-                document.getElementById('modal-km').innerText = v.km + ' km';
-                document.getElementById('modal-fuel').innerText = v.fuel;
-                document.getElementById('modal-gearbox').innerText = v.gearbox;
-                document.getElementById('modal-description').innerText = v.desc;
-                document.getElementById('modal-status-badge').innerText = v.status;
-                document.getElementById('vehicle-modal').classList.add('open');
-            }
-            document.querySelectorAll('.modal-close-btn').forEach(b => b.addEventListener('click', () => document.getElementById('vehicle-modal').classList.remove('open')));
-
-            // --- CAROUSEL (NOUVEAUTÉS) - UPDATED HEIGHTS ---
-            const track = document.getElementById('carousel-track');
-            const dotsContainer = document.getElementById('carousel-dots');
-            const featuredKeys = ['peugeot-308', 'clio-alpine', 'c5-aircross']; 
-            let slideIndex = 0;
-            
-            if(track) {
-                featuredKeys.forEach((key, idx) => {
-                    const v = allVehicleData[key];
-                    const slide = document.createElement('div'); slide.className = 'carousel-slide';
-                    // UPDATED: h-64 on mobile, h-[600px] on desktop (md:)
-                    slide.innerHTML = `<img src="${v.image}" class="w-full h-64 md:h-[600px] object-cover"><div class="carousel-caption"><div class="container mx-auto px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold uppercase mb-2 inline-block">Nouveauté</span><h3 class="text-2xl md:text-6xl font-bold mb-4 drop-shadow-lg">${v.title}</h3><button onclick="openModal('${v.id}')" class="mt-2 md:mt-4 px-6 md:px-8 py-2 md:py-3 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all hover:scale-105 shadow-lg text-sm md:text-base">Découvrir</button></div></div>`;
-                    track.appendChild(slide);
-                    const dot = document.createElement('button'); dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx===0?'bg-blue-500 w-8':'bg-gray-500 hover:bg-gray-300'}`; dot.onclick=()=>goToSlide(idx); dotsContainer.appendChild(dot);
-                });
-                
-                function goToSlide(n) { 
-                    slideIndex=n; if(slideIndex>=featuredKeys.length)slideIndex=0; if(slideIndex<0)slideIndex=featuredKeys.length-1; 
-                    track.style.transform=`translateX(-${slideIndex*100}%)`; 
-                    Array.from(dotsContainer.children).forEach((d,i) => { d.className = `w-3 h-3 rounded-full transition-all duration-300 ${i===slideIndex?'bg-blue-500 w-8':'bg-gray-500 hover:bg-gray-300'}`; });
-                }
-                
-                document.getElementById('carousel-next').onclick=()=>goToSlide(slideIndex+1); document.getElementById('carousel-prev').onclick=()=>goToSlide(slideIndex-1);
-                setInterval(()=>goToSlide(slideIndex+1), 6000);
-            }
-
-            // --- TYPEWRITER ---
-            const typeTextSpan = document.getElementById('typewriter-text');
-            const phrases = ["Exportation vers l'Algérie", "Réception aux ports", "Alger - Oran - Skikda - Mostaganem"];
-            let pIdx=0, cIdx=0, isDel=false;
-            function typeWriter() {
-                const current = phrases[pIdx];
-                typeTextSpan.textContent = current.substring(0, cIdx);
-                let speed = isDel ? 30 : 80;
-                if (!isDel && cIdx === current.length) { speed = 2500; isDel = true; }
-                else if (isDel && cIdx === 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; }
-                cIdx += isDel ? -1 : 1;
-                setTimeout(typeWriter, speed);
-            }
-            typeWriter();
-
-            // --- UTILS ---
-            function observeReveal() { const obs = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible')), {threshold:0.1}); document.querySelectorAll('.reveal-on-scroll').forEach(el => obs.observe(el)); }
-            window.onscroll = function() { const winScroll = document.body.scrollTop || document.documentElement.scrollTop; const height = document.documentElement.scrollHeight - document.documentElement.clientHeight; const scrolled = (winScroll / height) * 100; document.getElementById("scroll-progress-bar").style.width = scrolled + "%"; };
-            
-            // Init
-            setTimeout(() => { document.getElementById('skeleton-loader').classList.add('hidden'); document.getElementById('vehicle-grid').classList.remove('hidden'); document.getElementById('vehicle-grid').classList.add('grid'); renderVehicles(); }, 600);
+        trees.forEach(t => {
+            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            ctx.beginPath(); ctx.ellipse(t.x, t.y+30, 60, 25, 0, 0, Math.PI*2); ctx.fill();
         });
-    </script>
+
+    } else if (state.map === 'house') {
+        ctx.fillStyle = '#DEB887'; 
+        ctx.fillRect(-400, -300, 800, 600);
+        
+        ctx.strokeStyle = '#D2B48C'; ctx.lineWidth = 2;
+        for(let i=-400; i<400; i+=40) {
+            ctx.beginPath(); ctx.moveTo(i, -300); ctx.lineTo(i, 300); ctx.stroke();
+        }
+
+        ctx.fillStyle = '#FFE4E1'; 
+        ctx.fillRect(-400, -350, 800, 100);
+
+        ctx.fillStyle = '#FFC0CB';
+        ctx.beginPath(); ctx.roundRect(-250, -150, 500, 300, 20); ctx.fill();
+
+        if (state.lightsOn) {
+            ctx.fillStyle = '#8B4513'; ctx.fillRect(-150, -80, 300, 100);
+            ctx.fillStyle = '#A0522D'; ctx.fillRect(-160, -100, 320, 100);
+
+            ctx.fillStyle = '#FFF'; ctx.beginPath(); ctx.ellipse(0, -60, 40, 20, 0, 0, Math.PI*2); ctx.fill();
+            ctx.fillRect(-40, -90, 80, 30);
+            ctx.fillStyle = '#FF69B4'; ctx.beginPath(); ctx.ellipse(0, -90, 40, 20, 0, 0, Math.PI*2); ctx.fill();
+            
+            ctx.fillStyle = '#FFD700'; ctx.fillRect(-10, -110, 4, 20); ctx.fillRect(6, -110, 4, 20);
+            ctx.fillStyle = '#FF4500'; ctx.beginPath(); ctx.arc(-8, -114, 4, 0, Math.PI*2); ctx.arc(8, -114, 4, 0, Math.PI*2); ctx.fill();
+
+            ctx.fillStyle = '#87CEEB'; ctx.fillRect(-120, -80, 30, 30); ctx.fillStyle='red'; ctx.fillRect(-110,-80,10,30);
+            ctx.fillStyle = '#98FB98'; ctx.fillRect(90, -70, 40, 40); ctx.fillStyle='purple'; ctx.fillRect(105,-70,10,40);
+
+            ctx.strokeStyle = '#FF69B4'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(-350, -300); ctx.quadraticCurveTo(0, -200, 350, -300); ctx.stroke();
+            for(let i=-300; i<=300; i+=60) {
+                ctx.fillStyle = ['#FFD700', '#FF69B4', '#00FFFF', '#32CD32'][Math.abs(i/60)%4];
+                let by = -200 + (Math.abs(i)/300)*100 - 50; 
+                ctx.beginPath(); ctx.moveTo(i, by); ctx.lineTo(i+20, by+30); ctx.lineTo(i+40, by); ctx.fill();
+            }
+        } else {
+            ctx.fillStyle = 'rgba(10, 10, 20, 0.98)';
+            ctx.fillRect(-400, -350, 800, 700);
+            ctx.globalCompositeOperation = 'destination-out';
+            let grad = ctx.createRadialGradient(player.x, player.y, 20, player.x, player.y, 150);
+            grad.addColorStop(0, 'rgba(0,0,0,1)'); grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad; ctx.fillRect(-400, -350, 800, 700);
+            ctx.globalCompositeOperation = 'source-over';
+        }
+    }
+}
+
+// --- UI ET TEXTE ---
+const ui = {
+    tracker: document.getElementById('objective-tracker'),
+    box: document.getElementById('dialogue-box'), 
+    speaker: document.getElementById('dialogue-speaker'),
+    text: document.getElementById('dialogue-text'), 
+    letter: document.getElementById('letter-container'),
+    fade: document.getElementById('fade-overlay'),
+};
+
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+async function typeText(speakerName, text) {
+    state.paused = true;
+    ui.box.style.display = 'flex';
+    ui.speaker.innerText = speakerName;
+    ui.text.textContent = ''; // Utiliser textContent pour préserver les espaces
+    
+    let color = '#FF69B4';
+    let charKey = Object.keys(charactersData).find(k => charactersData[k].name === speakerName);
+    if(charKey) color = charactersData[charKey].hair;
+    ui.speaker.style.color = color;
+
+    for(let i=0; i<text.length; i++) {
+        ui.text.textContent += text[i];
+        if(i % 3 === 0 && text[i] !== ' ') { audio.playPop(); }
+        await sleep(25);
+    }
+    
+    return new Promise(resolve => {
+        const handler = (e) => {
+            if(e.code === 'Space') {
+                window.removeEventListener('keydown', handler);
+                ui.box.style.animation = 'none'; 
+                ui.box.style.display = 'none';
+                state.paused = false;
+                state.keys['Space'] = false; 
+                resolve();
+            }
+        };
+        window.addEventListener('keydown', handler);
+    });
+}
+
+// --- CINEMATIQUES ---
+async function introCutscene() {
+    state.cutscene = true;
+    player.dir = 1;
+    await sleep(1000);
+
+    player.showPhone = true;
+    await sleep(1000);
+    await typeText("Melissa", "Toujours aucun message...");
+    await typeText("Melissa", "Ont-ils vraiment oublié mon anniversaire ?");
+    player.showPhone = false;
+    await typeText("Melissa", "Je ferais bien d'aller me promener dans le jardin pour me vider la tête...");
+    
+    state.cutscene = false;
+    ui.tracker.style.opacity = '1'; // Afficher le tracker
+}
+
+function spawnConfetti() {
+    for(let i=0; i<300; i++) {
+        const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#32CD32', '#FF4500'];
+        particles.push(new Particle((Math.random()-0.5)*600, (Math.random()-0.5)*400, colors[Math.floor(Math.random() * colors.length)]));
+    }
+}
+
+async function startCutscene() {
+    state.cutscene = true; player.vx = 0; player.vy = 0;
+    player.dir = 1;
+
+    await sleep(1000); 
+    await typeText("Melissa", "Il y a quelqu'un... ?");
+    await sleep(800);
+
+    // Surprise!
+    state.lightsOn = true; 
+    audio.playUpliftingChords();
+    spawnConfetti();
+
+    await sleep(500);
+    await typeText("Tout le monde", "SURPRISE !! JOYEUX ANNIVERSAIRE MELISSA !!!");
+
+    interiorNpcs.forEach((n, i) => {
+        setTimeout(() => { n.vy = -3; setTimeout(()=> n.vy = 0, 200); }, i*150);
+    });
+
+    await sleep(2000);
+
+    let abd = interiorNpcs.find(n => n.type === 'abderrahmen');
+    
+    await typeText("Abderrahmen", "On ne pourrait jamais oublier cette journée.");
+
+    // The Walk & Hug (Robuste et fluide)
+    let steps = 90; // 1.5 secondes
+    let dx = (player.x - abd.x) / steps;
+    let dy = ((player.y - 12) - abd.y) / steps; // Stop juste au dessus pour le câlin
+
+    abd.isMoving = true;
+    for(let i=0; i<steps; i++) {
+        abd.x += dx;
+        abd.y += dy;
+        abd.walkTimer += 0.5;
+        if(Math.abs(dx) > Math.abs(dy)) abd.dir = dx > 0 ? 2 : 3;
+        else abd.dir = dy > 0 ? 0 : 1;
+        await sleep(16);
+    }
+    abd.isMoving = false;
+    abd.x = player.x; 
+    abd.y = player.y - 12; // Chevauchement pour l'étreinte
+    
+    await sleep(300);
+    
+    // Float Heart
+    particles.push(new HeartParticle(player.x, player.y - 30));
+
+    await sleep(1500);
+
+    await typeText("Abderrahmen", "J'ai écrit quelque chose pour toi. Lis-le s'il te plaît.");
+
+    ui.letter.style.display = 'block';
+    setTimeout(() => ui.letter.style.opacity = '1', 100);
+}
+
+// --- BOUCLE PRINCIPALE ---
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let camX = MAP_W/2, camY = MAP_H/2;
+let lastTime = performance.now();
+
+function loop(timestamp) {
+    let dt = timestamp - lastTime;
+    if (dt > 50) dt = 50; 
+    lastTime = timestamp;
+    state.time += dt;
+
+    if(state.started) {
+        player.update(dt);
+        
+        let currentNpcs = state.map === 'garden' ? npcs : interiorNpcs;
+        currentNpcs.forEach(npc => npc.update(dt));
+        particles.forEach(p => p.update(dt));
+        particles = particles.filter(p => p.life > 0);
+
+        let interactable = null;
+        let interactType = null;
+        let minDist = 100;
+
+        if (!state.paused && !state.cutscene) {
+            currentNpcs.forEach(n => {
+                let d = Math.hypot(n.x - player.x, n.y - player.y);
+                if(d < minDist) { minDist = d; interactable = n; interactType = 'npc'; }
+            });
+
+            if (state.map === 'garden') {
+                let dDoor = Math.hypot(HOUSE_X - player.x, (HOUSE_Y+50) - player.y);
+                if(dDoor < 120) { interactable = {x: HOUSE_X, y: HOUSE_Y+50}; interactType = 'door'; }
+            }
+        }
+
+        if (state.keys['Space'] && interactable && !state.paused) {
+            state.keys['Space'] = false; 
+            
+            if (interactType === 'npc' && dialogueLines[interactable.type]) {
+                let dx = interactable.x - player.x; let dy = interactable.y - player.y;
+                if(Math.abs(dx) > Math.abs(dy)) {
+                    player.dir = dx > 0 ? 2 : 3; interactable.dir = dx > 0 ? 3 : 2;
+                } else {
+                    player.dir = dy > 0 ? 0 : 1; interactable.dir = dy > 0 ? 1 : 0;
+                }
+                
+                state.talkedTo.add(interactable.type);
+                ui.tracker.innerText = `Amis trouvés : ${state.talkedTo.size} / 8`;
+
+                // Wrapper the dialogue inside an async IIFE to chain the inner thought
+                (async () => {
+                    await typeText(interactable.data.name, dialogueLines[interactable.type]);
+                    
+                    if (state.talkedTo.size >= 8 && !state.doorUnlocked) {
+                        state.doorUnlocked = true;
+                        ui.tracker.classList.add('tracker-complete');
+                        ui.tracker.innerText = "La maison est ouverte.";
+                        await sleep(500);
+                        // L'idée vient de Melissa de rentrer.
+                        await typeText("Melissa", "J'ai croisé tout le monde... Ils sont un peu mystérieux aujourd'hui. Je devrais peut-être rentrer à la maison.");
+                    }
+                })();
+            } 
+            else if (interactType === 'door') {
+                if (state.doorUnlocked) {
+                    state.map = 'house';
+                    player.x = 0; player.y = 250; player.dir = 1;
+                    ui.tracker.style.display = 'none'; 
+                } else {
+                    typeText("Melissa", "La porte est fermée à clé... Je devrais d'abord aller voir les autres dans le jardin.");
+                }
+            }
+        }
+
+        let targetCamX = player.x;
+        let targetCamY = player.y;
+        camX += (targetCamX - camX) * 0.1;
+        camY += (targetCamY - camY) * 0.1;
+
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        
+        ctx.save();
+        ctx.translate(canvas.width/2, canvas.height/2);
+        ctx.scale(SCALE, SCALE);
+        ctx.translate(-camX, -camY);
+
+        drawEnvironment(ctx);
+
+        let renderables = [player, ...currentNpcs];
+        if (state.map === 'garden') {
+            trees.forEach(t => renderables.push({ isTree: true, x: t.x, y: t.y }));
+        }
+        
+        renderables.sort((a, b) => a.y - b.y);
+        
+        renderables.forEach(item => {
+            if (item.isTree) {
+                ctx.fillStyle = '#228B22'; 
+                ctx.beginPath(); ctx.arc(item.x, item.y-20, 65, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#32CD32'; 
+                ctx.beginPath(); ctx.arc(item.x-15, item.y-35, 50, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#8B4513';
+                ctx.fillRect(item.x - 10, item.y, 20, 40);
+            } else {
+                item.draw(ctx);
+            }
+        });
+
+        particles.forEach(p => p.draw(ctx));
+
+        if (interactable && !state.paused && !state.cutscene) {
+            ctx.fillStyle = '#fff';
+            ctx.font = '800 14px Inter';
+            ctx.textAlign = 'center';
+            let py = interactable.y - (interactType === 'npc' ? 70 : 50);
+            let bob = Math.sin(state.time * 0.005) * 4;
+            
+            ctx.shadowBlur = 10; ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.fillText("[ESPACE]", interactable.x, py + bob);
+            ctx.shadowBlur = 0;
+        }
+
+        ctx.restore();
+    }
+
+    requestAnimationFrame(loop);
+}
+
+window.addEventListener('keydown', e => { state.keys[e.code] = true; });
+window.addEventListener('keyup', e => { state.keys[e.code] = false; });
+
+document.getElementById('start-btn').addEventListener('click', async () => {
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    document.getElementById('start-screen').style.opacity = '0';
+    setTimeout(() => document.getElementById('start-screen').style.display = 'none', 500);
+    
+    ui.fade.style.opacity = '0';
+    state.started = true;
+    
+    introCutscene(); // Lancer l'introduction avec le téléphone
+});
+
+requestAnimationFrame(loop);
+
+</script>
 </body>
 </html>
